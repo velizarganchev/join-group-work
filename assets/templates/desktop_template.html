@@ -2,15 +2,15 @@
     <span class="title">Kanban Project Management Tool</span>
     <div class="header-icons">
         <a id="help" class="scale-on-hover" href="/html/help.html"><img src="/assets/img/question-mark-icon.png"></a>
-        <img class="scale-on-hover" src="/assets/img/guest-profile-icon.png" onclick="toggleClass('log-out-button', 'hide')">
+        <img class="scale-on-hover" src="/assets/img/guest-profile-icon.png" onclick="toggleClass('profile-nav', 'hide')">
     </div>
 </header>
 
-<span id="log-out-button" class="log-out hide">
-    Legal notice <br>
-    Privacy policy <br>
-    Log out
-</span>
+<div id="profile-nav" class="hide">
+    <a href="/html/legal_notice.html" onclick="toggleClass('profile-nav', 'hide')">Legal notice</a> <br>
+    <a href="/html/privacy_policy.html" onclick="toggleClass('profile-nav', 'hide')">Privacy policy</a> <br>
+    <a href="/html/index.html" onclick="toggleClass('profile-nav', 'hide')">Log out</a>
+</div>
 
 <div class="side-bar">
     <img class="join-logo" src="/assets/img/join-logo.png">
@@ -33,7 +33,7 @@
                 <span>Contacts</span>
             </a>
         </div>
-        <div> 
+        <div>
             <a id="privacy-policy" href="/html/privacy_policy.html" class="bottom-nav-item">
                 <span>Privacy policy</span>
             </a>

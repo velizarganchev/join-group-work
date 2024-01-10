@@ -80,9 +80,3 @@ function getHost() {
     let host = window.location.host;
     return host;
 }
-
-
-
-function changeImageOnHover() {
-    
-}

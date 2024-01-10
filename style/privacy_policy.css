@@ -1,11 +1,5 @@
-.ContentContainer{
-    margin-top:206px;
-    margin-left:328px;
-}
-
-.ContentContainer h3{
+.content-margin h3{
     color: #000;
-    font-family: Inter;
     font-size: 27px;
     font-style: normal;
     font-weight: 700;
