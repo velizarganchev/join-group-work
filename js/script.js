@@ -2,7 +2,10 @@ const STORAGE_TOKEN = 'DR6FZK1MTGPR11C93C73PUGXTKY05AJ4CNFZMV8P';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
 
-
+/**
+ * 
+ * @param {string} id
+ */
 async function init(id) {
     await includeHTML();
     changeNavigationHighlight(id);
