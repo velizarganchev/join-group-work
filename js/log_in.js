@@ -41,7 +41,7 @@ function logInFormTemplate() {
             <div class="log-in-box">
                 <h1>Log in</h1>
                 <div class="log-in-border"></div>
-                <form onsubmit="logIn(); return false;">
+                <form id="log-in-form" onsubmit="logIn(); return false;">
                     <div class="input-wrapper">
                         <input type="email" id="email" required placeholder="Email" autofocus>
                         <img id="email-image" src="/assets/img/email-icon.png">
@@ -56,7 +56,7 @@ function logInFormTemplate() {
                     </div>
                     <div class="entry-buttons">
                         <button class="dark-button" type="submit">Log in</button>
-                        <button class="light-button">Guest Log in</button>
+                        <button class="light-button" onclick="setUpGuestLogIn()">Guest Log in</button>
                     </div>
                 </form>
             </div>
@@ -84,14 +84,108 @@ function checkIfEmpty() {
 
 /**
  * Toggles visibility of password in its input field.
+ * @param {string} id - The input field's id.
  */
-function togglePasswordVisibility() {
-    let passwordInput = document.getElementById('password');
+function togglePasswordVisibility(id) {
+    let passwordInput = document.getElementById(id);
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
         changeImageSource('password-image', '/assets/img/password-shown.png');
     } else {
         passwordInput.type = 'password';
-        changeImageSource('password-image', '/assets/img/password-shown.png');
+        changeImageSource('password-image', '/assets/img/password-hidden.png');
     }
+}
+
+
+/**
+ * Desides whether or not to fetch user information depending if a log in or a guest log in occured.
+ */
+async function logIn() {
+    if (await checkValidation() === true) {
+        /*fetch user information*/
+        window.location.href = 'summary.html'
+    } else {
+        window.location.href = 'summary.html'
+    }
+}
+
+
+/**
+ * Sets up log in for guest user by disabling the form validation.
+ */
+function setUpGuestLogIn() {
+    let logInForm = document.getElementById('log-in-form');
+    let emailInput = document.getElementById('email');
+    let passwordInput = document.getElementById('password');
+    emailInput.removeAttribute('required');
+    passwordInput.removeAttribute('required');
+    logInForm.submit();
+}
+
+
+/**
+ * Checks whether or not the form validtion is on.
+ * @returns True if form validation is on and false if form validation is off.
+ */
+async function checkValidation() {
+    let emailInput = document.getElementById('email');
+    let passwordInput = document.getElementById('password');
+    if (emailInput.hasAttribute('required') === true && passwordInput.hasAttribute('required') === true) {
+        return true
+    } else {
+        return false
+    }
+}
+
+
+/**
+ * Renders the form for signing up.
+ */
+function renderSignUp() {
+    let dynamicContent = document.getElementById('dynamic-content');
+    dynamicContent.innerHTML = signUpFormTemplate();
+}
+
+
+/**
+ * HTML template for better readability.
+ * @returns HTML template of the sign up form.
+ */
+function signUpFormTemplate() {
+    return/*html*/`
+        <div id="form-wrapper">
+            <div class="sign-up-box">
+                <button class="arrow-left scale-on-hover" onclick="renderLogIn()"><img src="/assets/img/arrow-left-line.png"></button>
+                <h1>Sign up</h1>
+                <div class="headline-border"></div>
+                <form id="sign-up-form" onsubmit="logIn(); return false;">
+                    <div class="input-wrapper">
+                        <input type="text" id="name" required placeholder="Name" autofocus>
+                        <img id="email-image" src="/assets/img/name-icon.png">
+                    </div>
+                    <div class="input-wrapper">
+                    <input type="email" id="email" required placeholder="Email">
+                        <img id="email-image" src="/assets/img/email-icon.png">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" required placeholder="Password" oninput="checkIfEmpty()">
+                        <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility()">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirm-password" required placeholder="Confirm password" oninput="checkIfEmpty()">
+                        <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility()">
+                    </div>
+                    <div class="privacy-policy-box">
+                        <input type="checkbox" id="privacy-policy-checkbox">
+                        <span>I accept the</span>
+                        <a class="scale-on-hover" href="privacy_policy.html">Privacy Policy</a>
+                    </div>
+                    <div class="entry-buttons">
+                        <button class="dark-button" type="submit">Sign up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
 }
