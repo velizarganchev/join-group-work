@@ -89,6 +89,10 @@
     cursor: pointer;
 }
 
+.contactItem:hover .emailInOverview{
+    color: #65a5df;
+}
+
 .selectedContact .emailInOverview {
     color: #65a5df;
 }

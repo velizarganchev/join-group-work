@@ -21,26 +21,23 @@ const contacts = [
 function renderContactBook() {
     const contactOverview = document.getElementById('contactOverviewContent');
     const sortedContacts = sortContactsAlphabetically();
-
-    let currentGroup = null;
+    let currentAlphabetLetter = null;
 
     for (let i = 0; i < sortedContacts.length; i++) {
         const contact = sortedContacts[i];
-        const groupInitial = contact.name.charAt(0).toUpperCase();
+        const contactFirstLetter = contact.name.charAt(0).toUpperCase();
+        handleLetterChange(currentAlphabetLetter, contactFirstLetter, contactOverview);
+        currentAlphabetLetter = contactFirstLetter;
 
-        handleGroupChange(currentGroup, groupInitial, contactOverview);
-        currentGroup = groupInitial;
+        const circleStyle = `background-color: ${contact.color};`;
+        const circleClass = `circle-${contact.name.charAt(0).toUpperCase()}`;
+        const nameParts = contact.name.split(' ');
+        const contactInitials = calculateContactInitials(nameParts);
 
-        let circleStyle = `background-color: ${contact.color};`;
-        let circleClass = `circle-${contact.name.charAt(0).toUpperCase()}`;
-        let nameParts = contact.name.split(' ');
-        let contactInitials = calculateContactInitials(nameParts);
-
-        // Übergebe den Index als fünftes Argument
         renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, i);
     }
 
-    handleLastGroup(currentGroup, contactOverview);
+    handleLastLetter(currentAlphabetLetter, contactOverview);
 }
 
 
@@ -57,17 +54,16 @@ function sortContactsAlphabetically() {
 /**
  * Handles changes in the current group and renders the new group header if needed.
  *
- * @param {string} currentGroup - The current group.
- * @param {string} newGroup - The new group.
+ * @param {string} currentAlphabetLetter - The current letter group.
+ * @param {string} newLetter - The new letter group.
  * @param {HTMLElement} contactOverview - The element where contacts are rendered.
  */
-function handleGroupChange(currentGroup, newGroup, contactOverview) {
-    if (newGroup !== currentGroup) {
-        if (currentGroup !== null) {
-            closeGroup(contactOverview);
-        }
-        openGroup(newGroup, contactOverview);
-    }
+function handleLetterChange(currentAlphabetLetter, newLetter, contactOverview) {
+    if (newLetter !== currentAlphabetLetter) {
+        openLetterGroup(newLetter, contactOverview);
+    } else {
+        closeLetterGroup(contactOverview);
+    };
 }
 
 
@@ -75,7 +71,6 @@ function handleGroupChange(currentGroup, newGroup, contactOverview) {
  * Renders a contact item with circle and details.
  *
  * @param {HTMLElement} contactOverview - The element where contacts are rendered.
- * @param {string} groupInitial - The initial of the current group.
  * @param {string} circleStyle - The CSS style for the circle.
  * @param {string} circleClass - The class for the circle.
  * @param {string} contactInitials - The contact's initials.
@@ -84,14 +79,16 @@ function handleGroupChange(currentGroup, newGroup, contactOverview) {
  */
 function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, index) {
     const contactItemId = `contactItem_${index}`;
-    
-    contactOverview.innerHTML += `<div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}')">
-                                    <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
-                                    <div class="contactDetails">
-                                        <div class="contactNameInOverview">${contact.name}</div>
-                                        <div class="emailInOverview">${contact.email}</div>
-                                    </div>
-                                </div>`;
+    const contactItemHTML = `
+        <div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}')">
+            <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
+            <div class="contactDetails">
+                <div class="contactNameInOverview">${contact.name}</div>
+                <div class="emailInOverview">${contact.email}</div>
+            </div>
+        </div>
+    `;
+    contactOverview.innerHTML += contactItemHTML;
 }
 
 
@@ -109,12 +106,12 @@ function calculateContactInitials(nameParts) {
 /**
  * Opens a new contact group.
  *
- * @param {string} newGroup - The new group.
+ * @param {string} newLetter - The new letter group.
  * @param {HTMLElement} contactOverview - The element where contacts are rendered.
  */
-function openGroup(newGroup, contactOverview) {
+function openLetterGroup(newLetter, contactOverview) {
     contactOverview.innerHTML += `<div class="contact-group">
-                                    <div class="groupHeader">${newGroup}</div>
+                                    <div class="groupHeader">${newLetter}</div>
                                     <hr class="groupDivider">`;
 }
 
@@ -123,7 +120,7 @@ function openGroup(newGroup, contactOverview) {
  *
  * @param {HTMLElement} contactOverview - The element where contacts are rendered.
  */
-function closeGroup(contactOverview) {
+function closeLetterGroup(contactOverview) {
     contactOverview.innerHTML += `</div>`;
 }
 
@@ -131,12 +128,12 @@ function closeGroup(contactOverview) {
 /**
  * Handles the last group and closes it if needed.
  *
- * @param {string} currentGroup - The current name group.
+ * @param {string} currentAlphabetLetter - The current name group.
  * @param {HTMLElement} contactOverview - The element where contacts are rendered.
  */
-function handleLastGroup(currentGroup, contactOverview) {
-    if (currentGroup !== null) {
-        closeGroup(contactOverview);
+function handleLastLetter(currentAlphabetLetter, contactOverview) {
+    if (currentAlphabetLetter !== null) {
+        closeLetterGroup(contactOverview);
     }
 }
 
