@@ -93,6 +93,10 @@
     color: #65a5df;
 }
 
+.selectedContact .circle{
+    border: 2px solid white;
+}
+
 .contactItem:hover {
     background-color: #395274 !important;
     color: white !important;

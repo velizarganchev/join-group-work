@@ -1,17 +1,17 @@
 const contacts = [
-    { name: 'Alice Smith', email: 'alice@example.com', color: '#3498db' },
-    { name: 'Bob Johnson', email: 'bob@example.com', color: '#2ecc71' },
-    { name: 'Brad Williams', email: 'brad@example.com', color: '#e74c3c' },
-    { name: 'Michael Davis', email: 'michael@example.com', color: '#f39c12' },
-    { name: 'David Clark', email: 'david@example.com', color: '#9b59b6' },
-    { name: 'Diana Martinez', email: 'diana@example.com', color: '#1abc9c' },
-    { name: 'Eva Miller', email: 'eva@example.com', color: '#3498db' },
-    { name: 'Sam Taylor', email: 'sam@example.com', color: '#2ecc71' },
-    { name: 'Sara Brown', email: 'sara@example.com', color: '#e74c3c' },
-    { name: 'Ross Wilson', email: 'ross@example.com', color: '#f39c12' },
-    { name: 'Kate Moore', email: 'kate@example.com', color: '#9b59b6' },
-    { name: 'Karl Lee', email: 'karl@example.com', color: '#1abc9c' },
-    { name: 'John Turner', email: 'john@example.com', color: '#3498db' }
+    { name: 'Alice Smith', email: 'alice@example.com', phone: '+49 123 456789', color: '#3498db' },
+    { name: 'Bob Johnson', email: 'bob@example.com', phone: '+49 234 567890', color: '#2ecc71' },
+    { name: 'Brad Williams', email: 'brad@example.com', phone: '+49 345 678901', color: '#e74c3c' },
+    { name: 'Michael Davis', email: 'michael@example.com', phone: '+49 456 789012', color: '#f39c12' },
+    { name: 'David Clark', email: 'david@example.com', phone: '+49 567 890123', color: '#9b59b6' },
+    { name: 'Diana Martinez', email: 'diana@example.com', phone: '+49 678 901234', color: '#1abc9c' },
+    { name: 'Eva Miller', email: 'eva@example.com', phone: '+49 789 012345', color: '#3498db' },
+    { name: 'Sam Taylor', email: 'sam@example.com', phone: '+49 890 123456', color: '#2ecc71' },
+    { name: 'Sara Brown', email: 'sara@example.com', phone: '+49 901 234567', color: '#e74c3c' },
+    { name: 'Ross Wilson', email: 'ross@example.com', phone: '+49 012 345678', color: '#f39c12' },
+    { name: 'Kate Moore', email: 'kate@example.com', phone: '+49 345 678901', color: '#9b59b6' },
+    { name: 'Karl Lee', email: 'karl@example.com', phone: '+49 567 890123', color: '#1abc9c' },
+    { name: 'John Turner', email: 'john@example.com', phone: '+49 789 012345', color: '#3498db' }
 ];
 
 
@@ -85,7 +85,7 @@ function handleGroupChange(currentGroup, newGroup, contactOverview) {
 function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, index) {
     const contactItemId = `contactItem_${index}`;
     
-    contactOverview.innerHTML += `<div id="${contactItemId}" class="contactItem" onclick="toggleSelectedClass('${contactItemId}')">
+    contactOverview.innerHTML += `<div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}')">
                                     <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
                                     <div class="contactDetails">
                                         <div class="contactNameInOverview">${contact.name}</div>
@@ -140,13 +140,25 @@ function handleLastGroup(currentGroup, contactOverview) {
     }
 }
 
+/**
+ * Shows contact details and toggles the 'selectedContact' class for the clicked contact item.
+ *
+ * @param {string} contactItemId - The ID of the contact item.
+ */
+function showContactDetails(contactItemId){
+    toggleSelectedClass(contactItemId);
+}
+
+/**
+ * Toggles the 'selectedContact' class for the clicked contact item and removes it from other items.
+ *
+ * @param {string} contactItemId - The ID of the contact item.
+ */
 function toggleSelectedClass(contactItemId) {
     const clickedItem = document.getElementById(contactItemId);
 
-    // Toggle die "selectedContact" Klasse für das angeklickte Element
     clickedItem.classList.toggle('selectedContact');
 
-    // Entferne die "selectedContact" Klasse von den anderen Elementen
     const contactItems = document.querySelectorAll('.contactItem');
     contactItems.forEach(function (item) {
         if (item !== clickedItem) {
