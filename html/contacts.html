@@ -13,7 +13,9 @@
     <script src="/js/script.js"></script>
     <script src="/js/contacts.js"></script>
 </head>
-<body onload="init('contacts')">
+<body onload="init('contacts'); renderContactBook()">
     <div w3-include-html="/assets/templates/desktop_template.html"></div>
+    <div id="contactOverview"></div>
+
 </body>
 </html>

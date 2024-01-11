@@ -1,0 +1,17 @@
+#contactOverview {
+    position: relative;
+    width: 456px;
+    height: 928px;
+    top: 96px;
+    left: 232px;
+    padding: 10px;
+}
+
+.group-header {
+    font-weight: bold;
+    border-bottom: 1px solid #D1D1D1;
+}
+
+.contact-item {
+    margin-bottom: 5px;
+}
