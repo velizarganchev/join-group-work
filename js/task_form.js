@@ -15,6 +15,7 @@ function choosePrio(i){
     }
     changeColorOfPrio(Prio, i);
 }
+
 /**changes the Img of the Prio div
  * 
  * @param {*} Prio - still the Priority in numbers
@@ -30,7 +31,6 @@ function changeImgOfPrio(Prio, img1, img2){
         alreadychosen = false;
     }
 }
-
 
 /** changes the backgroundcolors of the Priority divs
  * @param {*} Prio 
