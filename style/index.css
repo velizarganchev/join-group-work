@@ -15,7 +15,7 @@
     left: 150px !important;
 }
 
-.content {
+#dynamic-content {
     animation: fade-in 1s;
     animation-timing-function: ease-in-out;
 }
@@ -81,6 +81,8 @@ footer {
     display: flex;
     gap: 32px;
     transform: translate(-50%);
+    animation: fade-in 1s;
+    animation-timing-function: ease-in-out;
 }
 
 footer a {
@@ -137,10 +139,8 @@ footer a:hover {
 
 form input {
     width: 100%;
-    border-radius: 10px;
     font-size: 20px;
-    padding: 12px 21px;
-    border: 1px solid #D1D1D1;
+    border: unset;
 }
 
 form input::placeholder {
@@ -148,15 +148,20 @@ form input::placeholder {
 }
 
 form input:focus {
-    outline: 1px solid #29ABE2;
+    outline: unset;
 }
 
-form input:first-of-type {
-    background: url('/assets/img/email-icon.png') no-repeat scroll 96% 50%;
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 12px 21px;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
 }
 
-form input:last-of-type {
-    background: url('/assets/img/password-icon.png') no-repeat scroll 96% 50%;
+.input-wrapper img {
+    object-fit: contain;
+    cursor: pointer;
 }
 
 .remember-me-box {

@@ -83,3 +83,14 @@ function getHost() {
     let host = window.location.host;
     return host;
 }
+
+
+/**
+ * Changes the url of a given image.
+ * @param {string} id 
+ * @param {string} url 
+ */
+function changeImageSource(id, url) {
+    let image = document.getElementById(id);
+    image.src = url;
+}
