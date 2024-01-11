@@ -125,7 +125,7 @@ nav {
     border-radius: 8px;
     text-decoration: none;
     color: #CDCDCD;
-    transition: all 125ms ease-in-out;
+    transition: all 100ms ease-in-out;
 }
 
 .profile-nav a:hover {
