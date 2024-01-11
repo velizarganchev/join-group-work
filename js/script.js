@@ -3,8 +3,8 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
 
 /**
- * 
- * @param {string} id
+ * Initializing certain functions once the body of the page has fully loaded.
+ * @param {string} id - Id of the current navigation item which is supposed to be highlighted.
  */
 async function init(id) {
     await includeHTML();
@@ -13,7 +13,7 @@ async function init(id) {
 
 
 /**
- * Renders dynamic content in into the base html structures.
+ * Renders dynamic content in into the static html structures.
  */
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
