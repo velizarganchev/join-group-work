@@ -7,11 +7,40 @@
     padding: 10px;
 }
 
+#contactOverviewContent {
+    padding: 32px 34px 32px 34px;
+}
+
 .group-header {
-    font-weight: bold;
-    border-bottom: 1px solid #D1D1D1;
+    display: flex;
+    align-items: center;
+    height: 58px;
+    width: 352px;
+    padding: 17px 36px 17px 36px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.group-divider{
+    width: 352px;
+    border: none;
+    border-bottom: 0.5px solid #D1D1D1;
+    margin: 8px 0 8px 0;
 }
 
 .contact-item {
+    display: flex;
     margin-bottom: 5px;
+}
+
+.circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
 }
