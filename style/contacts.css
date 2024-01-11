@@ -1,12 +1,24 @@
 #contactOverview {
-    position: relative;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 456px;
-    height: 928px;
-    top: 96px;
+    height: calc(100% - 90px);
+    top: 90px;
     left: 232px;
+    background-color: white;
+    box-shadow: 4px 0px 6px 0px #00000014;
 }
 
 #contactOverviewContent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
     padding: 32px 34px 32px 34px;
 }
 
@@ -21,11 +33,41 @@
     line-height: 24px;
 }
 
-.groupDivider{
+.groupDivider {
     width: 352px;
     border: none;
     border-bottom: 0.5px solid #D1D1D1;
     margin: 8px 0 8px 0;
+}
+
+#addContactButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 352px;
+    height: 56px;
+    top: 22.5px;
+    padding: 12px 0 12px 0;
+    border-radius: 10px;
+    border: none;
+    background-color: #2A3647;
+    color:white;
+    gap: 16px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    margin-bottom: 8px;
+}
+
+#addContactButton img {
+    height: 32px;
+    width: 32px;
+
+}
+
+#addContactButton:hover{
+    cursor: pointer;
+    background-color: #223d65;
 }
 
 .contactItem {
@@ -35,6 +77,21 @@
     padding: 15px 24px 15px 24px;
     height: 78px;
     width: 352px;
+}
+
+.contactItem:hover,
+.selectedContact {
+    background-color: #2A3647 !important;
+    color: white !important;
+    border-radius: 10px !important;
+    cursor: pointer;
+}
+
+.contactItem:hover {
+    background-color: #223d65 !important;
+    color: white !important;
+    border-radius: 10px !important;
+    cursor: pointer;
 }
 
 .circle {
@@ -47,14 +104,14 @@
     color: #fff;
 }
 
-.contactDetails{
+.contactDetails {
     height: 48px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.contactNameInOverview{
+.contactNameInOverview {
     max-width: 352px;
     height: 24px;
     font-size: 20px;
@@ -62,10 +119,20 @@
     line-height: 24px;
 }
 
-.emailInOverview{
+.emailInOverview {
     height: 19px;
     font-size: 16px;
     font-weight: 400;
     line-height: 19.2px;
     color: #007CEE;
+}
+
+#contactOverviewContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+#contactOverviewContent::-webkit-scrollbar-thumb {
+    background-color: #A8A8A8;
+    border-radius: 8px;
+    height: 53px;
 }

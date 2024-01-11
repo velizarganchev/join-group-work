@@ -36,7 +36,8 @@ function renderContactBook() {
         let nameParts = contact.name.split(' ');
         let contactInitials = calculateContactInitials(nameParts);
 
-        renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact);
+        // Übergebe den Index als fünftes Argument
+        renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, i);
     }
 
     handleLastGroup(currentGroup, contactOverview);
@@ -79,9 +80,12 @@ function handleGroupChange(currentGroup, newGroup, contactOverview) {
  * @param {string} circleClass - The class for the circle.
  * @param {string} contactInitials - The contact's initials.
  * @param {Object} contact - The contact information.
+ * @param {number} index - The index of the contact.
  */
-function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact) {
-    contactOverview.innerHTML += `<div class="contactItem">
+function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, index) {
+    const contactItemId = `contactItem_${index}`;
+    
+    contactOverview.innerHTML += `<div id="${contactItemId}" class="contactItem" onclick="toggleSelectedClass('${contactItemId}')">
                                     <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
                                     <div class="contactDetails">
                                         <div class="contactNameInOverview">${contact.name}</div>
@@ -134,4 +138,19 @@ function handleLastGroup(currentGroup, contactOverview) {
     if (currentGroup !== null) {
         closeGroup(contactOverview);
     }
+}
+
+function toggleSelectedClass(contactItemId) {
+    const clickedItem = document.getElementById(contactItemId);
+
+    // Toggle die "selectedContact" Klasse für das angeklickte Element
+    clickedItem.classList.toggle('selectedContact');
+
+    // Entferne die "selectedContact" Klasse von den anderen Elementen
+    const contactItems = document.querySelectorAll('.contactItem');
+    contactItems.forEach(function (item) {
+        if (item !== clickedItem) {
+            item.classList.remove('selectedContact');
+        }
+    });
 }
