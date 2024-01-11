@@ -121,11 +121,36 @@
     padding: 16px 10px;
     justify-content: center;
     align-items: center;
+    font-size:20px;
     gap: 8px;
     flex: 1 0 0;
     border-radius: 10px;
     /* background: var(--white, #FFF); */
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+}
+
+.Highchoosen{
+    padding:15.5px 10px !important;
+    background-color:orangered !important;
+    font-size:21px;
+    font-weight:700;
+    color:white;
+}
+
+.Mediumchoosen{
+    padding:15.5px 10px !important;
+    background-color:rgb(255,168,0) !important;
+    font-size:21px;
+    font-weight:700;
+    color:white;
+}
+
+.Lowchoosen{
+    padding:15.5px 10px !important;
+    background-color:rgb(122,226,41) !important;
+    font-size:21px;
+    font-weight:700;
+    color:white;
 }
 
 .requiredText{
