@@ -1,5 +1,5 @@
 const contacts = [
-    { name: 'Alice Brenda Smith', email: 'alice@example.com', color: '#3498db' },
+    { name: 'Alice Smith', email: 'alice@example.com', color: '#3498db' },
     { name: 'Bob Johnson', email: 'bob@example.com', color: '#2ecc71' },
     { name: 'Brad Williams', email: 'brad@example.com', color: '#e74c3c' },
     { name: 'Michael Davis', email: 'michael@example.com', color: '#f39c12' },
@@ -81,11 +81,11 @@ function handleGroupChange(currentGroup, newGroup, contactOverview) {
  * @param {Object} contact - The contact information.
  */
 function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact) {
-    contactOverview.innerHTML += `<div class="contact-item">
+    contactOverview.innerHTML += `<div class="contactItem">
                                     <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
-                                    <div class="contact-details">
-                                        <div>${contact.name}</div>
-                                        <div>${contact.email}</div>
+                                    <div class="contactDetails">
+                                        <div class="contactNameInOverview">${contact.name}</div>
+                                        <div class="emailInOverview">${contact.email}</div>
                                     </div>
                                 </div>`;
 }
@@ -110,8 +110,8 @@ function calculateContactInitials(nameParts) {
  */
 function openGroup(newGroup, contactOverview) {
     contactOverview.innerHTML += `<div class="contact-group">
-                                    <div class="group-header">${newGroup}</div>
-                                    <hr class="group-divider">`;
+                                    <div class="groupHeader">${newGroup}</div>
+                                    <hr class="groupDivider">`;
 }
 
 /**
