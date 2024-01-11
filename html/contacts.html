@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +14,21 @@
     <script src="/js/script.js"></script>
     <script src="/js/contacts.js"></script>
 </head>
+
 <body onload="init('contacts'); renderContactBook()">
     <div w3-include-html="/assets/templates/desktop_template.html"></div>
     <div id="contactOverview">
         <div id="contactOverviewContent">
-            <button id="addContactButton">Add new contact <img src="/assets/img/add-contact.png" alt="add contact image"></button>
+            <button id="addContactButton">Add new contact <img src="/assets/img/add-contact.png"
+                    alt="add contact image"></button>
+        </div>
+    </div>
+    <div id="contactPageRight">
+        <div class="contactPageRightHeader">
+            <p id="contactPageHeaderName">Contacts</p>
+            <p id="contactPageHeaderText">Better with a team</p>
         </div>
     </div>
 </body>
+
 </html>
