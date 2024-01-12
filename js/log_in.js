@@ -1,9 +1,10 @@
 /**
  * Starts the animation of the opening logo.
  */
-async function initLogIn() {
+function initLogIn() {
     animateStartLogo();
     renderLogIn();
+    checkIfEmpty();
 }
 
 
@@ -40,15 +41,15 @@ function logInFormTemplate() {
         <div id="form-wrapper">
             <div class="log-in-box">
                 <h1>Log in</h1>
-                <div class="log-in-border"></div>
+                <div class="headline-border"></div>
                 <form id="log-in-form" onsubmit="logIn(); return false;">
                     <div class="input-wrapper">
                         <input type="email" id="email" required placeholder="Email" autofocus>
                         <img id="email-image" src="/assets/img/email-icon.png">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="password" required placeholder="Password" oninput="checkIfEmpty()">
-                        <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility()" onload="checkIfEmpty()">
+                        <input type="password" id="password" required placeholder="Password" oninput="checkIfEmpty('password', 'password-image')">
+                        <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('password', 'password-image')">
                     </div>
                     <div class="remember-me-box">
                         <input type="checkbox" id="remember-me">
@@ -68,14 +69,15 @@ function logInFormTemplate() {
 /**
  * Checks if input field for password is empty.
  */
-function checkIfEmpty() {
-    let passwordInput = document.getElementById('password');
-    let passwordImage = document.getElementById('password-image');
+function checkIfEmpty(inputId, imageId) {
+    let passwordInput = document.getElementById(inputId);
+    let passwordImage = document.getElementById(imageId);
     if (passwordInput.value !== '') {
-        changeImageSource('password-image', '/assets/img/password-hidden.png');
+        changeImageSource(imageId, '/assets/img/password-hidden.png');
         passwordImage.style.pointerEvents = 'all';
+        passwordImage.style.cursor = 'pointer';
     } else {
-        changeImageSource('password-image', '/assets/img/password-icon.png');
+        changeImageSource(imageId, '/assets/img/password-icon.png');
         passwordImage.style.pointerEvents = 'none';
         passwordInput.type = 'password';
     }
@@ -86,14 +88,15 @@ function checkIfEmpty() {
  * Toggles visibility of password in its input field.
  * @param {string} id - The input field's id.
  */
-function togglePasswordVisibility(id) {
-    let passwordInput = document.getElementById(id);
+function togglePasswordVisibility(inputId, imageId) {
+    let passwordInput = document.getElementById(inputId);
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        changeImageSource('password-image', '/assets/img/password-shown.png');
+        changeImageSource(imageId, '/assets/img/password-shown.png');
+        passwordInput.focus();
     } else {
         passwordInput.type = 'password';
-        changeImageSource('password-image', '/assets/img/password-hidden.png');
+        changeImageSource(imageId, '/assets/img/password-hidden.png');
     }
 }
 
@@ -101,8 +104,8 @@ function togglePasswordVisibility(id) {
 /**
  * Desides whether or not to fetch user information depending if a log in or a guest log in occured.
  */
-async function logIn() {
-    if (await checkValidation() === true) {
+function logIn() {
+    if (checkValidation() === true) {
         /*fetch user information*/
         window.location.href = 'summary.html'
     } else {
@@ -128,7 +131,7 @@ function setUpGuestLogIn() {
  * Checks whether or not the form validtion is on.
  * @returns True if form validation is on and false if form validation is off.
  */
-async function checkValidation() {
+function checkValidation() {
     let emailInput = document.getElementById('email');
     let passwordInput = document.getElementById('password');
     if (emailInput.hasAttribute('required') === true && passwordInput.hasAttribute('required') === true) {
@@ -169,15 +172,15 @@ function signUpFormTemplate() {
                         <img id="email-image" src="/assets/img/email-icon.png">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="password" required placeholder="Password" oninput="checkIfEmpty()">
-                        <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility()">
+                        <input type="password" id="password" required placeholder="Password" oninput="checkIfEmpty('password', 'password-image')">
+                        <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('password', 'password-image')">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="confirm-password" required placeholder="Confirm password" oninput="checkIfEmpty()">
-                        <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility()">
+                        <input type="password" id="confirm-password" required placeholder="Confirm password" oninput="checkIfEmpty('confirm-password', 'confirm-password-image')">
+                        <img id="confirm-password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('confirm-password', 'confirm-password-image')">
                     </div>
                     <div class="privacy-policy-box">
-                        <input type="checkbox" id="privacy-policy-checkbox">
+                        <input type="checkbox" id="privacy-policy-checkbox" required>
                         <span>I accept the</span>
                         <a class="scale-on-hover" href="privacy_policy.html">Privacy Policy</a>
                     </div>

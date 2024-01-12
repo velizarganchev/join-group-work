@@ -161,7 +161,6 @@ form input:focus {
 
 .input-wrapper img {
     object-fit: contain;
-    cursor: pointer;
 }
 
 .remember-me-box {
