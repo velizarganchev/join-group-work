@@ -125,7 +125,7 @@ footer a:hover {
 
 .headline-border {
     width: 150px;
-    height: 3px;
+    min-height: 3px;
     background-color: #29ABE2;
     border-radius: 20px;
 }
@@ -223,6 +223,14 @@ form input:focus {
     background-color: transparent;
 }
 
+#password-message {
+    color: #FF8190;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    align-self: flex-start;
+}
+
 .privacy-policy-box {
     display: flex;
     justify-content: center;
@@ -239,6 +247,21 @@ form input:focus {
 
 .privacy-policy-box a:hover {
     color: #29ABE2;
+}
+
+.confirmation-message {
+    background-color: #2A3647;
+    position: fixed;
+    bottom: -10%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 1;
+    box-shadow: 0px 0px 4px 0px #00000026;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 0;
 }
 
 @keyframes fade-in {

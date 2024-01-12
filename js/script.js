@@ -31,6 +31,28 @@ async function includeHTML() {
 
 
 /**
+ * Stores data in backend.
+ * @param {string} key - The name which the data is saved with.
+ * @param {string} value - The data which is supposed to be saved.
+ */
+async function setItem(key, value) {
+    const payload = { key, value, token: STORAGE_TOKEN };
+    fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)}).then(res => res.json());
+}
+
+
+/**
+ * Fetches data from backend.
+ * @param {string} key - The name which the data is saved with.
+ * @returns The fethed data from backend.
+ */
+async function getItem(key) {
+    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+    return fetch(url).then(response => response.json()).then(response => response.data.value);
+}
+
+
+/**
  * Toggles a class.
  * @param {string} id - The id of the element which contains the class.
  * @param {string} classname - The name of the class to be toggled.

@@ -1,10 +1,74 @@
+let users = [];
+
+
 /**
  * Starts the animation of the opening logo.
  */
-function initLogIn() {
+async function initEntry() {
+    await loadUsers();
     animateStartLogo();
     renderLogIn();
-    checkIfEmpty();
+    checkIfEmpty('password', 'password-image');
+}
+
+
+/**
+ * Fetches list of users and it's according information from backend.
+ */
+async function loadUsers() {
+    try {
+        users = JSON.parse(await getItem('users'));
+    } catch(error) {
+        console.info('Unable to load users');
+    }
+}
+
+
+/**
+ * Save's the new users data in the backend.
+ * @param {string} password - Value of the password's input field.
+ */
+async function signUp(password) {
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    users.push({
+        'name': name,
+        'email': email,
+        'password': password
+    })
+    await setItem('users', JSON.stringify(users));
+    toggleClass('sign-up-confirmation', 'fly-in');
+    setTimeout(function() {
+        renderLogIn();
+    }, 800)
+}
+
+
+
+/**
+ * Desides whether or not to fetch user information depending on the entry method.
+ */
+function logIn() {
+    if (checkValidation() === true) {
+        /*fetch user information*/
+        window.location.href = 'summary.html'
+    } else {
+        window.location.href = 'summary.html'
+    }
+}
+
+
+/**
+ * Checks if the value of the password's input field and the value of the comfirm password's field are equal.
+ */
+async function validatePassword() {
+    let password = document.getElementById('password').value;
+    let confirmPassword = document.getElementById('confirm-password').value;
+    if (password === confirmPassword) {
+        await signUp(password);
+    } else {
+        toggleClass('password-message', 'hide');
+    }
 }
 
 
@@ -41,7 +105,7 @@ function logInFormTemplate() {
         <div id="form-wrapper">
             <div class="log-in-box">
                 <h1>Log in</h1>
-                <div class="headline-border"></div>
+                <div class="headline-border" style="box-sizing: content-box !important;"></div>
                 <form id="log-in-form" onsubmit="logIn(); return false;">
                     <div class="input-wrapper">
                         <input type="email" id="email" required placeholder="Email" autofocus>
@@ -102,19 +166,6 @@ function togglePasswordVisibility(inputId, imageId) {
 
 
 /**
- * Desides whether or not to fetch user information depending if a log in or a guest log in occured.
- */
-function logIn() {
-    if (checkValidation() === true) {
-        /*fetch user information*/
-        window.location.href = 'summary.html'
-    } else {
-        window.location.href = 'summary.html'
-    }
-}
-
-
-/**
  * Sets up log in for guest user by disabling the form validation.
  */
 function setUpGuestLogIn() {
@@ -162,7 +213,7 @@ function signUpFormTemplate() {
                 <button class="arrow-left scale-on-hover" onclick="renderLogIn()"><img src="/assets/img/arrow-left-line.png"></button>
                 <h1>Sign up</h1>
                 <div class="headline-border"></div>
-                <form id="sign-up-form" onsubmit="logIn(); return false;">
+                <form id="sign-up-form" onsubmit="validatePassword(); return false;">
                     <div class="input-wrapper">
                         <input type="text" id="name" required placeholder="Name" autofocus>
                         <img id="email-image" src="/assets/img/name-icon.png">
@@ -172,13 +223,14 @@ function signUpFormTemplate() {
                         <img id="email-image" src="/assets/img/email-icon.png">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="password" required placeholder="Password" oninput="checkIfEmpty('password', 'password-image')">
+                        <input type="password" id="password" required placeholder="Password" minlength="8" pattern="[0-9a-fA-F]{8, 16}" autocomplete="new-password" oninput="checkIfEmpty('password', 'password-image')">
                         <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('password', 'password-image')">
                     </div>
                     <div class="input-wrapper">
                         <input type="password" id="confirm-password" required placeholder="Confirm password" oninput="checkIfEmpty('confirm-password', 'confirm-password-image')">
                         <img id="confirm-password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('confirm-password', 'confirm-password-image')">
                     </div>
+                    <p id="password-message" class="hide">Ups! Your password doesn't match.</p>
                     <div class="privacy-policy-box">
                         <input type="checkbox" id="privacy-policy-checkbox" required>
                         <span>I accept the</span>
@@ -190,5 +242,6 @@ function signUpFormTemplate() {
                 </form>
             </div>
         </div>
+        <p id="sign-up-confirmation" class="confirmation-message">You signed up successfully</p>
     `;
 }
