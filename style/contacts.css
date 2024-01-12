@@ -89,7 +89,7 @@
     cursor: pointer;
 }
 
-.contactItem:hover .emailInOverview{
+.contactItem:hover .emailInOverview {
     color: #65a5df;
 }
 
@@ -97,7 +97,7 @@
     color: #65a5df;
 }
 
-.selectedContact .circle{
+.selectedContact .circle {
     border: 2px solid white;
 }
 
@@ -153,23 +153,19 @@
 
 /* Contact Page Right Side */
 
-#contactPageRight {
-    position: relative;
-    height: 73px;
-    top: 206px;
-    left: 743px;
-    gap: 30px;
-}
-
-.contactPageRightHeader{
-    position: absolute;
+.contactPageRightHeader {
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 569px;
+    height: 73px;
+    top: 145px;
+    left: 743px;
+    gap: 30px;
 }
 
-#contactPageHeaderName{
+#contactPageHeaderName {
     border: none;
     border-right: 3px solid #29ABE2;
     font-size: 61px;
@@ -179,11 +175,118 @@
     margin: 0;
 }
 
-#contactPageHeaderText{
+#contactPageHeaderText {
     font-size: 27px;
     font-weight: 400;
     line-height: 32.4px;
     color: #2A3647;
     padding-left: 20px;
     margin: 0;
+}
+
+#contactDetailsView {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    height: 364px;
+    width: 461px;
+    top: 270px;
+    left: 750px;
+    gap: 21px;
+}
+
+.circleInDetailView {
+    width: 120px !important;
+    height: 120px !important;
+    font-size: 47px !important;
+    font-weight: 400 !important;
+    line-height: 56.4px !important;
+    text-align: center;
+    border: 2px solid white !important;
+    margin-right: 40px;
+}
+
+.contactDetailsName {
+    display: flex;
+    align-items: center;
+    font-size: 47px;
+    font-weight: 500;
+    line-height: 65.4px;
+}
+
+.contactDetailsNameAndButtons p {
+    font-size: 16px !important;
+    font-weight: 400;
+    line-height: 19.2px;
+    color: #2A3647;
+}
+
+.contactNameIcons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 149px;
+}
+
+.contactEditButton img,
+.contactDeleteButton img {
+    height: 24px;
+    width: 24px;
+    margin-right: 5px;
+}
+
+.contactEditButton{
+    width: 70px;
+}
+
+.contactDeleteButton{
+    width: 78px;
+}
+
+.contactEditButton,
+.contactDeleteButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 35px;
+}
+
+.contactEditButton:hover ,
+.contactDeleteButton:hover {
+    cursor: pointer;
+    background-color: rgb(232, 229, 229);
+    border-radius: 10px;
+}
+
+.contactEditButton:hover img,
+.contactDeleteButton:hover img {
+    filter: invert(30%) sepia(53%) saturate(4595%) hue-rotate(195deg) brightness(101%) contrast(101%);
+}
+
+.contactEditButton:hover p,
+.contactDeleteButton:hover p {
+    color: #0092ff;
+    font-weight: 500;
+}
+
+.contactInformation {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.emailAndPhoneDetails p,
+.phoneDetails {
+    font-size: 16px;
+    font-weight: 700px;
+    line-height: 19.2px;
+}
+
+.emailDetails a {
+    text-decoration: none;
+    color: #007CEE;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
 }
