@@ -129,7 +129,7 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
 }
 
-.Highchoosen{
+.Highchosen{
     padding:15.5px 10px !important;
     background-color:orangered !important;
     font-size:21px;
@@ -137,7 +137,7 @@
     color:white;
 }
 
-.Mediumchoosen{
+.Mediumchosen{
     padding:15.5px 10px !important;
     background-color:rgb(255,168,0) !important;
     font-size:21px;
@@ -145,7 +145,7 @@
     color:white;
 }
 
-.Lowchoosen{
+.Lowchosen{
     padding:15.5px 10px !important;
     background-color:rgb(122,226,41) !important;
     font-size:21px;
