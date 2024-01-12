@@ -79,6 +79,7 @@ const contacts = [
   },
 ];
 
+
 /**
  * Renders contact overview section
  */
@@ -115,6 +116,7 @@ function renderContactBook() {
   handleLastLetter(currentAlphabetLetter, contactOverview);
 }
 
+
 /**
  * Sorts the contacts alphabetically based on the name.
  *
@@ -123,6 +125,7 @@ function renderContactBook() {
 function sortContactsAlphabetically() {
   return contacts.slice().sort((a, b) => a.name.localeCompare(b.name));
 }
+
 
 /**
  * Handles changes in the current group and renders the new group header if needed.
@@ -138,6 +141,7 @@ function handleLetterChange(currentAlphabetLetter, newLetter, contactOverview) {
     closeLetterGroup(contactOverview);
   }
 }
+
 
 /**
  * Renders a contact item with circle and details.
@@ -170,6 +174,7 @@ function renderContactItem(
   contactOverview.innerHTML += contactItemHTML;
 }
 
+
 /**
  * Calculates the contact initials based on name parts.
  *
@@ -181,6 +186,7 @@ function calculateContactInitials(nameParts) {
     0
   )}`;
 }
+
 
 /**
  * Opens a new contact group.
@@ -194,6 +200,7 @@ function openLetterGroup(newLetter, contactOverview) {
                                     <hr class="groupDivider">`;
 }
 
+
 /**
  * Closes the current contact group.
  *
@@ -202,6 +209,7 @@ function openLetterGroup(newLetter, contactOverview) {
 function closeLetterGroup(contactOverview) {
   contactOverview.innerHTML += `</div>`;
 }
+
 
 /**
  * Handles the last group and closes it if needed.
@@ -215,19 +223,21 @@ function handleLastLetter(currentAlphabetLetter, contactOverview) {
   }
 }
 
+
 /**
  * Shows contact details and renders them in the 'contactDetailsView' div.
  *
  * @param {string} contactItemId - The ID of the contact item.
  */
 function showContactDetails(contactItemId) {
-  toggleSelectedClass(contactItemId);
+    toggleSelectedClass(contactItemId);
 
-  const index = parseInt(contactItemId.split("_")[1]);
-  const selectedContact = contacts[index];
+    let sortedIndex = parseInt(contactItemId.split('_')[1]);
+    let selectedContact = sortContactsAlphabetically()[sortedIndex];
 
-  renderContactDetails(selectedContact);
+    renderContactDetails(selectedContact);
 }
+
 
 /**
  * Toggles the 'selectedContact' class for the clicked contact item and removes it from other items.
@@ -247,6 +257,7 @@ function toggleSelectedClass(contactItemId) {
     }
   }
 }
+
 
 /**
  * Renders the contact details in the 'contactDetailsView' div.
