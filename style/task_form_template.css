@@ -59,6 +59,13 @@
     font-size: 20px;
 }
 
+.textarea{ 
+    max-width: 442px; 
+    max-height: 107px;
+    min-width: 442px; 
+    min-height: 107px;
+}
+
 ::placeholder{
     color: var(--Style, #D1D1D1);
     font-family: 'Inter', sans-serif;
@@ -188,6 +195,10 @@
 
 .subtasks{
     background: url('/assets/img/subtasks.png') no-repeat scroll 96% 50%;
+}
+
+.subtasks:hover{
+    cursor:pointer;
 }
 
 .arrowdown { 
