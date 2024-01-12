@@ -156,7 +156,6 @@
 .contactPageRightHeader {
     position: fixed;
     display: flex;
-    justify-content: center;
     align-items: center;
     width: 569px;
     height: 73px;
@@ -167,12 +166,17 @@
 
 #contactPageHeaderName {
     border: none;
-    border-right: 3px solid #29ABE2;
     font-size: 61px;
     font-weight: 700;
     line-height: 73.2px;
-    padding-right: 20px;
     margin: 0;
+}
+
+.vertical{
+    border-right: 3px solid #29ABE2;
+    height: 59px;
+    position: absolute;
+    left: 50%;
 }
 
 #contactPageHeaderText {
