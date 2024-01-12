@@ -38,6 +38,7 @@ async function signUp(password) {
     })
     await setItem('users', JSON.stringify(users));
     toggleClass('sign-up-confirmation', 'fly-in');
+    toggleClass('confirmation-wrapper', 'dark-background');
     setTimeout(function() {
         renderLogIn();
     }, 800)
@@ -223,7 +224,7 @@ function signUpFormTemplate() {
                         <img id="email-image" src="/assets/img/email-icon.png">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="password" required placeholder="Password" minlength="8" pattern="[0-9a-fA-F]{8, 16}" autocomplete="new-password" oninput="checkIfEmpty('password', 'password-image')">
+                        <input type="password" id="password" required placeholder="Password" minlength="8" pattern="[0-9a-fA-F]{6, 18}" autocomplete="new-password" oninput="checkIfEmpty('password', 'password-image')">
                         <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('password', 'password-image')">
                     </div>
                     <div class="input-wrapper">
@@ -242,6 +243,11 @@ function signUpFormTemplate() {
                 </form>
             </div>
         </div>
-        <p id="sign-up-confirmation" class="confirmation-message">You signed up successfully</p>
+        <div id="confirmation-wrapper">
+            
+        </div>
+        <p id="sign-up-confirmation" class="confirmation-message">
+                You signed up successfully
+            </p>
     `;
 }
