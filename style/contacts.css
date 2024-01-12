@@ -237,7 +237,7 @@
 }
 
 .contactEditButton{
-    width: 70px;
+    width: 60px;
 }
 
 .contactDeleteButton{
@@ -248,7 +248,6 @@
 .contactDeleteButton {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: 35px;
 }
 
