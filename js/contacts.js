@@ -221,16 +221,11 @@ function handleLastLetter(currentAlphabetLetter, contactOverview) {
  * @param {string} contactItemId - The ID of the contact item.
  */
 function showContactDetails(contactItemId) {
-  // Toggle the 'selectedContact' class for the clicked contact item
   toggleSelectedClass(contactItemId);
 
-  // Find the index of the selected contact in the contacts array
   const index = parseInt(contactItemId.split("_")[1]);
-
-  // Get the selected contact from the contacts array
   const selectedContact = contacts[index];
 
-  // Render the contact details in the 'contactDetailsView' div
   renderContactDetails(selectedContact);
 }
 
@@ -261,7 +256,6 @@ function toggleSelectedClass(contactItemId) {
 function renderContactDetails(contact) {
   const contactDetailsView = document.getElementById("contactDetailsView");
 
-  // Create HTML for contact details
   const contactDetailsHTML = `
         <div class="contactDetailsName">
             <div class="circle circleInDetailView" style="background-color: ${contact.color};">
@@ -290,6 +284,5 @@ function renderContactDetails(contact) {
         </div>
   `;
 
-  // Set the HTML content of the 'contactDetailsView' div
   contactDetailsView.innerHTML = contactDetailsHTML;
 }
