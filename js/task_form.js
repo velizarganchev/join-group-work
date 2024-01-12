@@ -1,4 +1,5 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
+let allTasks = [];
 
 /** changes the HTML back to standard (=no Prio chosen)
  * 
@@ -28,7 +29,7 @@ function resetPrio(){
  */
 function changeItoPrioInString(Prio, i){
     if (currentchosenPrio == i){
-        currentchosenPrio = 0;
+        currentchosenPrio = '';
     }else{
         if (i == 1){
             Prio = 'High';
@@ -71,3 +72,34 @@ function changeColorOfPrio(Prio, i){
     changeImgOfPrio(Prio);
 }
 
+function getAllInputs(){
+    let title = document.getElementById('title').value;
+    let description = document.getElementById('description').value;
+    let assignedTo = document.getElementById('assignedToSelect').value;
+    let date = document.getElementById('date').value;
+    let prio = currentchosenPrio;
+    let category = document.getElementById('category').value;
+    let subtask = document.getElementById('subtask').value;
+    const task = {
+        'title': title,
+        'description': description,
+        'assigned': assignedTo,
+        'date': date,
+        'prio': prio,
+        'category': category,
+        'subtask': subtask,
+        token: STORAGE_TOKEN
+    }
+    creatingJson(task);
+}
+
+function creatingJson(task){
+    allTasks.push(task);
+    
+    safeAllTasksToStorage('AllTasks',allTasks);
+}
+
+async function safeAllTasksToStorage(key, value){
+    const payload = {key, value, token: STORAGE_TOKEN};
+    return fetch(STORAGE_URL, {method:'POST', body: JSON.stringify(payload)});
+}

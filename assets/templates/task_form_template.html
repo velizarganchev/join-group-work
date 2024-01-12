@@ -1,5 +1,5 @@
 <section id="Content">  
-    <form class="CompleteContent">
+    <form class="CompleteContent" onsubmit="getAllInputs(); return false;">
         <div class="Content">
             <div id="TitleContent">
                 <div class="Subheadline">
@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="Subcontent">
-                    <input class="Inputfield" placeholder="Enter a title">
+                    <input required id="title" class="Inputfield" placeholder="Enter a title">
                 </div>
             </div>
             <div id="DescriptionContent">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="Subcontent">
-                    <textarea class="Inputfield" placeholder="Enter a title"></textarea>
+                    <textarea id="description" class="Inputfield" placeholder="Enter a description"></textarea>
                 </div>
             </div>
             <div id="AssignedToContent">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="Subcontent">
-                    <input type="date" class="Inputfield"  placeholder="dd/mm/yyyy">
+                    <input required id="date" type="date" class="Inputfield"  placeholder="dd/mm/yyyy">
                 </div>
             </div>
             <div id="PrioContent">
@@ -91,7 +91,7 @@
                         </div>
                 </div>
                 <div class="Subcontent">
-                    <select class="selection hover arrowdown" value="Select task category">
+                    <select required id="category" class="selection hover arrowdown" value="Select task category">
                         <option class="selectionOption" value="">Select contacts to assign</option>
                         <option class="selectionOption">1</option>
                         <option class="selectionOption">2</option>
@@ -103,7 +103,7 @@
                         Subtasks
                 </div>
                 <div class="Subcontent">
-                    <input class="Inputfield subtasks" placeholder="Add new subtask">
+                    <input id="subtask" class="Inputfield subtasks" placeholder="Add new subtask">
                 </div>
             </div>
             <div class="buttons">
