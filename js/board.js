@@ -1,9 +1,105 @@
+let tasks = [
+    {
+        id: 1,
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation',
+        date: new Date().getTime(),
+        priority: 'Medium',
+        subtasks: 2,
+        subtasksProgress: 0,
+        category: 'User Story',
+        colum: 'todo',
+        contacts: [
+            {
+                name: 'Anton',
+                lastName: 'Mayer',
+                color: 'gold'
+            },
+            {
+                name: 'Anja',
+                lastName: 'Schulz',
+                color: 'palevioletred'
+            }
+        ],
+    },
+    {
+        id: 2,
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation',
+        date: new Date().getTime(),
+        priority: 'Medium',
+        subtasks: 4,
+        subtasksProgress: 1,
+        category: 'User Story',
+        colum: 'in-progress',
+        contacts: [
+            {
+                name: 'Gerd',
+                lastName: 'Mayer',
+                color: 'red'
+            },
+            {
+                name: 'Maria',
+                lastName: 'Schulz',
+                color: 'sandybrown'
+            }
+        ],
+    },
+    {
+        id: 3,
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation',
+        date: new Date().getTime(),
+        priority: 'Medium',
+        subtasks: 4,
+        subtasksProgress: 3,
+        category: 'User Story',
+        colum: 'in-progress',
+        contacts: [
+            {
+                name: 'Gerd',
+                lastName: 'Mayer',
+                color: 'red'
+            },
+            {
+                name: 'Maria',
+                lastName: 'Schulz',
+                color: 'sandybrown'
+            }
+        ],
+    },
+    {
+        id: 4,
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation',
+        date: new Date().getTime(),
+        priority: 'Medium',
+        subtasks: 2,
+        subtasksProgress: 1,
+        category: 'User Story',
+        colum: 'await-feedback',
+        contacts: [
+            {
+                name: 'Gerd',
+                lastName: 'Mayer',
+                color: 'red'
+            },
+            {
+                name: 'Maria',
+                lastName: 'Schulz',
+                color: 'sandybrown'
+            }
+        ],
+    }
+]
+
+
 /**
  * Renders tasks in the 'todo' column.
  *
  * @param {Array} tasks - An array of task objects.
  */
-async function renderTasks(tasks) {
+async function renderTasks() {
     let allTasks = await getItem('AllTasks');
     let todoColumn = document.getElementById('todo');
     let inProgressColumn = document.getElementById('in-progress');
