@@ -48,7 +48,10 @@ let tasks = [
     }
 ]
 
-
+/**
+ * Initializing certain functions once the body of the page has fully loaded.
+ * @param {string} id - Id of the current navigation item which is supposed to be highlighted.
+ */
 async function init(id) {
     await includeHTML();
     changeNavigationHighlight(id);
@@ -57,7 +60,7 @@ async function init(id) {
 
 
 /**
- * Renders dynamic content in into the base html structures.
+ * Renders dynamic content in into the static html structures.
  */
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
@@ -71,6 +74,28 @@ async function includeHTML() {
             element.innerHTML = 'Page not found';
         }
     }
+}
+
+
+/**
+ * Stores data in backend.
+ * @param {string} key - The name which the data is saved with.
+ * @param {string} value - The data which is supposed to be saved.
+ */
+async function setItem(key, value) {
+    const payload = { key, value, token: STORAGE_TOKEN };
+    fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)}).then(res => res.json());
+}
+
+
+/**
+ * Fetches data from backend.
+ * @param {string} key - The name which the data is saved with.
+ * @returns The fethed data from backend.
+ */
+async function getItem(key) {
+    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+    return fetch(url).then(response => response.json()).then(response => response.data.value);
 }
 
 
@@ -126,4 +151,15 @@ function getProtocol() {
 function getHost() {
     let host = window.location.host;
     return host;
+}
+
+
+/**
+ * Changes the url of a given image.
+ * @param {string} id 
+ * @param {string} url 
+ */
+function changeImageSource(id, url) {
+    let image = document.getElementById(id);
+    image.src = url;
 }

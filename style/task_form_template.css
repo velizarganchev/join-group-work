@@ -6,3 +6,212 @@
     font-weight: 700;
     line-height: 120%;
 }
+
+.CompleteContent{
+    display:flex;
+    justify-content: space-around;
+}
+
+.Content{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.TitleContent{
+    display: flex;
+    width: 440px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.Subheadline{
+    align-self: stretch;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    display:flex;
+}
+
+.star{
+    color: #FF8190;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.Subcontent{
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    margin:8px 0px 16px 0px;
+}
+
+.Inputfield{
+    padding: 12px 21px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--Style, #D1D1D1);
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+}
+
+.textarea{ 
+    max-width: 442px; 
+    max-height: 107px;
+    min-width: 442px; 
+    min-height: 107px;
+}
+
+::placeholder{
+    color: var(--Style, #D1D1D1);
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    flex: 1 0 0;
+}
+
+.selection{
+    display: flex;
+    width: 440px;
+    padding: 12px 16px;
+    justify-content: space-between;
+    align-items: center;
+    font-size:20px;
+    border-radius: 10px;
+    border: 1px solid var(--Style, #D1D1D1);
+    background: var(--white, #FFF);
+}
+
+.selectionOption{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+}
+
+.SubcontentPrio{
+    display: flex;
+    width: 440px;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin:8px 0px 16px 0px;
+}
+
+.prioclass{
+    display: flex;
+    padding: 16px 10px;
+    justify-content: center;
+    align-items: center;
+    font-size:20px;
+    gap: 8px;
+    flex: 1 0 0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+}
+
+.Highchosen{
+    padding:15.5px 10px !important;
+    background-color:orangered !important;
+    font-size:21px;
+    font-weight:700;
+    color:white;
+}
+
+.Mediumchosen{
+    padding:15.5px 10px !important;
+    background-color:rgb(255,168,0) !important;
+    font-size:21px;
+    font-weight:700;
+    color:white;
+}
+
+.Lowchosen{
+    padding:15.5px 10px !important;
+    background-color:rgb(122,226,41) !important;
+    font-size:21px;
+    font-weight:700;
+    color:white;
+}
+
+.requiredText{
+    margin-top:223px;
+    display:flex;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.buttons{
+    display:flex;
+    justify-content: flex-end;
+    gap:16px;
+    margin-top:130px;
+}
+
+.cancelButton{
+    display: flex;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--Version-2-main-color, #2A3647);
+    background: #F6F7F8;
+    color: var(--Version-2-main-color, #2A3647);
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.createTaskButton{
+    display: flex;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 10px;
+    background: #2A3647;
+    color: #FFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+}
+
+.hover:hover{
+    cursor:pointer;
+}
+
+.subtasks{
+    background: url('/assets/img/subtasks.png') no-repeat scroll 96% 50%;
+}
+
+.subtasks:hover{
+    cursor:pointer;
+}
+
+.arrowdown { 
+    /* for Firefox */ 
+    -moz-appearance: none; 
+    /* for Safari, Chrome, Opera */ 
+    -webkit-appearance: none; 
+    background: url('/assets/img/arrow_down.png') no-repeat scroll 96% 50%;
+  } 
+
+/* Ersetzt den Kalender in dem Input */
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url('/assets/img/event.png') no-repeat scroll 96% 50%;
+      -webkit-appearance: none;
+  }

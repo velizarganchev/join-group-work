@@ -1,0 +1,115 @@
+<section id="Content">  
+    <form class="CompleteContent" onsubmit="getAllInputs(); return false;">
+        <div class="Content">
+            <div id="TitleContent">
+                <div class="Subheadline">
+                    <div>
+                        Title
+                    </div>
+                    <div class="star">
+                        *
+                    </div>
+                </div>
+                <div class="Subcontent">
+                    <input required id="title" class="Inputfield" placeholder="Enter a title">
+                </div>
+            </div>
+            <div id="DescriptionContent">
+                <div class="Subheadline">
+                    <div>
+                        Description
+                    </div>
+                </div>
+                <div class="Subcontent">
+                    <textarea id="description" class="Inputfield textarea" placeholder="Enter a description"></textarea>
+                </div>
+            </div>
+            <div id="AssignedToContent">
+                <div class="Subheadline">
+                    <div>
+                        Assigned to
+                    </div>
+                </div>
+                <div class="Subcontent">
+                    <select id="assignedToSelect" class="selection hover arrowdown" value="Select contacts to assign" onclick="changeImageSource(assignedToSelect, url)">
+                        <option class="selectionOption" value="">Select contacts to assign</option>
+                        <option class="selectionOption">1</option>
+                        <option class="selectionOption">2</option>
+                    </select>
+                </div>
+            </div>
+            <div id="requiredText" class="requiredText">
+                <div class="star">*</div>This field is required
+            </div>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="2" height="426" viewBox="0 0 2 426" fill="none">
+            <path d="M1.24805 1L1.24854 425" stroke="#D1D1D1" stroke-linecap="round"/>
+        </svg>
+        <div class="Content">
+            <div id="DueDateContent">
+                <div class="Subheadline">
+                    <div>
+                        Due date
+                    </div>
+                    <div class="star">
+                        *
+                    </div>
+                </div>
+                <div class="Subcontent">
+                    <input required id="date" type="date" class="Inputfield"  placeholder="dd/mm/yyyy">
+                </div>
+            </div>
+            <div id="PrioContent">
+                <div class="Subheadline">
+                    <div>
+                        Prio
+                    </div>
+                </div>
+                <div id="SubcontentPrio" class="SubcontentPrio">
+                    <div id="Prio1" class="prioclass hover" onclick="choosePrio(1)">
+                        <div>Urgent</div>
+                        <img id="HighImg" src="/assets/img/PrioHigh.png">
+                    </div>
+                    <div id="Prio2" class="prioclass hover" onclick="choosePrio(2)">
+                        <div>Medium</div>
+                        <img id="MediumImg" src="/assets/img/PrioMedium.png">
+                    </div>
+                    <div id="Prio3" class="prioclass hover" onclick="choosePrio(3)">
+                        <div>Low</div>
+                        <img id="LowImg" src="/assets/img/PrioLow.png">
+                    </div>
+                </div>
+            </div>
+            <div id="DescriptionContent">
+                <div class="Subheadline">
+                        <div>
+                            Category
+                        </div>
+                        <div class="star">
+                            *
+                        </div>
+                </div>
+                <div class="Subcontent">
+                    <select required id="category" class="selection hover arrowdown" value="Select task category">
+                        <option class="selectionOption" value="">Select contacts to assign</option>
+                        <option class="selectionOption">1</option>
+                        <option class="selectionOption">2</option>
+                    </select>
+                </div>
+            </div>
+            <div id="SubtasksContent">
+                <div class="Subheadline">
+                        Subtasks
+                </div>
+                <div class="Subcontent">
+                    <input id="subtask" class="Inputfield subtasks" placeholder="Add new subtask">
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="cancelButton hover">Clear <img src="/assets/img/cancel_dark.png"></button>
+                <button class="createTaskButton hover">Create Task <img src="/assets/img/confirm.png"></button>
+            </div>
+        </div>
+    </form>
+</section>

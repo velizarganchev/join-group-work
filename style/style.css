@@ -6,6 +6,7 @@ body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     background-color: #F6F7F8;
+    overflow-x: hidden;
 }
 
 .hide {
@@ -24,4 +25,14 @@ body {
 
 .scale-on-hover:hover {
     transform: scale(1.1);
+}
+
+.fly-in {
+    animation: fly-in 300ms ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fly-in {
+    0% {bottom: -10%}
+    100% {bottom: 47%}
 }
