@@ -19,16 +19,46 @@
     <div w3-include-html="/assets/templates/desktop_template.html"></div>
     <div id="contactOverview">
         <div id="contactOverviewContent">
-            <button id="addContactButton">Add new contact <img src="/assets/img/add-contact.png"
+            <button id="addContactButton" onclick="addContact()">Add new contact <img src="/assets/img/add-contact.png"
                     alt="add contact image"></button>
         </div>
     </div>
-        <div class="contactPageRightHeader">
-            <p id="contactPageHeaderName">Contacts</p>
-            <div class="vertical"></div>
-            <p id="contactPageHeaderText">Better with a team</p>
+    <div id="addContactOverlay">
+        <div id="addContactPopUp">
+            <div id="addContactLeft">
+                <img id="addContactPopUpImage" src="/assets/img/join-logo.png" alt="join logo">
+                <p id="addContactHeadline">Add contact</p>
+                <p id="addContactHeadlineText">Tasks are better with a team!</p>
+                <div id="addContactHeaderLine"></div>
+            </div>
+            <div id="addContactRight">
+                <img src="/assets/img/new-contact-icon.png" alt="new contact icon">
+                <div>
+                    <button type="button" onclick="closePopup()"><img src="/assets/img/cancel_dark.png" alt="close icon"></button>
+                    <form id="addContactForm">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+
+                        <label for="phone">Phone:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <div>
+                            <button type="button" id="cancelButton">Cancel <img src="/assets/img/cancel_dark.png" alt="cancel icon"></button>
+                            <button id="saveButton" type="button" onclick="saveContact()">Save Contact</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div id="contactDetailsView"></div>
+    </div>
+    <div class="contactPageRightHeader">
+        <p id="contactPageHeaderName">Contacts</p>
+        <div class="vertical"></div>
+        <p id="contactPageHeaderText">Better with a team</p>
+    </div>
+    <div id="contactDetailsView"></div>
 </body>
 
 </html>

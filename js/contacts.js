@@ -91,11 +91,7 @@ function renderContactBook() {
   for (let i = 0; i < sortedContacts.length; i++) {
     const contact = sortedContacts[i];
     const contactFirstLetter = contact.name.charAt(0).toUpperCase();
-    handleLetterChange(
-      currentAlphabetLetter,
-      contactFirstLetter,
-      contactOverview
-    );
+    handleLetterChange(currentAlphabetLetter, contactFirstLetter, contactOverview);
     currentAlphabetLetter = contactFirstLetter;
 
     const circleStyle = `background-color: ${contact.color};`;
@@ -103,14 +99,7 @@ function renderContactBook() {
     const nameParts = contact.name.split(" ");
     const contactInitials = calculateContactInitials(nameParts);
 
-    renderContactItem(
-      contactOverview,
-      circleStyle,
-      circleClass,
-      contactInitials,
-      contact,
-      i
-    );
+    renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, i);
   }
 
   handleLastLetter(currentAlphabetLetter, contactOverview);
@@ -153,14 +142,7 @@ function handleLetterChange(currentAlphabetLetter, newLetter, contactOverview) {
  * @param {Object} contact - The contact information.
  * @param {number} index - The index of the contact.
  */
-function renderContactItem(
-  contactOverview,
-  circleStyle,
-  circleClass,
-  contactInitials,
-  contact,
-  index
-) {
+function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, index) {
   const contactItemId = `contactItem_${index}`;
   const contactItemHTML = `
         <div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}')">
@@ -245,11 +227,20 @@ function showContactDetails(contactItemId) {
  * @param {string} contactItemId - The ID of the contact item.
  */
 function toggleSelectedClass(contactItemId) {
-  const clickedItem = document.getElementById(contactItemId);
+  let clickedItem = document.getElementById(contactItemId);
+  let contactDetailsView = document.getElementById("contactDetailsView");
+  let isSelected = clickedItem.classList.toggle("selectedContact");
 
-  clickedItem.classList.toggle("selectedContact");
+  if (isSelected) {
+    let sortedIndex = parseInt(contactItemId.split('_')[1]);
+    let selectedContact = sortContactsAlphabetically()[sortedIndex];
+    renderContactDetails(selectedContact);
+    contactDetailsView.style.display = "block";
+  } else {
+    contactDetailsView.style.display = "none";
+  }
 
-  const contactItems = document.querySelectorAll(".contactItem");
+  let contactItems = document.querySelectorAll(".contactItem");
   for (let i = 0; i < contactItems.length; i++) {
     const item = contactItems[i];
     if (item !== clickedItem) {
@@ -296,4 +287,66 @@ function renderContactDetails(contact) {
   `;
 
   contactDetailsView.innerHTML = contactDetailsHTML;
+}
+
+// Functions for adding contact
+
+
+/**
+ * Opens the pop-up for adding a new contact.
+ */
+function addContact() {
+    const addContactOverlay = document.getElementById("addContactOverlay");
+    const addContactPopUp = document.getElementById("addContactPopUp");
+
+    addContactOverlay.style.display = "flex";
+
+    addContactOverlay.addEventListener("click", function(event) {
+        if (event.target === addContactOverlay) {
+            closePopup();
+        }
+    });
+}
+
+
+/**
+ * Closes the pop-up.
+ */
+function closePopup() {
+    document.getElementById("addContactOverlay").style.display = "none";
+}
+
+
+/**
+ * Saves a new contact and closes the pop-up.
+ * 
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ */
+function saveContact() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+
+    contacts.push({
+        name: name,
+        email: email,
+        phone: phone,
+        color: generateRandomColor(),
+    });
+
+    closePopup();
+
+    renderContactBook();
+}
+
+
+/**
+ * Generates a random hex color.
+ * @returns {string} - Random hex color.
+ */
+function generateRandomColor() {
+    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    return randomColor;
 }

@@ -83,7 +83,7 @@
 
 .contactItem:hover,
 .selectedContact {
-    background-color: #2A3647 !important;
+    background-color: #2b3647 !important;
     color: white !important;
     border-radius: 10px !important;
     cursor: pointer;
@@ -94,7 +94,7 @@
 }
 
 .selectedContact .emailInOverview {
-    color: #65a5df;
+    color: #0c6fcf;
 }
 
 .selectedContact .circle {
@@ -172,7 +172,7 @@
     margin: 0;
 }
 
-.vertical{
+.vertical {
     border-right: 3px solid #29ABE2;
     height: 59px;
     position: absolute;
@@ -194,7 +194,7 @@
     justify-content: space-between;
     position: fixed;
     height: 364px;
-    width: 461px;
+    width: 500px;
     top: 270px;
     left: 750px;
     gap: 21px;
@@ -240,11 +240,11 @@
     margin-right: 5px;
 }
 
-.contactEditButton{
+.contactEditButton {
     width: 60px;
 }
 
-.contactDeleteButton{
+.contactDeleteButton {
     width: 78px;
 }
 
@@ -255,22 +255,24 @@
     height: 35px;
 }
 
-.contactEditButton:hover ,
+.contactEditButton:hover,
 .contactDeleteButton:hover {
     cursor: pointer;
-    background-color: rgb(232, 229, 229);
+    /* background-color: rgb(232, 229, 229); */
     border-radius: 10px;
 }
 
 .contactEditButton:hover img,
 .contactDeleteButton:hover img {
-    filter: invert(30%) sepia(53%) saturate(4595%) hue-rotate(195deg) brightness(101%) contrast(101%);
+    filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
 }
 
 .contactEditButton:hover p,
 .contactDeleteButton:hover p {
-    color: #0092ff;
-    font-weight: 500;
+    color: #00abe8;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 19.2px;
 }
 
 .contactInformation {
@@ -292,4 +294,81 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 19.2px;
+}
+
+/* PopUp for adding contact */
+
+#addContactOverlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+#addContactPopUp {
+    display: flex;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    height: 594px;
+}
+
+#addContactLeft{
+    background-color: #2b3647;
+    padding: 66px 48px 66px 48px;
+    width: 467px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+#addContactPopUpImage {
+    width: 55.6px;
+    height: 66.4px;
+    margin-bottom: 8px;
+}
+
+#addContactHeadline {
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+    color: #FFFFFF;
+    margin: 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#addContactHeadlineText{
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 32.4px;
+    color: #FFFFFF;
+    margin: 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#addContactHeaderLine{
+    border-bottom: 3px solid #29ABE2;
+    width: 90px;
+    margin-top: 8px;
+}
+
+#addContactRight{
+    display: flex;
+    align-items: center;
+}
+
+#addContactForm{
+    display: flex;
+    flex-direction: column;
 }
