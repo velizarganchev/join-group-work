@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,111 @@
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/desktop_template.css">
     <link rel="stylesheet" href="/style/mobile_template.css">
-    <link rel="stylesheet" href="/style/task_form_template.css">
     <link rel="stylesheet" href="/style/board.css">
     <script src="/js/script.js"></script>
-    <script src="/js./board.js"></script>
+    <script src="/js/board.js"></script>
 </head>
+
 <body onload="init('board')">
     <div w3-include-html="/assets/templates/desktop_template.html"></div>
+    <section class="content-margin">
+        <div class="board-header">
+            <div class="board-header-container">
+                <div class="board-title">
+                    <h1>Board</h1>
+                </div>
+                <div class="action-container">
+                    <form onsubmit="search(); return false;">
+                        <input type="text" placeholder="Find Task">
+                        <img src="../assets/img/board/vector3.svg" alt="Vector">
+                        <button type="submit" class="search-button">
+                            <img src="../assets/img/board/search.svg" alt="Search">
+                        </button>
+                    </form>
+                    <button class="add-task-button">Add task <img src="../assets/img/board/add.svg" alt=""></button>
+                </div>
+            </div>
+            <div class="board-nav-bar-container">
+                <div class="board-nav-item">
+                    To do
+                    <button>
+                        <img src="../assets/img/board/plus-button.svg" alt="Plus">
+                    </button>
+                </div>
+                <div class="board-nav-item">
+                    In progress
+                    <button>
+                        <img src="../assets/img/board/plus-button.svg" alt="">
+                    </button>
+                </div>
+                <div class="board-nav-item">
+                    Await feedback
+                    <button>
+                        <img src="../assets/img/board/plus-button.svg" alt="">
+                    </button>
+                </div>
+                <div class="board-nav-item">
+                    Done
+                </div>
+            </div>
+        </div>
+        <div class="board-distribution-container" id="board-distribution">
+            <div class="board-distribution-colum" id="todo">
+
+            </div>
+            <div class="board-distribution-colum" id="in-progress">
+                <div class="no-task-card-container">
+                    <h3>No tasks To do</h3>
+                </div>
+            </div>
+            <div class="board-distribution-colum" id="await-feedback">
+                <div class="card-container">
+                    <button class="card-label">User Story</button>
+                    <h3 class="card-title">Kochwelt Page & Recipe Recommender</h3>
+                    <p class="card-content">Build start page with recipe recommendation</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-done"></div>
+                        </div>
+                        <p class="subtasks-container">0/2 Subtasks</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="profiles">
+                            <div class="profile">AM</div>
+                            <div class="profile">AM</div>
+                            <div class="profile">AM</div>
+                        </div>
+                        <div class="priority-container">
+                            <img src="../assets/img/board/prio-media.svg" alt="Priority Icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="board-distribution-colum" id="done">
+                <div class="card-container">
+                    <button class="card-label">User Story</button>
+                    <h3 class="card-title">Kochwelt Page & Recipe Recommender</h3>
+                    <p class="card-content">Build start page with recipe recommendation</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-done"></div>
+                        </div>
+                        <p class="subtasks-container">0/2 Subtasks</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="profiles">
+                            <div class="profile">AM</div>
+                            <div class="profile">AM</div>
+                            <div class="profile">AM</div>
+                        </div>
+                        <div class="priority-container">
+                            <img src="../assets/img/board/prio-media.svg" alt="Priority Icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
+
 </html>
