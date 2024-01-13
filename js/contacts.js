@@ -343,17 +343,30 @@ function createContact() {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let phone = document.getElementById("phone").value;
+    let saveButton = document.getElementById("saveButton");
 
-    contacts.push({
-        name: name,
-        email: email,
-        phone: phone,
-        color: generateRandomColor(),
-    });
+    saveButton.disabled = true;
 
-    closePopUp();
+    saveButton.style.justifyContent = 'center';
+    saveButton.innerHTML = '<div class="loader"></div>';
 
-    renderContactBook();
+    setTimeout(function () {
+        contacts.push({
+            name: name,
+            email: email,
+            phone: phone,
+            color: generateRandomColor(),
+        });
+
+        closePopUp();
+
+        saveButton.disabled = false;
+
+        saveButton.innerHTML = 'Create Contact <img src="/assets/img/check.png" alt="confirm icon">';
+        saveButton.style.justifyContent = 'space-between';
+
+        renderContactBook();
+    }, 2000);
 }
 
 
