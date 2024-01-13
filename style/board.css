@@ -214,7 +214,7 @@
 
 .progress-done {
     height: 100%;
-    width: 50%;
+    width: 0%;
     background-color: #4589FF;
     border: none;
     border-radius: 8px;

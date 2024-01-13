@@ -8,7 +8,8 @@ let tasks = [
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
         priority: 'Medium',
-        subtasks: 0,
+        subtasks: 2,
+        subtasksProgress: 2,
         category: 'User Story',
         colum: 'todo',
         contacts: [
@@ -30,7 +31,8 @@ let tasks = [
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
         priority: 'Medium',
-        subtasks: 1,
+        subtasks: 4,
+        subtasksProgress: 1,
         category: 'User Story',
         colum: 'todo',
         contacts: [
@@ -84,7 +86,7 @@ async function includeHTML() {
  */
 async function setItem(key, value) {
     const payload = { key, value, token: STORAGE_TOKEN };
-    fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)}).then(res => res.json());
+    fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) }).then(res => res.json());
 }
 
 
