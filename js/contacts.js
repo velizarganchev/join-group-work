@@ -88,6 +88,10 @@ function renderContactBook() {
   const sortedContacts = sortContactsAlphabetically();
   let currentAlphabetLetter = null;
 
+  contactOverview.innerHTML = "";
+  contactOverview.innerHTML = `<button id="addContactButton" onclick="addContact()">Add new contact <img src="/assets/img/add-contact.png"
+  alt="add contact image"></button>`;
+
   for (let i = 0; i < sortedContacts.length; i++) {
     const contact = sortedContacts[i];
     const contactFirstLetter = contact.name.charAt(0).toUpperCase();
