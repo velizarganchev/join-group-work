@@ -41,21 +41,33 @@ async function signUp(password) {
     toggleClass('confirmation-wrapper', 'dark-background');
     setTimeout(function() {
         renderLogIn();
-    }, 800)
+    }, 800);
 }
 
 
 
 /**
- * Desides whether or not to fetch user information depending on the entry method.
+ * Logs the user in.
  */
 function logIn() {
-    if (checkValidation() === true) {
-        /*fetch user information*/
+    let emailInput = document.getElementById('email');
+    let passwordInput = document.getElementById('password');
+    if (checkLogInType(emailInput, passwordInput) === true) {
+        findUser(emailInput, passwordInput);
         window.location.href = 'summary.html'
     } else {
         window.location.href = 'summary.html'
     }
+}
+
+
+/**
+ * Tries to find the data from the backend that matches his login data.
+ * @param {} emailInput - Input field for email when loggin in.
+ * @param {} passwordInput - Input field for password when loggin in.
+ */
+function findUser(emailInput, passwordInput) {
+    let user = users.find(u => u.email === emailInput.value && u.password === passwordInput.value);
 }
 
 
@@ -183,9 +195,7 @@ function setUpGuestLogIn() {
  * Checks whether or not the form validtion is on.
  * @returns True if form validation is on and false if form validation is off.
  */
-function checkValidation() {
-    let emailInput = document.getElementById('email');
-    let passwordInput = document.getElementById('password');
+function checkLogInType(emailInput, passwordInput) {
     if (emailInput.hasAttribute('required') === true && passwordInput.hasAttribute('required') === true) {
         return true
     } else {
@@ -243,11 +253,9 @@ function signUpFormTemplate() {
                 </form>
             </div>
         </div>
-        <div id="confirmation-wrapper">
-            
-        </div>
+        <div id="confirmation-wrapper"></div>
         <p id="sign-up-confirmation" class="confirmation-message">
-                You signed up successfully
-            </p>
+            You signed up successfully
+        </p>
     `;
 }
