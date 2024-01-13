@@ -25,31 +25,39 @@
     </div>
     <div id="addContactOverlay">
         <div id="addContactPopUp">
+            <button id="closeAddContactButton" type="button" onclick="closePopUp()">
+                <img src="/assets/img/cancel_dark.png" alt="close icon">
+            </button>
             <div id="addContactLeft">
                 <img id="addContactPopUpImage" src="/assets/img/join-logo.png" alt="join logo">
                 <p id="addContactHeadline">Add contact</p>
                 <p id="addContactHeadlineText">Tasks are better with a team!</p>
                 <div id="addContactHeaderLine"></div>
             </div>
+            <img id="addContactEmptyProfile" src="/assets/img/new-contact-icon.png" alt="new contact icon">
             <div id="addContactRight">
-                <img src="/assets/img/new-contact-icon.png" alt="new contact icon">
-                <div>
-                    <button type="button" onclick="closePopup()"><img src="/assets/img/cancel_dark.png" alt="close icon"></button>
-                    <form id="addContactForm">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
-
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-
-                        <label for="phone">Phone:</label>
-                        <input type="tel" id="phone" name="phone" required>
-                        <div>
-                            <button type="button" id="cancelButton">Cancel <img src="/assets/img/cancel_dark.png" alt="cancel icon"></button>
-                            <button id="saveButton" type="button" onclick="saveContact()">Save Contact</button>
+                <form id="addContactForm" onsubmit="createContact(); return false;">
+                    <div class="contactFormInput">
+                        <div class="contactInputFields">
+                            <input type="text" id="name" name="name" placeholder="Name" required>
+                            <img src="/assets/img/person.png" alt="profile icon">
                         </div>
-                    </form>
-                </div>
+                        <div class="contactInputFields">
+                            <input type="email" id="email" name="email" placeholder="Email" required>
+                            <img src="/assets/img/mail.png" alt="email icon">
+                        </div>
+                        <div class="contactInputFields">
+                            <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+                            <img src="/assets/img/phone-icon.png" alt="phone icon">
+                        </div>
+                    </div>
+                    <div class="contactFormButtons">
+                        <button id="cancelButton" type="button" onclick="closePopUp()">Cancel <img
+                                src="/assets/img/cancel_dark.png" alt="cancel icon"></button>
+                        <button id="saveButton" type="button" onclick="createContact()">Create Contact <img
+                                src="/assets/img/check.png" alt="confirm icon"></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

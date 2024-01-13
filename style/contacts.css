@@ -69,7 +69,7 @@
 
 #addContactButton:hover {
     cursor: pointer;
-    background-color: #395274;
+    background-color: #29ABE2;
 }
 
 .contactItem {
@@ -260,19 +260,15 @@
     cursor: pointer;
     /* background-color: rgb(232, 229, 229); */
     border-radius: 10px;
-}
-
-.contactEditButton:hover img,
-.contactDeleteButton:hover img {
     filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
 }
 
 .contactEditButton:hover p,
 .contactDeleteButton:hover p {
-    color: #00abe8;
     font-weight: 700;
     font-size: 19px;
     line-height: 19.2px;
+    filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
 }
 
 .contactInformation {
@@ -288,12 +284,25 @@
     line-height: 19.2px;
 }
 
+.phoneDetails a{
+    text-decoration: none;
+    color: black;
+}
+
 .emailDetails a {
     text-decoration: none;
     color: #007CEE;
     font-size: 16px;
     font-weight: 400;
     line-height: 19.2px;
+}
+
+.phoneDetails:hover {
+    text-decoration: underline;
+}
+
+.emailDetails:hover{
+    text-decoration: underline #007CEE;
 }
 
 /* PopUp for adding contact */
@@ -313,22 +322,50 @@
 
 #addContactPopUp {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: #fff;
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    height: 594px;
+    height: 592px;
+    width: 80%;
+    max-width: 1212px;
+}
+
+#closeAddContactButton {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    right: 13%;
+    top: 13%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+#closeAddContactButton:hover{
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
 }
 
 #addContactLeft{
     background-color: #2b3647;
     padding: 66px 48px 66px 48px;
     width: 467px;
+    height: 100%;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: center;
+}
+
+#addContactEmptyProfile{
+    width: 120px;
+    height: 120px;
 }
 
 #addContactPopUpImage {
@@ -365,10 +402,108 @@
 
 #addContactRight{
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 #addContactForm{
     display: flex;
     flex-direction: column;
+    top: 137px;
+    margin-right: 32px;
+    width: 422px;
+}
+
+.contactFormInput{
+    height: 215px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contactInputFields ::placeholder{
+    color:#D1D1D1;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.contactInputFields{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    padding: 13px 21px 13px 21px;
+    gap: 10px;
+}
+
+.contactInputFields input{
+    border: none;
+    outline: none;
+    height: 100%;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+}
+
+.contactInputFields img{
+    height: 24px;
+    width: 24px;
+}
+
+.contactFormButtons{
+    position: relative;
+    display: flex;
+    width: 364px;
+    height: 57px;
+    gap: 24px;
+    margin-top: 10%;
+}
+
+#cancelButton{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    border: 1px solid #2b3647;
+    padding: 16px;
+    border-radius: 10px;
+    width: 126px;
+    height: 56px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+#cancelButton:hover{
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
+}
+
+#cancelButton img,
+#saveButton img{
+    height: 24px;
+    width: 24px;
+}
+
+#saveButton{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    color: white;
+    width: 214px;
+    background-color: #2b3647;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+}
+
+#saveButton:hover{
+    cursor: pointer;
+    background-color: #29ABE2;
 }
