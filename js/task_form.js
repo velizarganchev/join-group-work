@@ -72,7 +72,10 @@ function changeColorOfPrio(Prio, i){
     changeImgOfPrio(Prio);
 }
 
-function getAllInputs(){
+/**
+ * collects the values of all inputs
+ */
+function getAllInputs(){ // Json auslagern -> funktioniert nicht..
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = document.getElementById('assignedToSelect').value;
@@ -91,15 +94,69 @@ function getAllInputs(){
         token: STORAGE_TOKEN
     }
     creatingJson(task);
+    clearForm();
+    confirmTheCreationOfATask();   
 }
 
+/**
+ * safes the Json in an Array called "allTasks"
+ * @param {Json} task - contains the safed Json
+ */
 function creatingJson(task){
     allTasks.push(task);
-    
-    safeAllTasksToStorage('AllTasks',allTasks);
+    // safeAllTasksToStorage('AllTasks',allTasks);
 }
 
+/**
+ * safes the JsonArray in the backend
+ * @param {string} key - the key of the safed data
+ * @param {Json} value - the safed value as Json
+ * @returns 
+ */
 async function safeAllTasksToStorage(key, value){
     const payload = {key, value, token: STORAGE_TOKEN};
     return fetch(STORAGE_URL, {method:'POST', body: JSON.stringify(payload)});
+}
+
+/**
+ * empties all input-fields
+ */
+function clearForm(){
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('assignedToSelect').value = '';;
+    document.getElementById('date').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('subtask').value = '';
+    resetPrio();
+}
+
+/**
+ * This function creates an overlay for confirmation that a task was created successfully
+ */
+function confirmTheCreationOfATask(){
+    document.getElementById('Content').innerHTML += `
+    <div id="confirmationContent" class="confirmationContent">
+        <div class="fly-in">
+            <h1 class="addTaskHeadline">The task was created successfully!</h1>
+        </div>
+        <button type="button" class="createTaskButton hover" onclick="addAnotherTask()">add another task</button>
+        <br>
+        <button type="button" class="createTaskButton hover" onclick="backToBoard()">back to board</button>
+    </div>
+    `;
+}
+
+/**
+ * leads the user to board.html
+ */
+function backToBoard(){
+    location.href="board.html";
+}
+
+/**
+ * leads the user to "add_task.html"
+ */
+function addAnotherTask(){
+    location.href="add_task.html";
 }

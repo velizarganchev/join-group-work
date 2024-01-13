@@ -282,7 +282,7 @@ function renderContactDetails(contact) {
             <p><b>Email</b></p>
             <div class="emailDetails"><a href="mailto:${contact.email}">${contact.email}</a></div>
             <p><b>Phone</b></p>
-            <div class="phoneDetails">${contact.phone}</div>
+            <div class="phoneDetails"><a href="tel:${contact.phone}">${contact.phone}</a></div>
         </div>
   `;
 
@@ -294,16 +294,27 @@ function renderContactDetails(contact) {
 
 /**
  * Opens the pop-up for adding a new contact.
+ * 
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
  */
 function addContact() {
     const addContactOverlay = document.getElementById("addContactOverlay");
-    const addContactPopUp = document.getElementById("addContactPopUp");
+
+    let name = document.getElementById("name");
+    let email = document.getElementById("email");
+    let phone = document.getElementById("phone");
+
+    name.value = "";
+    email.value = "";
+    phone.value = "";
 
     addContactOverlay.style.display = "flex";
 
     addContactOverlay.addEventListener("click", function(event) {
         if (event.target === addContactOverlay) {
-            closePopup();
+            closePopUp();
         }
     });
 }
@@ -312,7 +323,7 @@ function addContact() {
 /**
  * Closes the pop-up.
  */
-function closePopup() {
+function closePopUp() {
     document.getElementById("addContactOverlay").style.display = "none";
 }
 
@@ -324,7 +335,7 @@ function closePopup() {
  * @param {string} email - The email of the contact.
  * @param {string} phone - The phone number of the contact.
  */
-function saveContact() {
+function createContact() {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let phone = document.getElementById("phone").value;
@@ -336,7 +347,7 @@ function saveContact() {
         color: generateRandomColor(),
     });
 
-    closePopup();
+    closePopUp();
 
     renderContactBook();
 }
