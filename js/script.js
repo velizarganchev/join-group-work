@@ -9,7 +9,7 @@ let tasks = [
         date: new Date().getTime(),
         priority: 'Medium',
         subtasks: 2,
-        subtasksProgress: 2,
+        subtasksProgress: 0,
         category: 'User Story',
         colum: 'todo',
         contacts: [
@@ -34,7 +34,53 @@ let tasks = [
         subtasks: 4,
         subtasksProgress: 1,
         category: 'User Story',
-        colum: 'todo',
+        colum: 'in-progress',
+        contacts: [
+            {
+                name: 'Gerd',
+                lastName: 'Mayer',
+                color: 'red'
+            },
+            {
+                name: 'Maria',
+                lastName: 'Schulz',
+                color: 'sandybrown'
+            }
+        ],
+    },
+    {
+        id: 3,
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation',
+        date: new Date().getTime(),
+        priority: 'Medium',
+        subtasks: 4,
+        subtasksProgress: 3,
+        category: 'User Story',
+        colum: 'in-progress',
+        contacts: [
+            {
+                name: 'Gerd',
+                lastName: 'Mayer',
+                color: 'red'
+            },
+            {
+                name: 'Maria',
+                lastName: 'Schulz',
+                color: 'sandybrown'
+            }
+        ],
+    },
+    {
+        id: 4,
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation',
+        date: new Date().getTime(),
+        priority: 'Medium',
+        subtasks: 2,
+        subtasksProgress: 1,
+        category: 'User Story',
+        colum: 'await-feedback',
         contacts: [
             {
                 name: 'Gerd',

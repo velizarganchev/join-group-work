@@ -6,38 +6,69 @@
 async function renderTasks(tasks) {
     let allTasks = await getItem('AllTasks');
     let todoColumn = document.getElementById('todo');
-
+    let inProgressColumn = document.getElementById('in-progress');
+    let awaitFeedbackColumn = document.getElementById('await-feedback');
+    let doneColumn = document.getElementById('done');
     if (allTasks) {
         tasks.forEach(task => {
             if (task.colum === 'todo') {
-                const cardId = `card${task.id}`;
-                todoColumn.innerHTML += /*html*/`
-                    <div class="card-container" id="${cardId}">
-                    <button class="card-label">${task.category}</button>
-                    <h3 class="card-title">${task.title}</h3>
-                    <p class="card-content">${task.description}</p>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar">
-                            <div class="progress-done" id="progress${task.id}"></div>
-                        </div>
-                        <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks} Subtasks</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="profiles" id="tasksProfiles${task.id}">
-                        </div>
-                        <div class="priority-container">
-                            <img src="../assets/img/board/prio-media.svg" alt="Priority Icon">
-                        </div>
-                    </div>
-                    </div>
-                `;
-                if (task.subtasks > 0) {
-                    setProgressSubtasks(task)
-                }
-                generateContactsHtml(task.contacts, task.id);
+                renderCard(task, todoColumn);
+            } else if (task.colum === 'in-progress') {
+                renderCard(task, inProgressColumn);
+            } else if (task.colum === 'await-feedback') {
+                renderCard(task, awaitFeedbackColumn);
+            } else if (task.colum === 'done') {
+                renderCard(task, doneColumn);
             }
+            if (task.subtasks > 0) {
+                setProgressSubtasks(task)
+            }
+            generateContactsHtml(task.contacts, task.id);
         });
     }
+}
+
+
+/**
+ * Generates the HTML for a task card.
+ *
+ * @param {string} cardId - The unique identifier for the card.
+ * @param {Object} task - The task object containing information to be displayed on the card.
+ * @returns {string} - The HTML string representing the task card.
+ */
+function generateCardHtml(cardId, task) {
+    return /*html*/ `
+        <div class="card-container" id="${cardId}">
+            <button class="card-label">${task.category}</button>
+            <h3 class="card-title">${task.title}</h3>
+            <p class="card-content">${task.description}</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-done" id="progress${task.id}"></div>
+                </div>
+                <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks} Subtasks</p>
+            </div>
+            <div class="card-footer">
+                <div class="profiles" id="tasksProfiles${task.id}">
+                </div>
+                <div class="priority-container">
+                    <img src="../assets/img/board/prio-media.svg" alt="Priority Icon">
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+/**
+ * Renders a task card and appends it to the specified column element.
+ *
+ * @param {Object} task - The task object to be rendered.
+ * @param {HTMLElement} column - The column element where the card will be appended.
+ */
+function renderCard(task, column) {
+    // Append the generated HTML for the task card to the specified column
+    column.innerHTML += generateCardHtml(`card${task.id}`, task);
 }
 
 
@@ -83,6 +114,7 @@ function generateContactsHtml(contacts, id) {
         `;
     }
 }
+
 
 /**
  * Extracts the first letters of names and last names from an array of contacts.
