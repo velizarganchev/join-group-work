@@ -67,7 +67,7 @@
 }
 
 ::placeholder{
-    color: var(--Style, #D1D1D1);
+    color:  #D1D1D1;
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-style: normal;
@@ -139,7 +139,7 @@
 }
 
 .requiredText{
-    margin-top:223px;
+    margin-top:73px;
     display:flex;
     color: #000;
     font-family: 'Inter', sans-serif;
@@ -201,7 +201,7 @@
     cursor:pointer;
 }
 
-.arrowdown { 
+.arrowdown{ 
     /* for Firefox */ 
     -moz-appearance: none; 
     /* for Safari, Chrome, Opera */ 
@@ -209,11 +209,23 @@
     background: url('/assets/img/arrow_down.png') no-repeat scroll 96% 50%;
   } 
 
+  .arrowup{
+    /* for Firefox */ 
+    -moz-appearance: none; 
+    /* for Safari, Chrome, Opera */ 
+    -webkit-appearance: none; 
+    background: url('/assets/img/arrow_up.png') no-repeat scroll 96% 50%;
+} 
+
 /* Ersetzt den Kalender in dem Input */
   input[type="date"]::-webkit-inner-spin-button,
   input[type="date"]::-webkit-calendar-picker-indicator {
     background: url('/assets/img/event.png') no-repeat scroll 96% 50%;
       -webkit-appearance: none;
+  }
+
+  .date{
+    color:black;
   }
 
   .confirmationContent{
@@ -228,4 +240,76 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(255,255,255,0.9);
+  }
+
+  .ContainerForAllChosenContacts{
+    height:150px;
+  }
+
+  .ContainerForAllPossibleContacts{
+    position:absolute;
+    top:635px;
+    width:440px;
+    height:200px;
+    overflow-y: scroll;
+  }
+
+.d-none{
+    display:none;
+}
+
+.contact{
+    padding:4px;
+    display:flex;
+    align-items:center;
+}
+
+.contact:hover{
+    background-color:rgba(240,240,240,1)
+}
+
+.circle{
+    border-radius:180px;
+    height:40px;
+    width:40px;
+    margin-right:20px;
+    text-align:center;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.ContentContacts{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.checkboxes{
+    margin-right:50px;
+    height:20px;
+    width:20px;
+}
+
+::-webkit-scrollbar {
+    width:10px;
+  }
+
+::-webkit-scrollbar-thumb {
+    border-radius:20px;
+    background-color:gray;
+    width:10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius:20px;
+    width:10px;
+  }
+
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image: url('/assets/img/arrow_up.png');
+  }
+  
+  ::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image: url('/assets/img/arrow_down.png');
   }

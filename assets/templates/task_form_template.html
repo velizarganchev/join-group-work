@@ -31,11 +31,13 @@
                     </div>
                 </div>
                 <div class="Subcontent">
-                    <select id="assignedToSelect" class="selection hover arrowdown" value="Select contacts to assign" onclick="changeImageSource(assignedToSelect, url)">
-                        <option class="selectionOption" value="">Select contacts to assign</option>
-                        <option class="selectionOption">1</option>
-                        <option class="selectionOption">2</option>
-                    </select>
+                    <input id="assignedToSelect" class="selection hover arrowdown" value="Select contacts to assign" onclick=" getAllContacts('assignedToSelect')">
+                    <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts">
+                        
+                    </div>
+                    <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts d-none">
+                        
+                    </div>
                 </div>
             </div>
             <div id="requiredText" class="requiredText">
@@ -57,7 +59,7 @@
                     </div>
                 </div>
                 <div class="Subcontent">
-                    <input required id="date" type="date" class="Inputfield"  placeholder="dd/mm/yyyy">
+                    <input required id="date" type="date" class="Inputfield"  pattern="">
                 </div>
             </div>
             <div id="PrioContent">
@@ -91,7 +93,7 @@
                         </div>
                 </div>
                 <div class="Subcontent">
-                    <select required id="category" class="selection hover arrowdown" value="Select task category">
+                    <select required id="category" class="selection hover arrowdown" onclick="getAllCategories('category')" value="Select task category">
                         <option class="selectionOption" value="">Select contacts to assign</option>
                         <option class="selectionOption">1</option>
                         <option class="selectionOption">2</option>
@@ -104,11 +106,16 @@
                 </div>
                 <div class="Subcontent">
                     <input id="subtask" class="Inputfield subtasks" placeholder="Add new subtask">
+                    <div >
+                        <ul id="subTaskList">
+
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="buttons">
                 <button type ="reset" class="cancelButton hover" onclick="resetPrio()">Clear <img src="/assets/img/cancel_dark.png"></button>
-                <button class="createTaskButton hover">Create Task <img src="/assets/img/confirm.png"></button>
+                <button id="addTastButton" class="createTaskButton hover">Create Task <img src="/assets/img/confirm.png"></button>
             </div>
         </div>
     </form>
