@@ -59,10 +59,12 @@
             </div>
         </div>
         <div class="board-distribution-container" id="board-distribution">
-            <div class="board-distribution-colum" id="todo"></div>
-            <div class="board-distribution-colum" id="in-progress"></div>
-            <div class="board-distribution-colum" id="await-feedback"></div>
-            <div class="board-distribution-colum" id="done"></div>
+            <div class="board-distribution-colum" id="todo" ondrop="moveTo('todo')" ondragover="allowDrop(event)"></div>
+            <div class="board-distribution-colum" id="in-progress" ondrop="moveTo('in-progress')"
+                ondragover="allowDrop(event)"></div>
+            <div class="board-distribution-colum" id="await-feedback" ondrop="moveTo('await-feedback')"
+                ondragover="allowDrop(event)"></div>
+            <div class="board-distribution-colum" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
         </div>
     </section>
 </body>

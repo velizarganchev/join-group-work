@@ -91,7 +91,9 @@ let tasks = [
             }
         ],
     }
-]
+];
+let columns;
+let currentDraggedElement;
 
 /**
  * Renders tasks in the 'todo' column.
@@ -100,7 +102,7 @@ let tasks = [
  */
 async function renderTasks() {
     let allTasks = await getItem('AllTasks');
-    let columns = document.getElementById('board-distribution').children;
+    columns = document.getElementById('board-distribution').children;
     let todoColumn = document.getElementById('todo');
     let inProgressColumn = document.getElementById('in-progress');
     let awaitFeedbackColumn = document.getElementById('await-feedback');
@@ -124,6 +126,52 @@ async function renderTasks() {
         });
     }
     iterateByEachColumn(columns);
+}
+
+
+/**
+ * Handles the 'dragover' event to allow dropping elements.
+ *
+ * @param {Event} ev - The dragover event.
+ */
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+
+/**
+ * Initiates the drag operation for a specific element.
+ *
+ * @param {number} id - The unique identifier of the dragged element.
+ */
+function startDragging(id) {
+    currentDraggedElement = id;
+}
+
+
+/**
+ * Moves the dragged element to a new column.
+ *
+ * @param {string} columnId - The unique identifier of the target column.
+ */
+function moveTo(columnId) {
+    // Update the column value for the dragged task
+    tasks[currentDraggedElement - 1]['colum'] = columnId;
+    // Clear all columns before re-rendering
+    clearAllColumns();
+    // Re-render tasks after moving
+    renderTasks();
+}
+
+
+/**
+ * Clears the content of all columns.
+ */
+function clearAllColumns() {
+    for (let i = 0; i < columns.length; i++) {
+        const element = columns[i];
+        element.innerHTML = '';
+    }
 }
 
 
@@ -161,7 +209,7 @@ function checkColumnForTasks(column) {
  */
 function generateCardHtml(cardId, task) {
     return /*html*/ `
-        <div class="card-container" id="${cardId}">
+        <div class="card-container" draggable="true" ondragstart="startDragging(${task.id})" id="${cardId}">
             <button class="card-label">${task.category}</button>
             <h3 class="card-title">${task.title}</h3>
             <p class="card-content">${task.description}</p>
