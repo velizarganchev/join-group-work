@@ -333,11 +333,7 @@ function closePopUp() {
 
 
 /**
- * Saves a new contact and closes the pop-up.
- * 
- * @param {string} name - The name of the contact.
- * @param {string} email - The email of the contact.
- * @param {string} phone - The phone number of the contact.
+ * Function for adding new contact
  */
 function createContact() {
     let name = document.getElementById("name").value;
@@ -358,7 +354,7 @@ function createContact() {
             color: generateRandomColor(),
         });
 
-        closePopUp();
+        closePopUpWithConfirmation();
 
         saveButton.disabled = false;
 
@@ -366,7 +362,7 @@ function createContact() {
         saveButton.style.justifyContent = 'space-between';
 
         renderContactBook();
-    }, 2000);
+    }, 1000);
 }
 
 
@@ -377,4 +373,24 @@ function createContact() {
 function generateRandomColor() {
     const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
     return randomColor;
+}
+
+/**
+ * Displays a confirmation message and hides it after 2 seconds.
+ */
+function showConfirmationMessage() {
+    const confirmationMessage = document.getElementById("confirmationMessage");
+    confirmationMessage.style.display = "flex";
+    
+    setTimeout(function () {
+        confirmationMessage.style.display = "none";
+    }, 2500);
+}
+
+/**
+ * Closes the pop-up and shows the confirmation message.
+ */
+function closePopUpWithConfirmation() {
+    closePopUp();
+    showConfirmationMessage();
 }

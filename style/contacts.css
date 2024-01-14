@@ -525,3 +525,34 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.confirmationMessage {
+    display: none;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    right: -100%;
+    width: 326px;
+    height: 74px;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    background-color: #2A3647;
+    color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    animation: slideInRight 500ms ease-in-out forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        right: -100%;
+    }
+    to {
+        right: 25%;
+    }
+}
