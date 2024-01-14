@@ -93,7 +93,6 @@ let tasks = [
     }
 ]
 
-
 /**
  * Renders tasks in the 'todo' column.
  *
@@ -101,10 +100,12 @@ let tasks = [
  */
 async function renderTasks() {
     let allTasks = await getItem('AllTasks');
+    let columns = document.getElementById('board-distribution').children;
     let todoColumn = document.getElementById('todo');
     let inProgressColumn = document.getElementById('in-progress');
     let awaitFeedbackColumn = document.getElementById('await-feedback');
     let doneColumn = document.getElementById('done');
+
     if (allTasks) {
         tasks.forEach(task => {
             if (task.colum === 'todo') {
@@ -121,6 +122,32 @@ async function renderTasks() {
             }
             generateContactsHtml(task.contacts, task.id);
         });
+    }
+    iterateByEachColumn(columns);
+}
+
+
+/**
+ * Iterates through an array of columns and checks each column for tasks. If a column has no tasks, a no tasks card is generated and appended.
+ *
+ * @param {Array<HTMLElement>} columns - An array of column elements to iterate through.
+ */
+function iterateByEachColumn(columns) {
+    for (let i = 0; i < columns.length; i++) {
+        let el = columns[i];
+        checkColumnForTasks(el);
+    }
+}
+
+
+/**
+ * Checks if a column has child nodes (tasks). If not, generates and appends HTML for a no tasks card.
+ *
+ * @param {HTMLElement} column - The column element to check for tasks.
+ */
+function checkColumnForTasks(column) {
+    if (!column.hasChildNodes()) {
+        column.innerHTML = generateNoTaskHtml();
     }
 }
 
@@ -151,6 +178,20 @@ function generateCardHtml(cardId, task) {
                     <img src="../assets/img/board/prio-media.svg" alt="Priority Icon">
                 </div>
             </div>
+        </div>
+    `;
+}
+
+
+/**
+ * Generates the HTML for a no tasks card.
+ *
+ * @returns {string} - The HTML string representing the container.
+ */
+function generateNoTaskHtml() {
+    return /*html*/ `
+        <div class="no-task-card-container">
+            <h3>No tasks To do</h3>
         </div>
     `;
 }
@@ -204,7 +245,7 @@ function generateContactsHtml(contacts, id) {
     let profiles = document.getElementById(`tasksProfiles${id}`);
     let onlyFirstLetter = takeFirstLetters(contacts);
     for (let i = 0; i < onlyFirstLetter.length; i++) {
-        const element = onlyFirstLetter[i];
+        let element = onlyFirstLetter[i];
         profiles.innerHTML += `
             <div class="profile" style="background-color: ${contacts[i].color};">${element}</div>
         `;

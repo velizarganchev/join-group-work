@@ -352,7 +352,6 @@ function createContact() {
     });
 
     closePopUp();
-
     renderContactBook();
 }
 
