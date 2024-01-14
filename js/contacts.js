@@ -261,6 +261,7 @@ function toggleSelectedClass(contactItemId) {
  */
 function renderContactDetails(contact) {
   const contactDetailsView = document.getElementById("contactDetailsView");
+  contactDetailsView.innerHTML = "";
 
   const contactDetailsHTML = `
         <div class="contactDetailsName">
@@ -342,7 +343,6 @@ function createContact() {
     let saveButton = document.getElementById("saveButton");
 
     saveButton.disabled = true;
-
     saveButton.style.justifyContent = 'center';
     saveButton.innerHTML = '<div class="loader"></div>';
 
@@ -357,11 +357,18 @@ function createContact() {
         closePopUpWithConfirmation();
 
         saveButton.disabled = false;
-
         saveButton.innerHTML = 'Create Contact <img src="/assets/img/check.png" alt="confirm icon">';
         saveButton.style.justifyContent = 'space-between';
 
         renderContactBook();
+
+        const sortedContacts = sortContactsAlphabetically();
+        const newIndex = sortedContacts.findIndex(contact =>
+            contact.name === name && contact.email === email && contact.phone === phone
+        );
+
+        const contactItemId = `contactItem_${newIndex}`;
+        showContactDetails(contactItemId);
     }, 1000);
 }
 
@@ -375,6 +382,7 @@ function generateRandomColor() {
     return randomColor;
 }
 
+
 /**
  * Displays a confirmation message and hides it after 2 seconds.
  */
@@ -386,6 +394,7 @@ function showConfirmationMessage() {
         confirmationMessage.style.display = "none";
     }, 2500);
 }
+
 
 /**
  * Closes the pop-up and shows the confirmation message.
