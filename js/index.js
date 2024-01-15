@@ -18,7 +18,7 @@ async function initEntry() {
 async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));
-    } catch(error) {
+    } catch {
         console.info('Unable to load users');
     }
 }

@@ -7,6 +7,7 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
  * @param {string} id - Id of the current navigation item which is supposed to be highlighted.
  */
 async function init(id) {
+    await loadTasks();
     await includeHTML();
     changeNavigationHighlight(id);
 }
@@ -139,6 +140,15 @@ function checkLogInStatus() {
 
 
 /**
+ * Sets the current username in the session storage.
+ * @param {string} username - The currently loggin in user's username.
+ */
+function setCurrentUsername(username) {
+    sessionStorage.setItem('current-username', username);
+}
+
+
+/**
  * Gets the current username from session storage.
  * @returns Item with the key "current-username" from session storage.
  */
@@ -149,9 +159,8 @@ function getCurrentUsername() {
 
 
 /**
- * Sets the current username in the session storage.
- * @param {string} username - The currently loggin in user's username.
+ * Loads the saved tasks from the backend.
  */
-function setCurrentUsername(username) {
-    sessionStorage.setItem('current-username', username);
+async function loadTasks() {
+    allTasks = JSON.parse(await getItem('AllTasks'));
 }
