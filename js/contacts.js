@@ -94,30 +94,41 @@ async function initContacts() {
  * Renders contact overview section
  */
 function renderContactBook() {
-  const contactOverview = document.getElementById("contactOverviewContent");
-  const sortedContacts = sortContactsAlphabetically();
-  let currentAlphabetLetter = null;
-
-  contactOverview.innerHTML = "";
-  contactOverview.innerHTML = `<button id="addContactButton" onclick="addContact()">Add new contact <img src="/assets/img/add-contact.png"
-  alt="add contact image"></button>`;
-
-  for (let i = 0; i < sortedContacts.length; i++) {
-    const contact = sortedContacts[i];
-    const contactFirstLetter = contact.name.charAt(0).toUpperCase();
-    handleLetterChange(currentAlphabetLetter, contactFirstLetter, contactOverview);
-    currentAlphabetLetter = contactFirstLetter;
-
-    const circleStyle = `background-color: ${contact.color};`;
-    const circleClass = `circle-${contact.name.charAt(0).toUpperCase()}`;
-    const nameParts = contact.name.split(" ");
-    const contactInitials = calculateContactInitials(nameParts);
-
-    renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, i);
+    const contactOverview = document.getElementById("contactOverviewContent");
+    const sortedContacts = sortContactsAlphabetically();
+    let currentAlphabetLetter = null;
+  
+    contactOverview.innerHTML = "";
+    contactOverview.innerHTML = renderAddContactButton();
+  
+    for (let i = 0; i < sortedContacts.length; i++) {
+      const contact = sortedContacts[i];
+      const contactFirstLetter = contact.name.charAt(0).toUpperCase();
+      handleLetterChange(currentAlphabetLetter, contactFirstLetter, contactOverview);
+      currentAlphabetLetter = contactFirstLetter;
+  
+      const circleStyle = `background-color: ${contact.color};`;
+      const circleClass = `circle-${contact.name.charAt(0).toUpperCase()}`;
+      const nameParts = contact.name.split(" ");
+      const contactInitials = calculateContactInitials(nameParts);
+  
+      renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, i);
+    }
+  
+    handleLastLetter(currentAlphabetLetter, contactOverview);
   }
 
-  handleLastLetter(currentAlphabetLetter, contactOverview);
-}
+  /**
+   * Generates HTML for the "Add new contact" button.
+   */
+function renderAddContactButton() {
+    const addContactButtonHTML = `
+      <button id="addContactButton" onclick="addContact()">
+        Add new contact <img src="/assets/img/add-contact.png" alt="add contact image">
+      </button>
+    `;
+    return addContactButtonHTML;
+  }
 
 
 /**
@@ -159,7 +170,7 @@ function handleLetterChange(currentAlphabetLetter, newLetter, contactOverview) {
 function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, index) {
   const contactItemId = `contactItem_${index}`;
   const contactItemHTML = `
-        <div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}')">
+        <div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}', true)">
             <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
             <div class="contactDetails">
                 <div class="contactNameInOverview">${contact.name}</div>
@@ -178,9 +189,7 @@ function renderContactItem(contactOverview, circleStyle, circleClass, contactIni
  * @returns {string} - The calculated initials.
  */
 function calculateContactInitials(nameParts) {
-  return `${nameParts[0].charAt(0)}${nameParts[nameParts.length - 1].charAt(
-    0
-  )}`;
+  return `${nameParts[0].charAt(0)}${nameParts[nameParts.length - 1].charAt(0)}`;
 }
 
 
@@ -224,56 +233,86 @@ function handleLastLetter(currentAlphabetLetter, contactOverview) {
  * Shows contact details and renders them in the 'contactDetailsView' div.
  *
  * @param {string} contactItemId - The ID of the contact item.
+ * @param {boolean} toEdit - True, wenn der Bearbeitungsmodus aktiviert ist.
  */
-function showContactDetails(contactItemId) {
+function showContactDetails(contactItemId, toEdit) {
     toggleSelectedClass(contactItemId);
-
+  
     let sortedIndex = parseInt(contactItemId.split('_')[1]);
     let selectedContact = sortContactsAlphabetically()[sortedIndex];
-
-    renderContactDetails(selectedContact);
-}
+  
+    renderContactDetails(selectedContact, toEdit);
+  }
 
 
 /**
- * Toggles the 'selectedContact' class for the clicked contact item and removes it from other items.
+ * Toggles the 'selectedContact' class for the clicked contact item and
+ * handles the corresponding actions like displaying or hiding contact details.
  *
  * @param {string} contactItemId - The ID of the contact item.
  */
 function toggleSelectedClass(contactItemId) {
-  let clickedItem = document.getElementById(contactItemId);
-  let contactDetailsView = document.getElementById("contactDetailsView");
-  let isSelected = clickedItem.classList.toggle("selectedContact");
+    const clickedItem = document.getElementById(contactItemId);
+    const contactDetailsView = document.getElementById("contactDetailsView");
+    const isSelected = clickedItem.classList.toggle("selectedContact");
 
-  if (isSelected) {
-    let sortedIndex = parseInt(contactItemId.split('_')[1]);
-    let selectedContact = sortContactsAlphabetically()[sortedIndex];
-    renderContactDetails(selectedContact);
-    contactDetailsView.style.display = "block";
-  } else {
-    contactDetailsView.style.display = "none";
-  }
-
-  let contactItems = document.querySelectorAll(".contactItem");
-  for (let i = 0; i < contactItems.length; i++) {
-    const item = contactItems[i];
-    if (item !== clickedItem) {
-      item.classList.remove("selectedContact");
+    if (isSelected) {
+        showSelectedContactDetails(clickedItem);
+    } else {
+        hideContactDetails(contactDetailsView);
     }
-  }
+
+    unselectOtherContactItems(clickedItem);
 }
 
+/**
+ * Shows details of the selected contact.
+ *
+ * @param {HTMLElement} clickedItem - The clicked contact item.
+ */
+function showSelectedContactDetails(clickedItem) {
+    const sortedIndex = parseInt(clickedItem.id.split('_')[1]);
+    const selectedContact = sortContactsAlphabetically()[sortedIndex];
+    renderContactDetails(selectedContact);
+    document.getElementById("contactDetailsView").style.display = "block";
+}
 
 /**
- * Renders the contact details in the 'contactDetailsView' div.
+ * Hides the contact details view.
+ *
+ * @param {HTMLElement} contactDetailsView - The contact details view element.
+ */
+function hideContactDetails(contactDetailsView) {
+    contactDetailsView.style.display = "none";
+}
+
+/**
+ * Unselects the 'selectedContact' class from other contact items.
+ *
+ * @param {HTMLElement} clickedItem - The clicked contact item.
+ */
+function unselectOtherContactItems(clickedItem) {
+    const contactItems = document.querySelectorAll(".contactItem");
+    contactItems.forEach(item => {
+        if (item !== clickedItem) {
+            item.classList.remove("selectedContact");
+        }
+    });
+}
+
+  
+
+/**
+ * Renders the detailed view of a contact, including name, buttons, and contact information.
  *
  * @param {Object} contact - The contact information.
+ * @param {boolean} toEdit - True if in edit mode.
  */
-function renderContactDetails(contact) {
-  const contactDetailsView = document.getElementById("contactDetailsView");
-  contactDetailsView.innerHTML = "";
+function renderContactDetails(contact, toEdit) {
+    const contactDetailsView = document.getElementById("contactDetailsView");
+    contactDetailsView.innerHTML = "";
 
-  const contactDetailsHTML = `
+    const contactDetailsHTML = `
         <div class="contactDetailsName">
             <div class="circle circleInDetailView" style="background-color: ${contact.color};">
                 ${calculateContactInitials(contact.name.split(" "))}
@@ -281,14 +320,7 @@ function renderContactDetails(contact) {
             <div class="contactDetailsNameAndButtons">
                 <div class="contactDetailsName">${contact.name}</div>
                 <div class="contactNameIcons">
-                    <div class="contactEditButton">
-                        <img class="contactDetailsNameIcons" src="/assets/img/edit-contact.png" alt="edit contact">
-                        <p>Edit</p>
-                    </div>
-                    <div class="contactDeleteButton">
-                        <img class="contactDetailsNameIcons" src="/assets/img/delete-contact.png" alt="delete contact">
-                        <p>Delete</p>
-                    </div>
+                    ${renderEditDeleteButtons()}
                 </div>
             </div>
         </div>
@@ -299,12 +331,55 @@ function renderContactDetails(contact) {
             <p><b>Phone</b></p>
             <div class="phoneDetails"><a href="tel:${contact.phone}">${contact.phone}</a></div>
         </div>
-  `;
+    `;
 
-  contactDetailsView.innerHTML = contactDetailsHTML;
+    contactDetailsView.innerHTML = contactDetailsHTML;
+
+    if (toEdit) {
+        renderEditFields(contact);
+    }
 }
 
-// Functions for adding contact
+/**
+ * Renders the edit fields with the contact's information for editing.
+ *
+ * @param {Object} contact - The contact information.
+ */
+function renderEditFields(contact) {
+    const editNameField = document.getElementById("editName");
+    const editEmailField = document.getElementById("editEmail");
+    const editPhoneField = document.getElementById("editPhone");
+
+    editNameField.value = contact.name;
+    editEmailField.value = contact.email;
+    editPhoneField.value = contact.phone;
+
+    const initialIcon = document.getElementById("iconInEditContact");
+    initialIcon.innerHTML = `
+        <div class="circle circleInDetailView" style="background-color: ${contact.color};">
+            ${calculateContactInitials(contact.name.split(" "))}
+        </div>
+    `;
+}
+
+/**
+ * Renders the buttons for editing and deleting a contact.
+ *
+ * @returns {string} - HTML for the edit and delete buttons.
+ */
+function renderEditDeleteButtons() {
+    return `
+        <div class="contactEditButton" onclick="editContact()">
+            <img class="contactDetailsNameIcons" src="/assets/img/edit-contact.png" alt="edit contact">
+            <p>Edit</p>
+        </div>
+        <div class="contactDeleteButton" onclick="deleteContact(this)">
+            <img class="contactDetailsNameIcons" src="/assets/img/delete-contact.png" alt="delete contact">
+            <p>Delete</p>
+        </div>
+    `;
+}
+
 
 
 /**
@@ -340,6 +415,7 @@ function addContact() {
  */
 function closePopUp() {
     document.getElementById("addContactOverlay").style.display = "none";
+    document.getElementById("editContactOverlay").style.display = "none";
 }
 
 
@@ -347,40 +423,75 @@ function closePopUp() {
  * Function for adding new contact
  */
 function createContact() {
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
-    let saveButton = document.getElementById("saveButton");
-
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const saveButton = document.getElementById("saveButton");
+  
+    createLoadingAnimation(saveButton);
+  
+    setTimeout(function () {
+      const newContact = {
+        name: name,
+        email: email,
+        phone: phone,
+        color: generateRandomColor(),
+      };
+  
+      addContactAndRender(newContact);
+      closePopUpWithConfirmation();
+      resetSaveButton(saveButton);
+  
+      const newIndex = findContactIndex(newContact);
+      const contactItemId = `contactItem_${newIndex}`;
+      showContactDetails(contactItemId);
+    }, 1000);
+  }
+/**
+ * Creates a loading animation for the save button, disabling it and displaying a loader.
+ *
+ * @param {HTMLElement} saveButton - The save button element.
+ */
+function createLoadingAnimation(saveButton) {
     saveButton.disabled = true;
     saveButton.style.justifyContent = 'center';
     saveButton.innerHTML = '<div class="loader"></div>';
-
-    setTimeout(function () {
-        contacts.push({
-            name: name,
-            email: email,
-            phone: phone,
-            color: generateRandomColor(),
-        });
-
-        closePopUpWithConfirmation();
-
-        saveButton.disabled = false;
-        saveButton.innerHTML = 'Create Contact <img src="/assets/img/check.png" alt="confirm icon">';
-        saveButton.style.justifyContent = 'space-between';
-
-        renderContactBook();
-
-        const sortedContacts = sortContactsAlphabetically();
-        const newIndex = sortedContacts.findIndex(contact =>
-            contact.name === name && contact.email === email && contact.phone === phone
-        );
-
-        const contactItemId = `contactItem_${newIndex}`;
-        showContactDetails(contactItemId);
-    }, 1000);
 }
+
+/**
+ * Resets the save button after loading animation, enabling it and setting the default content.
+ *
+ * @param {HTMLElement} saveButton - The save button element.
+ */
+function resetSaveButton(saveButton) {
+    saveButton.disabled = false;
+    saveButton.innerHTML = 'Create Contact <img src="/assets/img/check.png" alt="confirm icon">';
+    saveButton.style.justifyContent = 'space-between';
+}
+
+/**
+ * Adds a new contact to the contacts array and renders the contact book.
+ *
+ * @param {Object} newContact - The new contact to be added.
+ */
+function addContactAndRender(newContact) {
+    contacts.push(newContact);
+    renderContactBook();
+}
+
+/**
+ * Finds the index of a contact in the sorted contacts array.
+ *
+ * @param {Object} contactToFind - The contact to find in the array.
+ * @returns {number} - The index of the contact in the sorted array.
+ */
+function findContactIndex(contactToFind) {
+    const sortedContacts = sortContactsAlphabetically();
+    return sortedContacts.findIndex(contact =>
+        contact.name === contactToFind.name && contact.email === contactToFind.email && contact.phone === contactToFind.phone
+    );
+}
+  
 
 
 /**
@@ -402,7 +513,7 @@ function showConfirmationMessage() {
     
     setTimeout(function () {
         confirmationMessage.style.display = "none";
-    }, 2500);
+    }, 1500);
 }
 
 
@@ -410,6 +521,61 @@ function showConfirmationMessage() {
  * Closes the pop-up and shows the confirmation message.
  */
 function closePopUpWithConfirmation() {
-    closePopUp();
     showConfirmationMessage();
+    closePopUp();
+}
+
+
+/**
+ * Opens the pop-up for editing a contact.
+ * 
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ */
+function editContact() {
+    const editContactOverlay = document.getElementById("editContactOverlay");
+    editContactOverlay.style.display = "flex";
+}
+
+/**
+ * Deletes the selected contact, updates the contact book, and hides the contact details view.
+ *
+ * @param {HTMLElement} selectedContactItem - The selected contact item element.
+ */
+function deleteContact(selectedContactItem) {
+    if (selectedContactItem) {
+        const index = parseInt(selectedContactItem.id.split('_')[1]);
+        
+        contacts.splice(index, 1);
+
+        renderContactBook();
+
+        const contactDetailsView = document.getElementById("contactDetailsView");
+        const editContactOverlay = document.getElementById("editContactOverlay");
+        contactDetailsView.style.display = "none";
+        editContactOverlay.style.display = "none";
+    }
+}
+
+/**
+ * Saves the edited contact information, updates the contact book, and shows the edited contact details.
+ */
+function saveEditedContact() {
+    const editedName = document.getElementById("editName").value;
+    const editedEmail = document.getElementById("editEmail").value;
+    const editedPhone = document.getElementById("editPhone").value;
+
+    const selectedContactItem = document.querySelector(".selectedContact");
+    const index = parseInt(selectedContactItem.id.split('_')[1]);
+
+    contacts[index].name = editedName;
+    contacts[index].email = editedEmail;
+    contacts[index].phone = editedPhone;
+
+    closePopUp();
+
+    renderContactBook();
+
+    showContactDetails(selectedContactItem.id);
 }
