@@ -1,6 +1,17 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
 let allTasks = [];
 
+
+/**
+ * Initializes certain functions once the body of the page has fully loaded.
+ */
+async function initAddTask() {
+    checkLogInStatus();
+    await init('add-task');
+}
+
+
+
 /** changes the HTML back to standard (=no Prio chosen)
  * 
  */
@@ -159,4 +170,38 @@ function backToBoard(){
  */
 function addAnotherTask(){
     location.href="add_task.html";
+}
+
+function flipTheImage(id){
+    document.getElementById(`${id}`).classList.toggle('arrowdown');
+    document.getElementById(`${id}`).classList.toggle('arrowup');
+}
+
+function getAllContacts(id){
+    flipTheImage(id);
+    document.getElementById('ContainerForAllPossibleContacts').classList.toggle('d-none');
+    let contactsContainer = document.getElementById('ContainerForAllPossibleContacts');
+    contactsContainer.innerHTML = '';
+    for (let i = 0; i < contacts.length; i++){
+        let color = contacts[i]['color'];
+        let contact = contacts[i]['name'];
+        let firstLetterName = contact;
+        firstLetterName = firstLetterName.toUpperCase().slice(0,1);
+        let firstLetterLastName = contact.toUpperCase().slice(contact.lastIndexOf(' ')+1,contact.lastIndexOf(' ')+2);
+        contactsContainer.innerHTML += `
+        <div class="ContentContacts">
+            <div class="contact hover">
+                <div id="circle${i}" class="circle">${firstLetterName}${firstLetterLastName}</div>
+                <div>${contact}</div>
+            </div>
+            <div id="checkbox">
+                <input type="checkbox" id="checkboxFor${i}" class="checkboxes">
+            </div>
+        </div>`;
+        document.getElementById(`circle${i}`).style = `background-color:${color}`;
+    }
+}
+
+function getAllCategories(id){
+    flipTheImage(id);
 }

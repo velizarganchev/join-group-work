@@ -32,6 +32,11 @@ body {
     animation-fill-mode: forwards;
 }
 
+.disabled-button {
+    opacity: 0.8;
+    pointer-events: none;
+}
+
 @keyframes fly-in {
     0% {bottom: -10%}
     100% {bottom: 47%}
