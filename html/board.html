@@ -17,6 +17,7 @@
 
 <body onload="init('board'); renderTasks()">
     <div w3-include-html="/assets/templates/desktop_template.html"></div>
+    <div id="pop-up" onclick="closeTask()"></div>
     <section class="content-margin">
         <div class="board-header">
             <div class="board-header-container">
@@ -59,12 +60,15 @@
             </div>
         </div>
         <div class="board-distribution-container" id="board-distribution">
-            <div class="board-distribution-colum" id="todo" ondrop="moveTo('todo')" ondragover="allowDrop(event)"></div>
+            <div class="board-distribution-colum" id="todo" ondrop="moveTo('todo')"
+                ondragleave="removeHighlight('todo')" ondragover="allowDrop(event)"></div>
             <div class="board-distribution-colum" id="in-progress" ondrop="moveTo('in-progress')"
-                ondragover="allowDrop(event)"></div>
-            <div class="board-distribution-colum" id="await-feedback" ondrop="moveTo('await-feedback')"
-                ondragover="allowDrop(event)"></div>
-            <div class="board-distribution-colum" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
+                ondragleave="removeHighlight('in-progress')" ondragover="allowDrop(event)">
+            </div>
+            <div class="board-distribution-colum" id="await-feedback" ondrop="moveTo('await-feedback');"
+                ondragleave="removeHighlight('await-feedback')" ondragover="allowDrop(event)"></div>
+            <div class="board-distribution-colum" id="done" ondrop="moveTo('done')"
+                ondragleave="removeHighlight('done')" ondragover="allowDrop(event)"></div>
         </div>
     </section>
 </body>

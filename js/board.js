@@ -130,6 +130,117 @@ async function renderTasks() {
 
 
 /**
+ * Opens the task pop-up by setting its display style to "flex" and populates it with HTML content.
+ */
+function openTask() {
+    let taskPopUp = document.getElementById('pop-up');
+    taskPopUp.style.display = "flex";
+
+    // Populate the task pop-up with HTML content
+    taskPopUp.innerHTML = generateTaskHtml();
+}
+
+
+/**
+ * Generates HTML content for the task pop-up.
+ *
+ * @returns {string} - The HTML string representing the task pop-up content.
+ */
+function generateTaskHtml() {
+    return /*html*/ `
+        <!-- HTML content for the task pop-up -->
+        <div class="pop-up-task-container" onclick="stopPropagation(event)">
+            <!-- Pop-up header with buttons -->
+            <div class="pop-up-task-header">
+                <button class="pop-up-label">User Story</button>
+                <button class="pop-up-close-button" onclick="closeTask()">
+                    <img src="../assets/img/board/close-task.svg" alt="Close">
+                </button>
+            </div>
+            
+            <!-- Task title and subtitle -->
+            <div class="pop-up-task-title">
+                <h2>Kochwelt Page & Recipe Recommender</h2>
+            </div>
+            <div class="pop-up-task-subtitle">
+                <p>Build start page with recipe recommendation</p>
+            </div>
+            
+            <!-- Task date and priority -->
+            <div class="pop-up-task-date">
+                <span>Due date:</span>
+                <span>10/05/2024</span>
+            </div>
+            <div class="pop-up-task-priority">
+                <span>Priority:</span>
+                <button class="pop-up-task-priority-button">
+                    <span>Medium</span>
+                    <img src="../assets/img/board/pop-up-prio-media.svg" alt="">
+                </button>
+            </div>
+            
+            <!-- Assigned contacts -->
+            <div class="pop-up-task-contacts-container">
+                <p>Assigned to:</p>
+                <div class="pop-up-task-contacts">
+                    <!-- Contacts details -->
+                    <div class="pop-up-task-contact">
+                        <div class="contact-label">AD</div>
+                        <div class="contact-name">Marcel Mauer</div>
+                    </div>
+                    <!-- Additional contacts go here -->
+                </div>
+            </div>
+            
+            <!-- Subtasks section -->
+            <div class="pop-up-task-subtasks-container">
+                <p>Subtasks:</p>
+                <div class="pop-up-task-subtasks">
+                    <!-- Subtasks details -->
+                    <div class="pop-up-task-subtask">
+                        <input type="checkbox">
+                        <span>Implement Recipe Recommendation</span>
+                    </div>
+                    <!-- Additional subtasks go here -->
+                </div>
+            </div>
+            
+            <!-- Footer with task actions -->
+            <div class="pop-up-task-footer">
+                <button>
+                    <img src="../assets/img/board/pop-up-footer-delete.svg" alt="">
+                    <span>Delete</span>
+                </button>
+                <img src="../assets/img/board/pop-up-footer-vector 3.svg" alt="">
+                <button>
+                    <img src="../assets/img/board/pop-up-footer-edit.svg" alt="">
+                    <span>Edit</span>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Closes the task pop-up by setting its display style to "none".
+ */
+function closeTask() {
+    let taskPopUp = document.getElementById('pop-up');
+    taskPopUp.style.display = "none";
+}
+
+/**
+ * Stops the event propagation to prevent it from reaching the parent elements.
+ *
+ * @param {Event} event - The event for which propagation should be stopped.
+ */
+function stopPropagation(event) {
+    event.stopPropagation();
+}
+
+
+
+/**
  * Handles the 'dragover' event to allow dropping elements.
  *
  * @param {Event} ev - The dragover event.
@@ -163,6 +274,25 @@ function moveTo(columnId) {
     renderTasks();
 }
 
+
+/**
+ * Highlights the column if task is dragged over
+ * 
+ * @param {string} id - Id of highlightet column
+ */
+function highlight(id) {
+    document.getElementById(id).classList.add('dragAreaHighlight');
+}
+
+
+/**
+ * Removes the highlight when task is not longer dragged over the column
+ * 
+ * @param {string} id - Id of highlightet column
+ */
+function removeHighlight(id) {
+    document.getElementById(id).classList.remove('dragAreaHighlight');
+}
 
 /**
  * Clears the content of all columns.
@@ -209,7 +339,7 @@ function checkColumnForTasks(column) {
  */
 function generateCardHtml(cardId, task) {
     return /*html*/ `
-        <div class="card-container" draggable="true" ondragstart="startDragging(${task.id})" id="${cardId}">
+        <div class="card-container" onclick="openTask()" draggable="true" ondragstart="startDragging(${task.id})" id="${cardId}">
             <button class="card-label">${task.category}</button>
             <h3 class="card-title">${task.title}</h3>
             <p class="card-content">${task.description}</p>
