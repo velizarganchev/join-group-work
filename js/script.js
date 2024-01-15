@@ -3,10 +3,11 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
 
 /**
- * Initializing certain functions once the body of the page has fully loaded.
+ * Initializes certain functions once the body of the page has fully loaded.
  * @param {string} id - Id of the current navigation item which is supposed to be highlighted.
  */
 async function init(id) {
+    await loadTasks();
     await includeHTML();
     changeNavigationHighlight(id);
 }
@@ -115,4 +116,51 @@ function getHost() {
 function changeImageSource(id, url) {
     let image = document.getElementById(id);
     image.src = url;
+}
+
+
+/**
+ * Loggs out the current user.
+ */
+function logOut() {
+    toggleClass('profile-nav-wrapper', 'hide');
+    setCurrentUsername('');
+    window.location.replace = 'index.html'
+}
+
+
+/**
+ * Redirects user to log in page to prevent unauthorized users to see protected information such as board.html for example.
+ */
+function checkLogInStatus() {
+    if (getCurrentUsername() === '' || getCurrentUsername() === undefined) {
+        window.location.replace('index.html');
+    }
+}
+
+
+/**
+ * Sets the current username in the session storage.
+ * @param {string} username - The currently loggin in user's username.
+ */
+function setCurrentUsername(username) {
+    sessionStorage.setItem('current-username', username);
+}
+
+
+/**
+ * Gets the current username from session storage.
+ * @returns Item with the key "current-username" from session storage.
+ */
+function getCurrentUsername() {
+    let currentUsername = sessionStorage.getItem('current-username');
+    return currentUsername;
+}
+
+
+/**
+ * Loads the saved tasks from the backend.
+ */
+async function loadTasks() {
+    allTasks = JSON.parse(await getItem('AllTasks'));
 }
