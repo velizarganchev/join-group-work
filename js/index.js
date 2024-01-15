@@ -8,7 +8,7 @@ async function initEntry() {
     await loadUsers();
     animateStartLogo();
     renderLogIn();
-    checkIfEmpty('password', 'password-image');
+    setCurrentUsername('');
 }
 
 
@@ -52,12 +52,8 @@ async function signUp(password) {
 function logIn() {
     let emailInput = document.getElementById('email');
     let passwordInput = document.getElementById('password');
-    if (checkLogInType(emailInput, passwordInput) === true) {
-        findUser(emailInput, passwordInput);
-        window.location.href = 'summary.html'
-    } else {
-        window.location.href = 'summary.html'
-    }
+    findUser(emailInput, passwordInput);
+    window.location.href = 'summary.html';
 }
 
 
@@ -68,6 +64,11 @@ function logIn() {
  */
 function findUser(emailInput, passwordInput) {
     let user = users.find(u => u.email === emailInput.value && u.password === passwordInput.value);
+    if (user) {
+        setCurrentUsername(user.name);
+    } else {
+        setCurrentUsername('Guest');
+    }
 }
 
 
@@ -102,6 +103,7 @@ function animateStartLogo() {
 function renderLogIn() {
     let dynamicContent = document.getElementById('dynamic-content');
     dynamicContent.innerHTML = logInFormTemplate();
+    checkIfEmpty('password', 'password-image');
 }
 
 
@@ -192,14 +194,21 @@ function setUpGuestLogIn() {
 
 
 /**
- * Checks whether or not the form validtion is on.
- * @returns True if form validation is on and false if form validation is off.
+ * Disables sign up button until the form is filled.
  */
-function checkLogInType(emailInput, passwordInput) {
-    if (emailInput.hasAttribute('required') === true && passwordInput.hasAttribute('required') === true) {
-        return true
+function checkSignUpForm() {
+    let nameInput = document.getElementById('name');
+    let emailInput = document.getElementById('email');
+    let passwordInput = document.getElementById('password');
+    let confirmPasswordInput = document.getElementById('confirm-password');
+    let privacyPolicyCheckBox = document.getElementById('privacy-policy-checkbox');
+    let signUpButton = document.getElementById('sign-up-button');
+    if (nameInput.value !== '' && emailInput.value !== '' && passwordInput.value !== '' && confirmPasswordInput.value !== '' && privacyPolicyCheckBox.checked === true) {
+        signUpButton.disabled = false;
+        signUpButton.classList.remove('disabled-button');
     } else {
-        return false
+        signUpButton.disabled = true;
+        signUpButton.classList.add('disabled-button');
     }
 }
 
@@ -210,6 +219,8 @@ function checkLogInType(emailInput, passwordInput) {
 function renderSignUp() {
     let dynamicContent = document.getElementById('dynamic-content');
     dynamicContent.innerHTML = signUpFormTemplate();
+    checkIfEmpty('password', 'password-image');
+    checkIfEmpty('confirm-password', 'confirm-password-image');
 }
 
 
@@ -226,29 +237,29 @@ function signUpFormTemplate() {
                 <div class="headline-border"></div>
                 <form id="sign-up-form" onsubmit="validatePassword(); return false;">
                     <div class="input-wrapper">
-                        <input type="text" id="name" required placeholder="Name" autofocus>
+                        <input type="text" id="name" required placeholder="Name" oninput="checkSignUpForm()" autofocus>
                         <img id="email-image" src="/assets/img/name-icon.png">
                     </div>
                     <div class="input-wrapper">
-                    <input type="email" id="email" required placeholder="Email">
+                    <input type="email" id="email" required placeholder="Email" oninput="checkSignUpForm()">
                         <img id="email-image" src="/assets/img/email-icon.png">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="password" required placeholder="Password" minlength="8" pattern="[0-9a-fA-F]{6, 18}" autocomplete="new-password" oninput="checkIfEmpty('password', 'password-image')">
+                        <input type="password" id="password" required placeholder="Password" minlength="8" pattern="[0-9a-fA-F]{6, 18}" autocomplete="new-password" oninput="checkIfEmpty('password', 'password-image'); checkSignUpForm();">
                         <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('password', 'password-image')">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="confirm-password" required placeholder="Confirm password" oninput="checkIfEmpty('confirm-password', 'confirm-password-image')">
+                        <input type="password" id="confirm-password" required placeholder="Confirm password" oninput="checkIfEmpty('confirm-password', 'confirm-password-image'); checkSignUpForm();">
                         <img id="confirm-password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('confirm-password', 'confirm-password-image')">
                     </div>
                     <p id="password-message" class="hide">Ups! Your password doesn't match.</p>
                     <div class="privacy-policy-box">
-                        <input type="checkbox" id="privacy-policy-checkbox" required>
+                        <input type="checkbox" id="privacy-policy-checkbox" required onclick="checkSignUpForm()">
                         <span>I accept the</span>
                         <a class="scale-on-hover" href="privacy_policy.html">Privacy Policy</a>
                     </div>
                     <div class="entry-buttons">
-                        <button class="dark-button" type="submit">Sign up</button>
+                        <button id="sign-up-button" class="dark-button disabled-button" type="submit" disabled>Sign up</button>
                     </div>
                 </form>
             </div>

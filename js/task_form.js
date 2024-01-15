@@ -1,6 +1,17 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
 let allTasks = [];
 
+
+/**
+ * Initializes certain functions once the body of the page has fully loaded.
+ */
+async function initAddTask() {
+    checkLogInStatus();
+    await init('add-task');
+}
+
+
+
 /** changes the HTML back to standard (=no Prio chosen)
  * 
  */

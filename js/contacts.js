@@ -81,6 +81,16 @@ const contacts = [
 
 
 /**
+ * Initializes certain functions once the body of the page has fully loaded.
+ */
+async function initContacts() {
+  checkLogInStatus();
+  await init('contacts');
+  renderContactBook();
+}
+
+
+/**
  * Renders contact overview section
  */
 function renderContactBook() {

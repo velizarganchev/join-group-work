@@ -95,6 +95,18 @@ let tasks = [
 let columns;
 let currentDraggedElement;
 
+
+/**
+ * Initializes certain functions once the body of the page has fully loaded.
+ */
+async function initBoard() {
+    checkLogInStatus();
+    await init('board');
+    renderTasks();
+}
+
+
+
 /**
  * Renders tasks in the 'todo' column.
  *
