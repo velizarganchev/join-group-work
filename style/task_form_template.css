@@ -193,12 +193,44 @@
     cursor:pointer;
 }
 
-.subtasks{
-    background: url('/assets/img/subtasks.png') no-repeat scroll 96% 50%;
+.subtaskInput{
+    border: 1px solid rgb(209, 209, 209);
+    border-radius:10px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
 }
 
-.subtasks:hover{
-    cursor:pointer;
+.subtaskImg{
+    width:20px;
+    height:20px;
+    margin-right:2px;
+}
+
+.subtaskImg:hover{
+    box-shadow: 1px 1px 10px black;
+}
+
+.subtasksImgagesContainer{
+    display:flex;
+    margin-right:8px;
+}
+
+.verticalLine{
+    width:2px;
+    height:20px;
+    background-color:rgb(209, 209, 209);
+    margin:0 4px 0 0;
+}
+
+.subtasks{
+    border:none !important;
+    padding: 12px 21px;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    outline:unset;
 }
 
 .arrowdown{ 

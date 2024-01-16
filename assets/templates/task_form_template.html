@@ -105,7 +105,16 @@
                         Subtasks
                 </div>
                 <div class="Subcontent">
-                    <input id="subtask" class="Inputfield subtasks" placeholder="Add new subtask">
+                    <div class="subtaskInput">
+                        <input id="subtask" class="Inputfield subtasks" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
+                        <div class="subtasksImgagesContainer">
+                            <img id="+" class="subtaskImg hover" src="/assets/img/+.png">
+                            <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
+                            <div class="d-none verticalLine" id="verticalLine"></div>
+                            <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
+                        </div>
+                    </div>
+                   
                     <div >
                         <ul id="subTaskList">
 

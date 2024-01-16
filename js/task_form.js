@@ -1,6 +1,6 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
 let allTasks = [];
-
+let allSubtasks = [];
 
 /**
  * Initializes certain functions once the body of the page has fully loaded.
@@ -83,6 +83,34 @@ function changeColorOfPrio(Prio, i){
     changeImgOfPrio(Prio);
 }
 
+function activateAndDeactivateSubtaskInput(){
+    let task = document.getElementById('subtask').value
+    if (document.activeElement == task){
+        document.getElementById('+').classList.remove('d-none');
+        document.getElementById('cancel').classList.add('d-none');
+        document.getElementById('verticalLine').classList.add('d-none');
+        document.getElementById('hook').classList.add('d-none'); 
+    }else {
+        document.getElementById('+').classList.add('d-none');
+        document.getElementById('cancel').classList.remove('d-none');
+        document.getElementById('verticalLine').classList.remove('d-none');
+        document.getElementById('hook').classList.remove('d-none');
+    }
+}
+
+function cancelSubtask(){
+    document.getElementById('subtask').value = '';
+}
+
+function addSubtask(){
+    let task = document.getElementById('subtask').value;
+    document.getElementById('subTaskList').innerHTML += `<li>${task}</li>`;
+    allSubtasks.push(task);
+    activateAndDeactivateSubtaskInput();
+    cancelSubtask();
+}
+
+
 /**
  * collects the values of all inputs
  */
@@ -101,7 +129,7 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
         'date': date,
         'prio': prio,
         'category': category,
-        'subtask': subtask,
+        'subtask': allSubtasks,
         token: STORAGE_TOKEN
     }
     creatingJson(task);
@@ -118,6 +146,8 @@ function creatingJson(task){
     // safeAllTasksToStorage('AllTasks',allTasks);
 }
 
+
+//löschen und aus script.js ziehen
 /**
  * safes the JsonArray in the backend
  * @param {string} key - the key of the safed data
