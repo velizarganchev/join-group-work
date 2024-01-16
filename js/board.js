@@ -5,8 +5,21 @@ let tasks = [
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
         priority: 'Medium',
-        subtasks: 2,
-        subtasksProgress: 0,
+        subtasks: [
+            {
+                name: 'Implement Recipe Recommendation',
+                done: true
+            },
+            {
+                name: 'Start Page Layout',
+                done: false
+            },
+            {
+                name: 'Start Page Layout',
+                done: true
+            }
+        ],
+        subtasksProgress: 1,
         category: 'User Story',
         colum: 'todo',
         contacts: [
@@ -28,7 +41,16 @@ let tasks = [
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
         priority: 'Medium',
-        subtasks: 4,
+        subtasks: [
+            {
+                name: 'Implement Recipe Recommendation',
+                done: false
+            },
+            {
+                name: 'Start Page Layout',
+                done: false
+            }
+        ],
         subtasksProgress: 1,
         category: 'User Story',
         colum: 'in-progress',
@@ -51,7 +73,24 @@ let tasks = [
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
         priority: 'Medium',
-        subtasks: 4,
+        subtasks: [
+            {
+                name: 'Implement Recipe Recommendation',
+                done: false
+            },
+            {
+                name: 'Start Page Layout',
+                done: false
+            },
+            {
+                name: 'Start Page Layout',
+                done: false
+            },
+            {
+                name: 'Start Page Layout',
+                done: false
+            },
+        ],
         subtasksProgress: 3,
         category: 'User Story',
         colum: 'in-progress',
@@ -74,7 +113,12 @@ let tasks = [
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
         priority: 'Medium',
-        subtasks: 2,
+        subtasks: [
+            {
+                name: 'Start Page Layout',
+                done: false
+            }
+        ],
         subtasksProgress: 1,
         category: 'User Story',
         colum: 'await-feedback',
@@ -131,7 +175,7 @@ async function renderTasks() {
             } else if (task.colum === 'done') {
                 renderCard(task, doneColumn);
             }
-            if (task.subtasks > 0) {
+            if (task.subtasks.length > 0) {
                 setProgressSubtasks(task)
             }
             generateContactsHtml(task.contacts, task.id);
@@ -144,12 +188,13 @@ async function renderTasks() {
 /**
  * Opens the task pop-up by setting its display style to "flex" and populates it with HTML content.
  */
-function openTask() {
+function openTask(taskId) {
+    let task = tasks.find(t => t.id === taskId);
     let taskPopUp = document.getElementById('pop-up');
     taskPopUp.style.display = "flex";
 
     // Populate the task pop-up with HTML content
-    taskPopUp.innerHTML = generateTaskHtml();
+    taskPopUp.innerHTML = generateTaskHtml(task);
 }
 
 
@@ -158,13 +203,17 @@ function openTask() {
  *
  * @returns {string} - The HTML string representing the task pop-up content.
  */
-function generateTaskHtml() {
+function generateTaskHtml(task) {
+
+    let contactsHtml = task.contacts.map(generateContactHtml).join('');
+    let subtasksHtml = task.subtasks.map(generateSubtaskHtml).join('');
+
     return /*html*/ `
         <!-- HTML content for the task pop-up -->
         <div class="pop-up-task-container" onclick="stopPropagation(event)">
             <!-- Pop-up header with buttons -->
             <div class="pop-up-task-header">
-                <button class="pop-up-label">User Story</button>
+                <button class="pop-up-label">${task.category}</button>
                 <button class="pop-up-close-button" onclick="closeTask()">
                     <img src="../assets/img/board/close-task.svg" alt="Close">
                 </button>
@@ -172,21 +221,21 @@ function generateTaskHtml() {
             
             <!-- Task title and subtitle -->
             <div class="pop-up-task-title">
-                <h2>Kochwelt Page & Recipe Recommender</h2>
+                <h2>${task.title}</h2>
             </div>
             <div class="pop-up-task-subtitle">
-                <p>Build start page with recipe recommendation</p>
+                <p>${task.description}</p>
             </div>
             
             <!-- Task date and priority -->
             <div class="pop-up-task-date">
                 <span>Due date:</span>
-                <span>10/05/2024</span>
+                <span>${new Date(task.date).toLocaleDateString('DE')}</span>
             </div>
             <div class="pop-up-task-priority">
                 <span>Priority:</span>
                 <button class="pop-up-task-priority-button">
-                    <span>Medium</span>
+                    <span>${task.priority}</span>
                     <img src="../assets/img/board/pop-up-prio-media.svg" alt="">
                 </button>
             </div>
@@ -194,12 +243,9 @@ function generateTaskHtml() {
             <!-- Assigned contacts -->
             <div class="pop-up-task-contacts-container">
                 <p>Assigned to:</p>
-                <div class="pop-up-task-contacts">
+                <div class="pop-up-task-contacts${task.id}">
                     <!-- Contacts details -->
-                    <div class="pop-up-task-contact">
-                        <div class="contact-label">AD</div>
-                        <div class="contact-name">Marcel Mauer</div>
-                    </div>
+                    ${contactsHtml}
                     <!-- Additional contacts go here -->
                 </div>
             </div>
@@ -209,10 +255,7 @@ function generateTaskHtml() {
                 <p>Subtasks:</p>
                 <div class="pop-up-task-subtasks">
                     <!-- Subtasks details -->
-                    <div class="pop-up-task-subtask">
-                        <input type="checkbox">
-                        <span>Implement Recipe Recommendation</span>
-                    </div>
+                    ${subtasksHtml}
                     <!-- Additional subtasks go here -->
                 </div>
             </div>
@@ -232,6 +275,37 @@ function generateTaskHtml() {
         </div>
     `;
 }
+
+
+/**
+ * Generates HTML for a contact in the pop-up task details.
+ *
+ * @param {Object} contact - The contact object containing information.
+ * @returns {string} - The HTML string representing the contact.
+ */
+function generateContactHtml(contact) {
+    return  /*html*/ `
+        <div class="pop-up-task-contact">
+            <div class="contact-label" style="background:${contact.color};">${contact.name[0] + contact.lastName[0]}</div>
+            <div class="contact-name">${contact.name} ${contact.lastName}</div>
+        </div>`;
+}
+
+
+/**
+ * Generates HTML for a subtask in the pop-up task details.
+ *
+ * @param {Object} subtask - The subtask object containing information.
+ * @returns {string} - The HTML string representing the subtask.
+ */
+function generateSubtaskHtml(subtask) {
+    return  /*html*/ `
+        <div class="pop-up-task-subtask">
+            <input type="checkbox" ${subtask.done ? 'checked' : ''} >
+            <span>${subtask.name}</span>
+        </div>`;
+}
+
 
 /**
  * Closes the task pop-up by setting its display style to "none".
@@ -306,6 +380,7 @@ function removeHighlight(id) {
     document.getElementById(id).classList.remove('dragAreaHighlight');
 }
 
+
 /**
  * Clears the content of all columns.
  */
@@ -350,8 +425,9 @@ function checkColumnForTasks(column) {
  * @returns {string} - The HTML string representing the task card.
  */
 function generateCardHtml(cardId, task) {
-    return /*html*/ `
-        <div class="card-container" onclick="openTask()" draggable="true" ondragstart="startDragging(${task.id})" id="${cardId}">
+    if (task)
+        return /*html*/ `
+        <div class="card-container" onclick="openTask(${task.id})" draggable="true" ondragstart="startDragging(${task.id})" id="${cardId}">
             <button class="card-label">${task.category}</button>
             <h3 class="card-title">${task.title}</h3>
             <p class="card-content">${task.description}</p>
@@ -359,7 +435,7 @@ function generateCardHtml(cardId, task) {
                 <div class="progress-bar">
                     <div class="progress-done" id="progress${task.id}"></div>
                 </div>
-                <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks} Subtasks</p>
+                <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>
             </div>
             <div class="card-footer">
                 <div class="profiles" id="tasksProfiles${task.id}">
@@ -415,7 +491,7 @@ function setProgressSubtasks(task) {
     let finalValue = task.subtasksProgress * 10;
 
     // Calculate the maximum value of the progress bar (based on the total number of subtasks)
-    let max = task.subtasks * 10;
+    let max = task.subtasks.length * 10;
 
     // Calculate the progress in percentage
     let progressInPercent = (finalValue / max) * 100;

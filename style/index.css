@@ -2,32 +2,30 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transition: all 400ms ease-in-out;
     margin-left: -137px;
     margin-top: -162px;
     z-index: 1;
+    transition: all 400ms ease-in-out;
 }
 
 .animated-start-logo {
     transform: scale(0.5, 0.5) !important;
     transform: translate(-50%, -50%);
-    top: 150px !important;
-    left: 150px !important;
+    top: 110px !important;
+    left: 110px !important;
 }
 
 #dynamic-content {
-    animation: fade-in 1s;
-    animation-timing-function: ease-in-out;
+    animation: content-fade-in forwards 1s ease-in-out;
 }
 
 .sign-up-wrapper {
     position: fixed;
-    top: 70px;
-    right: 70px;
+    top: 55px;
+    right: 55px;
     display: flex;
     align-items: center;
     gap: 35px;
-    
 }
 
 .dark-button {
@@ -280,13 +278,34 @@ form input:focus {
     animation-fill-mode: forwards;
 }
 
-@keyframes fade-in {
-    0% {opacity: 0;}
-    75% {opacity: 0;}
-    100% {opacity: 1;}
+#start-background-mobile {
+    display: none;
+}
+
+#start-logo-mobile {
+    display: none;
+}
+
+@keyframes content-fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes dark-background {
-    0% {opacity: 0;}
-    100% {opacity: 0.25;}
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0.25;
+    }
 }

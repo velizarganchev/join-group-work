@@ -158,6 +158,43 @@ async function safeAllTasksToStorage(key, value){
     const payload = {key, value, token: STORAGE_TOKEN};
     return fetch(STORAGE_URL, {method:'POST', body: JSON.stringify(payload)});
 }
+// Kannst du bitte das Item so speichern!!!
+// {
+//     id: 1,
+//     title: 'Kochwelt Page & Recipe Recommender',
+//     description: 'Build start page with recipe recommendation',
+//     date: new Date().getTime(),
+//     priority: 'Medium',
+//     subtasks: [
+//         {
+//             name: 'Implement Recipe Recommendation',
+//             done: false
+//         },
+//         {
+//             name: 'Start Page Layout',
+//             done: false
+//         },
+//         {
+//             name: 'Start Page Layout',
+//             done: false
+//         }
+//     ],
+//     subtasksProgress: 1,
+//     category: 'User Story',
+//     colum: 'todo',
+//     contacts: [
+//         {
+//             name: 'Anton',
+//             lastName: 'Mayer',
+//             color: 'gold'
+//         },
+//         {
+//             name: 'Anja',
+//             lastName: 'Schulz',
+//             color: 'palevioletred'
+//         }
+//     ],
+// }
 
 /**
  * empties all input-fields
