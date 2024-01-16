@@ -8,6 +8,7 @@ let allSubtasks = [];
 async function initAddTask() {
     checkLogInStatus();
     await init('add-task');
+    minDate();
 }
 
 
@@ -83,25 +84,29 @@ function changeColorOfPrio(Prio, i){
     changeImgOfPrio(Prio);
 }
 
+/**
+ * This function toggles the Images from the Subtask Input
+ */
 function activateAndDeactivateSubtaskInput(){
     let task = document.getElementById('subtask').value
-    if (document.activeElement == task){
-        document.getElementById('+').classList.remove('d-none');
-        document.getElementById('cancel').classList.add('d-none');
-        document.getElementById('verticalLine').classList.add('d-none');
-        document.getElementById('hook').classList.add('d-none'); 
-    }else {
-        document.getElementById('+').classList.add('d-none');
-        document.getElementById('cancel').classList.remove('d-none');
-        document.getElementById('verticalLine').classList.remove('d-none');
-        document.getElementById('hook').classList.remove('d-none');
-    }
+        document.getElementById('+').classList.toggle('d-none');
+        document.getElementById('cancel').classList.toggle('d-none');
+        document.getElementById('verticalLine').classList.toggle('d-none');
+        document.getElementById('hook').classList.toggle('d-none'); 
+        document.getElementById('overlay').classList.toggle('d-none'); 
+        cancelSubtask();
 }
 
+/**
+ * This function clears the Subtasks Input
+ */
 function cancelSubtask(){
     document.getElementById('subtask').value = '';
 }
 
+/**
+ * this function adds new Subtasks to a List and to an Array
+ */
 function addSubtask(){
     let task = document.getElementById('subtask').value;
     document.getElementById('subTaskList').innerHTML += `<li>${task}</li>`;
@@ -121,20 +126,33 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
     let date = document.getElementById('date').value;
     let prio = currentchosenPrio;
     let category = document.getElementById('category').value;
-    let subtask = document.getElementById('subtask').value;
+    let contacts= [];
     const task = {
+        'id': id, //dynamisch
         'title': title,
         'description': description,
         'assigned': assignedTo,
         'date': date,
-        'prio': prio,
-        'category': category,
+        'priority': prio,
         'subtask': allSubtasks,
+        'subtasksProgress': 0,
+        'category': category,
+        'colum': 'todo',
+        'contacts': contacts,
         token: STORAGE_TOKEN
     }
     creatingJson(task);
     clearForm();
     confirmTheCreationOfATask();   
+}
+
+/**
+ * limits the possible Dates which can be chosen
+ */
+function minDate(){
+    let TodaysDate = new Date().toISOString().split('T')[0];;
+    console.log(TodaysDate);
+    document.getElementById('date').setAttribute('min',TodaysDate);
 }
 
 /**
@@ -145,56 +163,6 @@ function creatingJson(task){
     allTasks.push(task);
     // safeAllTasksToStorage('AllTasks',allTasks);
 }
-
-
-//löschen und aus script.js ziehen
-/**
- * safes the JsonArray in the backend
- * @param {string} key - the key of the safed data
- * @param {Json} value - the safed value as Json
- * @returns 
- */
-async function safeAllTasksToStorage(key, value){
-    const payload = {key, value, token: STORAGE_TOKEN};
-    return fetch(STORAGE_URL, {method:'POST', body: JSON.stringify(payload)});
-}
-// Kannst du bitte das Item so speichern!!!
-// {
-//     id: 1,
-//     title: 'Kochwelt Page & Recipe Recommender',
-//     description: 'Build start page with recipe recommendation',
-//     date: new Date().getTime(),
-//     priority: 'Medium',
-//     subtasks: [
-//         {
-//             name: 'Implement Recipe Recommendation',
-//             done: false
-//         },
-//         {
-//             name: 'Start Page Layout',
-//             done: false
-//         },
-//         {
-//             name: 'Start Page Layout',
-//             done: false
-//         }
-//     ],
-//     subtasksProgress: 1,
-//     category: 'User Story',
-//     colum: 'todo',
-//     contacts: [
-//         {
-//             name: 'Anton',
-//             lastName: 'Mayer',
-//             color: 'gold'
-//         },
-//         {
-//             name: 'Anja',
-//             lastName: 'Schulz',
-//             color: 'palevioletred'
-//         }
-//     ],
-// }
 
 /**
  * empties all input-fields
@@ -239,6 +207,10 @@ function addAnotherTask(){
     location.href="add_task.html";
 }
 
+/**
+ * This function toggles the Images of the "Assigned to" Input
+ * @param {String} id - ID of the Input-Field "Assigned to"
+ */
 function flipTheImage(id){
     document.getElementById(`${id}`).classList.toggle('arrowdown');
     document.getElementById(`${id}`).classList.toggle('arrowup');

@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="Subcontent">
-                    <input required id="date" type="date" class="Inputfield"  pattern="">
+                    <input required id="date" type="date" class="Inputfield" min ="todaydate" pattern="">
                 </div>
             </div>
             <div id="PrioContent">
@@ -114,7 +114,9 @@
                             <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
                         </div>
                     </div>
-                   
+                    <div id="overlay" class="overlay d-none" onclick="activateAndDeactivateSubtaskInput()">
+
+                    </div>
                     <div >
                         <ul id="subTaskList">
 
