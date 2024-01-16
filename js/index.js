@@ -90,10 +90,21 @@ async function validatePassword() {
  * Animates the big Join logo at the start of the log in page.
  */
 function animateStartLogo() {
-    setTimeout(function(){
-        toggleClass('start-logo', 'animated-start-logo');
-        toggleClass('form-wrapper', 'fade-in-content')
-    }, 600);
+    let mobileStartBackground = document.getElementById('start-background-mobile');
+    if (window.innerWidth > 700) {
+        setTimeout(function(){
+            toggleClass('start-logo', 'animated-start-logo');
+            toggleClass('form-wrapper', 'fade-in-content');
+        }, 600);
+    } else {
+        setTimeout(function(){
+            toggleClass('start-logo-mobile', 'animated-start-logo');
+            toggleClass('start-logo', 'animated-start-logo');
+        }, 600);
+        setTimeout(function(){
+            mobileStartBackground.style.zIndex = -1;
+        }, 1000)
+    }
 }
 
 
@@ -135,7 +146,7 @@ function logInFormTemplate() {
                         <span>Remember me</span>
                     </div>
                     <div class="entry-buttons">
-                        <button class="dark-button" type="submit">Log in</button>
+                        <button class="dark-button log-in-button-mobile" type="submit">Log in</button>
                         <button class="light-button" onclick="setUpGuestLogIn()">Guest Log in</button>
                     </div>
                 </form>
