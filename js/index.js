@@ -53,7 +53,6 @@ function logIn() {
     let emailInput = document.getElementById('email');
     let passwordInput = document.getElementById('password');
     findUser(emailInput, passwordInput);
-    window.location.href = 'summary.html';
 }
 
 
@@ -66,8 +65,9 @@ function findUser(emailInput, passwordInput) {
     let user = users.find(u => u.email === emailInput.value && u.password === passwordInput.value);
     if (user) {
         setCurrentUsername(user.name);
+        window.location.href = 'summary.html';
     } else {
-        setCurrentUsername('Guest');
+        toggleClass('error-message', 'hide');
     }
 }
 
@@ -157,13 +157,14 @@ function logInFormTemplate() {
                         <input type="password" id="password" required placeholder="Password" oninput="checkIfEmpty('password', 'password-image')">
                         <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('password', 'password-image')">
                     </div>
+                    <p id="error-message" class="hide">Ups! Your login details are incorrect.</p>
                     <div class="remember-me-box">
                         <input type="checkbox" id="remember-me">
                         <span>Remember me</span>
                     </div>
                     <div class="entry-buttons">
                         <button class="dark-button log-in-button-mobile" type="submit">Log in</button>
-                        <button class="light-button" onclick="setUpGuestLogIn()">Guest Log in</button>
+                        <button class="light-button" onclick="logInAsGuest()">Guest Log in</button>
                     </div>
                 </form>
             </div>
@@ -210,13 +211,13 @@ function togglePasswordVisibility(inputId, imageId) {
 /**
  * Sets up log in for guest user by disabling the form validation.
  */
-function setUpGuestLogIn() {
-    let logInForm = document.getElementById('log-in-form');
+function logInAsGuest() {
     let emailInput = document.getElementById('email');
     let passwordInput = document.getElementById('password');
     emailInput.removeAttribute('required');
     passwordInput.removeAttribute('required');
-    logInForm.submit();
+    setCurrentUsername('Guest');
+    window.location.href = 'summary.html';
 }
 
 
@@ -272,7 +273,7 @@ function signUpFormTemplate() {
                         <img id="email-image" src="/assets/img/email-icon.png">
                     </div>
                     <div class="input-wrapper">
-                        <input type="password" id="password" required placeholder="Password" minlength="8" pattern="[0-9a-fA-F]{6, 18}" autocomplete="new-password" oninput="checkIfEmpty('password', 'password-image'); checkSignUpForm();">
+                        <input type="password" id="password" required placeholder="Password" minlength="8" autocomplete="new-password" oninput="checkIfEmpty('password', 'password-image'); checkSignUpForm();">
                         <img id="password-image" src="/assets/img/password-icon.png" onclick="togglePasswordVisibility('password', 'password-image')">
                     </div>
                     <div class="input-wrapper">

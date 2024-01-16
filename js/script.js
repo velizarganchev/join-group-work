@@ -1,5 +1,7 @@
 const STORAGE_TOKEN = 'DR6FZK1MTGPR11C93C73PUGXTKY05AJ4CNFZMV8P';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
+let allTasks = [];
+let allSubtasks = [];
 
 
 /**
@@ -10,6 +12,7 @@ async function init(id) {
     await loadTasks();
     await includeHTML();
     changeNavigationHighlight(id);
+    lockScreenOrientation();
 }
 
 
@@ -163,4 +166,14 @@ function getCurrentUsername() {
  */
 async function loadTasks() {
     allTasks = JSON.parse(await getItem('AllTasks'));
+}
+
+
+/**
+ * Locks the screen orientation depending on which device the user is using.
+ */
+function lockScreenOrientation() {
+    if (window.innerWidth <= 700) {
+        screen.orientation.lock('portrait');
+    }
 }

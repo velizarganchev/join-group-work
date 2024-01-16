@@ -230,6 +230,14 @@ form input:focus {
     align-self: flex-start;
 }
 
+#error-message {
+    color: #FF8190;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    align-self: flex-start;
+}
+
 .privacy-policy-box {
     display: flex;
     justify-content: center;

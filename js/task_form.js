@@ -1,6 +1,5 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
-let allTasks = [];
-let allSubtasks = [];
+
 
 /**
  * Initializes certain functions once the body of the page has fully loaded.
@@ -89,11 +88,11 @@ function changeColorOfPrio(Prio, i){
  */
 function activateAndDeactivateSubtaskInput(){
     let task = document.getElementById('subtask').value
-        document.getElementById('+').classList.toggle('d-none');
-        document.getElementById('cancel').classList.toggle('d-none');
-        document.getElementById('verticalLine').classList.toggle('d-none');
-        document.getElementById('hook').classList.toggle('d-none'); 
-        document.getElementById('overlay').classList.toggle('d-none'); 
+        document.getElementById('+').classList.toggle('d-none'); //toggleClass('+', 'd-none');
+        document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
+        document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
+        document.getElementById('hook').classList.toggle('d-none'); //toggleClass('hook', 'd-none');
+        document.getElementById('overlay').classList.toggle('d-none'); //toggleClass('overlay', 'd-none');
         cancelSubtask();
 }
 
