@@ -90,21 +90,37 @@ async function validatePassword() {
  * Animates the big Join logo at the start of the log in page.
  */
 function animateStartLogo() {
-    let mobileStartBackground = document.getElementById('start-background-mobile');
     if (window.innerWidth > 700) {
-        setTimeout(function(){
-            toggleClass('start-logo', 'animated-start-logo');
-            toggleClass('form-wrapper', 'fade-in-content');
-        }, 600);
+        desktopStartAnimation();
     } else {
-        setTimeout(function(){
-            toggleClass('start-logo-mobile', 'animated-start-logo');
-            toggleClass('start-logo', 'animated-start-logo');
-        }, 600);
-        setTimeout(function(){
-            mobileStartBackground.style.zIndex = -1;
-        }, 1000)
+        mobileStartAnimation();
     }
+}
+
+
+/**
+ * Begins the animation of the starting logo when index.html has loaded on desktop devices.
+ */
+function desktopStartAnimation() {
+    setTimeout(function(){
+        toggleClass('start-logo', 'animated-start-logo');
+        toggleClass('form-wrapper', 'fade-in-content');
+    }, 600);
+}
+
+
+/**
+ * Begins the animation of the starting logo when index.html has loaded on mobile devices.
+ */
+function mobileStartAnimation() {
+    let mobileStartBackground = document.getElementById('start-background-mobile');
+    setTimeout(function(){
+        toggleClass('start-logo-mobile', 'animated-start-logo');
+        toggleClass('start-logo', 'animated-start-logo');
+    }, 600);
+    setTimeout(function(){
+        mobileStartBackground.style.zIndex = -1;
+    }, 1000);
 }
 
 

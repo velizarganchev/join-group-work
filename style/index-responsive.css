@@ -1,13 +1,19 @@
+@media (max-width: 1000px) {
+    .sign-up-box {
+        margin-top: 100px;
+    }
+}
+
 @media (max-width: 700px) {
     .sign-up-wrapper {
         position: fixed;
-        top: 775px;
-        left: 50%;
-        transform: translate(-50%);
+        top: 85%;
+        right: 50%;
+        transform: translate(50%);
         display: flex;
         align-items: center;
         gap: 35px;
-        text-wrap: nowrap;
+        white-space: nowrap;
     }
 
     .entry-buttons {
@@ -71,6 +77,56 @@
         animation: none;
     }
 
+    .log-in-box {
+        min-height: 536px;
+        width: 90%;
+        padding: 32px;
+    }
+    
+    .log-in-box h1 {
+        font-size: 47px;
+    }
+
+    .log-in-box form {
+        width: 100%;
+    }
+
+    .remember-me-box {
+        padding-left: 20px;
+    }
+
+    .sign-up-box {
+        height: 578px;
+        width: 90%;
+        padding: 32px;
+        margin-top: 0;
+    }
+
+    .sign-up-box h1 {
+        font-size: 47px;
+    }
+
+    .sign-up-box form {
+        width: 100%;
+    }
+
+    .headline-border {
+        width: 88px;
+    }
+
+    .arrow-left {
+        top: 7%;
+        left: 7%;
+    }
+
+    .input-wrapper {
+        width: 100%;
+    }
+
+    footer {
+        top: 95%;
+    }
+
     @keyframes logo-fade-out {
         0% {
             opacity: 1;
@@ -104,12 +160,13 @@
             opacity: 1;
         }
 
-        /* 50% {
-            opacity: 0;
-        } */
-
         100% {
             opacity: 0;
         }
+    }
+
+    @keyframes fly-in {
+        0% {bottom: -13%}
+        100% {bottom: 23%}
     }
 }

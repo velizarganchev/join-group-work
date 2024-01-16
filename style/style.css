@@ -38,6 +38,6 @@ body {
 }
 
 @keyframes fly-in {
-    0% {bottom: -10%}
+    0% {bottom: -13%}
     100% {bottom: 47%}
 }
