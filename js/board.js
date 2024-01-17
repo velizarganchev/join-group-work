@@ -37,17 +37,17 @@ let tasks = [
     },
     {
         id: 2,
-        title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build start page with recipe recommendation',
+        title: 'CSS Architecture Planning',
+        description: 'Define CSS naming conventions and structure.',
         date: new Date().getTime(),
         priority: 'Urgent',
         subtasks: [
             {
-                name: 'Implement Recipe Recommendation',
+                name: 'Establish CSS Methodology',
                 done: false
             },
             {
-                name: 'Start Page Layout',
+                name: 'Setup Base Styles',
                 done: false
             }
         ],
@@ -150,38 +150,64 @@ async function initBoard() {
 }
 
 
-
 /**
  * Renders tasks in the 'todo' column.
  *
- * @param {Array} tasks - An array of task objects.
+ * @param {Array} searchedTasks - An optional array of task objects to render (filtered tasks based on search).
  */
-async function renderTasks() {
+async function renderTasks(searchedTasks) {
+    // Retrieves all tasks from storage
     let allTasks = await getItem('AllTasks');
-    columns = document.getElementById('board-distribution').children;
-    let todoColumn = document.getElementById('todo');
-    let inProgressColumn = document.getElementById('in-progress');
-    let awaitFeedbackColumn = document.getElementById('await-feedback');
-    let doneColumn = document.getElementById('done');
 
-    if (allTasks) {
-        tasks.forEach(task => {
-            if (task.colum === 'todo') {
-                renderCard(task, todoColumn);
-            } else if (task.colum === 'in-progress') {
-                renderCard(task, inProgressColumn);
-            } else if (task.colum === 'await-feedback') {
-                renderCard(task, awaitFeedbackColumn);
-            } else if (task.colum === 'done') {
-                renderCard(task, doneColumn);
-            }
-            if (task.subtasks.length > 0) {
-                setProgressSubtasks(task)
-            }
-            generateContactsHtml(task.contacts, task.id);
-        });
-    }
+    // Accesses the column elements
+    columns = document.getElementById('board-distribution').children;
+
+    // Functions for accessing column elements
+    let getColumnById = (columnId) => document.getElementById(columnId);
+    let getColumnByTask = (task) => getColumnById(task.colum);
+
+    // Functions for dynamically rendering cards and subtask progress
+    let renderCardAndSubtasks = (task) => {
+        let column = getColumnByTask(task);
+
+        renderCard(task, column);
+        if (task.subtasks.length > 0) {
+            setProgressSubtasks(task);
+        }
+        generateContactsHtml(task.contacts, task.id);
+    };
+
+    // Rendering tasks based on the searchedTasks array or all tasks
+    let tasksToRender = searchedTasks || tasks;
+    tasksToRender.forEach(renderCardAndSubtasks);
+
+    // Iterating through all columns and checking for tasks
     iterateByEachColumn(columns);
+}
+
+
+
+/**
+ * Searches tasks based on the entered search term and renders the matching tasks.
+ *
+ * @param {Event} e - The event object that triggered the function call.
+ */
+function search(e) {
+    e.preventDefault();
+    // The search input element
+    let searchTermInput = document.getElementById('search-text');
+
+    // The entered search term (converted to lowercase for case insensitivity)
+    let searchTerm = searchTermInput.value.toLowerCase();
+    // Filters tasks based on the search term
+    let searchedTasks = tasks.filter(task => task.title.toLowerCase().includes(searchTerm));
+
+    // Clears all column contents
+    clearAllColumns();
+    // Renders the found tasks
+    renderTasks(searchedTasks);
+    // Clears the search input field
+    searchTermInput.value = '';
 }
 
 
@@ -453,7 +479,6 @@ function generateCardHtml(cardId, task) {
  * @returns {string} - The HTML string representing the priority icon.
  */
 function generatePriorityIcon(priority) {
-    console.log(priority);
     switch (priority) {
         case 'Low':
             return /*html*/`<img src="../assets/img/board/prio-low.svg" alt="Priority Icon">`;
@@ -477,6 +502,7 @@ function generateNoTaskHtml() {
         </div>
     `;
 }
+
 
 
 /**

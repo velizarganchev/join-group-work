@@ -25,10 +25,10 @@
                     <h1>Board</h1>
                 </div>
                 <div class="action-container">
-                    <form onsubmit="search(); return false;">
-                        <input type="text" placeholder="Find Task">
+                    <form onsubmit="search(event)">
+                        <input id="search-text" type="text" minlength="3" required placeholder="Find Task">
                         <img src="../assets/img/board/vector3.svg" alt="Vector">
-                        <button type="submit" class="search-button">
+                        <button id="search-button" class="search-button-container">
                             <img src="../assets/img/board/search.svg" alt="Search">
                         </button>
                     </form>
