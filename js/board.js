@@ -40,7 +40,7 @@ let tasks = [
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
-        priority: 'Medium',
+        priority: 'Urgent',
         subtasks: [
             {
                 name: 'Implement Recipe Recommendation',
@@ -72,7 +72,7 @@ let tasks = [
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
-        priority: 'Medium',
+        priority: 'Low',
         subtasks: [
             {
                 name: 'Implement Recipe Recommendation',
@@ -112,7 +112,7 @@ let tasks = [
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation',
         date: new Date().getTime(),
-        priority: 'Medium',
+        priority: 'Low',
         subtasks: [
             {
                 name: 'Start Page Layout',
@@ -207,6 +207,7 @@ function generateTaskHtml(task) {
 
     let contactsHtml = task.contacts.map(generateContactHtml).join('');
     let subtasksHtml = task.subtasks.map(generateSubtaskHtml).join('');
+    let priorityIcon = generatePriorityIcon(task.priority);
 
     return /*html*/ `
         <!-- HTML content for the task pop-up -->
@@ -217,8 +218,7 @@ function generateTaskHtml(task) {
                 <button class="pop-up-close-button" onclick="closeTask()">
                     <img src="../assets/img/board/close-task.svg" alt="Close">
                 </button>
-            </div>
-            
+            </div>        
             <!-- Task title and subtitle -->
             <div class="pop-up-task-title">
                 <h2>${task.title}</h2>
@@ -226,7 +226,6 @@ function generateTaskHtml(task) {
             <div class="pop-up-task-subtitle">
                 <p>${task.description}</p>
             </div>
-            
             <!-- Task date and priority -->
             <div class="pop-up-task-date">
                 <span>Due date:</span>
@@ -236,10 +235,9 @@ function generateTaskHtml(task) {
                 <span>Priority:</span>
                 <button class="pop-up-task-priority-button">
                     <span>${task.priority}</span>
-                    <img src="../assets/img/board/pop-up-prio-media.svg" alt="">
+                    ${priorityIcon}
                 </button>
             </div>
-            
             <!-- Assigned contacts -->
             <div class="pop-up-task-contacts-container">
                 <p>Assigned to:</p>
@@ -248,8 +246,7 @@ function generateTaskHtml(task) {
                     ${contactsHtml}
                     <!-- Additional contacts go here -->
                 </div>
-            </div>
-            
+            </div>          
             <!-- Subtasks section -->
             <div class="pop-up-task-subtasks-container">
                 <p>Subtasks:</p>
@@ -258,8 +255,7 @@ function generateTaskHtml(task) {
                     ${subtasksHtml}
                     <!-- Additional subtasks go here -->
                 </div>
-            </div>
-            
+            </div>  
             <!-- Footer with task actions -->
             <div class="pop-up-task-footer">
                 <button>
@@ -425,7 +421,8 @@ function checkColumnForTasks(column) {
  * @returns {string} - The HTML string representing the task card.
  */
 function generateCardHtml(cardId, task) {
-    if (task)
+    let priorityIcon = generatePriorityIcon(task.priority);
+    if (task) {
         return /*html*/ `
         <div class="card-container" onclick="openTask(${task.id})" draggable="true" ondragstart="startDragging(${task.id})" id="${cardId}">
             <button class="card-label">${task.category}</button>
@@ -438,14 +435,33 @@ function generateCardHtml(cardId, task) {
                 <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>
             </div>
             <div class="card-footer">
-                <div class="profiles" id="tasksProfiles${task.id}">
-                </div>
+                <div class="profiles" id="tasksProfiles${task.id}"></div>
                 <div class="priority-container">
-                    <img src="../assets/img/board/prio-media.svg" alt="Priority Icon">
+                    ${priorityIcon}
                 </div>
             </div>
         </div>
     `;
+    }
+}
+
+
+/**
+ * Generates HTML for a priority icon based on the specified priority level.
+ *
+ * @param {string} priority - The priority level ('Low', 'Medium', or 'Urgent').
+ * @returns {string} - The HTML string representing the priority icon.
+ */
+function generatePriorityIcon(priority) {
+    console.log(priority);
+    switch (priority) {
+        case 'Low':
+            return /*html*/`<img src="../assets/img/board/prio-low.svg" alt="Priority Icon">`;
+        case 'Medium':
+            return /*html*/`<img src="../assets/img/board/prio-medium.svg" alt="Priority Icon">`;
+        case 'Urgent':
+            return /*html*/`<img src="../assets/img/board/prio-urgent.svg" alt="Priority Icon">`;
+    }
 }
 
 
@@ -457,7 +473,7 @@ function generateCardHtml(cardId, task) {
 function generateNoTaskHtml() {
     return /*html*/ `
         <div class="no-task-card-container">
-            <h3>No tasks To do</h3>
+            <h3>No tasks</h3>
         </div>
     `;
 }
