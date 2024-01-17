@@ -193,12 +193,57 @@
     cursor:pointer;
 }
 
-.subtasks{
-    background: url('/assets/img/subtasks.png') no-repeat scroll 96% 50%;
+.subtaskInput{
+    border: 1px solid rgb(209, 209, 209);
+    border-radius:10px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    z-index:999px;
 }
 
-.subtasks:hover{
-    cursor:pointer;
+.subtaskImg{
+    width:20px;
+    height:20px;
+    margin-right:2px;
+    z-index:999;
+}
+
+.subtaskImg:hover{
+    box-shadow: 1px 1px 10px black;
+}
+
+.subtasksImgagesContainer{
+    display:flex;
+    margin-right:8px;
+}
+
+.verticalLine{
+    width:2px;
+    height:20px;
+    background-color:rgb(209, 209, 209);
+    margin:0 4px 0 0;
+}
+
+.subtasks{
+    border:none !important;
+    padding: 12px 21px;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    outline:unset;
+}
+
+.overlay{
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:1;
+    height:100vh;
+    width:100vw;
 }
 
 .arrowdown{ 
@@ -312,4 +357,38 @@
   
   ::-webkit-scrollbar-button:single-button:vertical:increment {
     background-image: url('/assets/img/arrow_down.png');
+  }
+
+  .simulateSelectElement{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border:1px solid rgb(209, 209, 209);
+    border-radius:10px;
+    padding:12px;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    color:rgb(209, 209, 209);
+  }
+
+  .categories{
+    position:absolute;
+    top:600px;
+    width:440px;
+    z-index:999;
+    background-color: rgb(255, 255, 255);
+    margin-top:-10px;
+  }
+
+  .category{
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    border-radius:10px;
+    padding-top:8px;
+  }
+
+  .category:hover{
+    background-color:rgb(240, 240, 240);
   }

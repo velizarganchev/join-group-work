@@ -1,4 +1,4 @@
-const contacts = [
+let contacts = [
   {
     name: "Alice Smith",
     email: "alice@example.com",
@@ -86,6 +86,7 @@ const contacts = [
 async function initContacts() {
   checkLogInStatus();
   await init('contacts');
+//   await loadContactsFromServer();
   renderContactBook();
 }
 
@@ -431,7 +432,7 @@ function createContact() {
   
     createLoadingAnimation(saveButton);
   
-    setTimeout(function () {
+    setTimeout(async function () {
       const newContact = {
         name: name,
         email: email,
@@ -439,7 +440,7 @@ function createContact() {
         color: generateRandomColor(),
       };
   
-      addContactAndRender(newContact);
+      await addContactAndRender(newContact);
       closePopUpWithConfirmation();
       resetSaveButton(saveButton);
   
@@ -475,8 +476,9 @@ function resetSaveButton(saveButton) {
  *
  * @param {Object} newContact - The new contact to be added.
  */
-function addContactAndRender(newContact) {
+async function addContactAndRender(newContact) {
     contacts.push(newContact);
+    await setItemContacts("contacts", JSON.stringify(contacts));
     renderContactBook();
 }
 
@@ -506,7 +508,7 @@ function generateRandomColor() {
 
 
 /**
- * Displays a confirmation message and hides it after 2 seconds.
+ * Displays a confirmation message and hides it.
  */
 function showConfirmationMessage() {
     const confirmationMessage = document.getElementById("confirmationMessage");
@@ -543,7 +545,7 @@ function editContact() {
 /**
  * Saves the edited contact information, updates the contact book, and shows the edited contact details.
  */
-function saveEditedContact() {
+async function saveEditedContact() {
     const editedName = document.getElementById("editName").value;
     const editedEmail = document.getElementById("editEmail").value;
     const editedPhone = document.getElementById("editPhone").value;
@@ -554,6 +556,8 @@ function saveEditedContact() {
     contacts[index].name = editedName;
     contacts[index].email = editedEmail;
     contacts[index].phone = editedPhone;
+
+    await setItemContacts("contacts", JSON.stringify(contacts));
 
     closePopUp();
 
@@ -566,7 +570,7 @@ function saveEditedContact() {
 /**
  * Deletes the selected contact, updates the contacts array, and re-renders the contact book.
  */
-function deleteContact() {
+async function deleteContact() {
     const selectedContactItem = document.querySelector(".selectedContact");
     const detailView = document.getElementById("contactDetailsView");
 
@@ -577,9 +581,57 @@ function deleteContact() {
 
         contacts.splice(index, 1);
 
+        await setItemContacts("contacts", JSON.stringify(contacts));
+
         closePopUp();
         renderContactBook();
         
         detailView.style.display = "none";
     }
 }
+
+/*
+
+/**
+ * Stores data on the server using the specified key.
+ *
+ * @param {string} key - The key under which the data will be stored.
+ * @param {string} value - The data to be stored.
+ * @returns {Promise} - A promise that resolves to the server response in JSON format.
+ */
+async function setItemContacts(key, value) {
+    const payload = { key, value, token: STORAGE_TOKEN };
+    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) }).then((res) => res.json());
+}
+
+// /**
+//  * Retrieves data from the server using the specified key.
+//  *
+//  * @param {string} key - The key for which data is to be retrieved.
+//  * @returns {Promise} - A promise that resolves to the retrieved data value from the server.
+//  */
+// async function getItemContacts(key) {
+//     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+//     return fetch(url).then((res) => res.json()).then((res) => res.data.value);
+// }
+
+// /**
+//  * Loads contacts from the server and updates the local 'contacts' array.
+//  */
+// async function loadContactsFromServer() {
+//     try {
+//         contacts = JSON.parse(await getItemContacts("contacts"));
+//     } catch (e) {
+//       console.error("Loading error:", e);
+//     }
+// }
+
+// /**
+//  * Saves a new contact to the server and updates the local 'contacts' array.
+//  *
+//  * @param {Object} newContact - The contact object to be saved.
+//  */
+// async function saveContactsToServer(newContact) {
+//     contacts.push(newContact);
+//     await setItemContacts("contacts", JSON.stringify(contacts));
+// }

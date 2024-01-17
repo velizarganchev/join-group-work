@@ -5,10 +5,14 @@ async function initSummary() {
     checkLogInStatus();
     await init('summary');
     renderWelcomeMessage();
-    renderTasksInBoard();
+    renderTasksInToDo();
+    renderTasksDone();
     sortTasks();
     renderUpcomingPrio();
     renderUpcomingDate();
+    renderTasksInBoard();
+    renderTasksInProgress();
+    renderTasksAwaitingFeedback();
 }
 
 
@@ -44,7 +48,7 @@ function renderWelcomeMessage() {
  */
 function renderTasksInBoard() {
     let tasksInBoard = document.getElementById('tasks-amount');
-    let tasksAmount = allTasks.length;
+    let tasksAmount = tasks.length; //tasks --> allTasks
     tasksInBoard.innerHTML = tasksAmount;
 }
 
@@ -53,7 +57,7 @@ function renderTasksInBoard() {
  * Sorts the tasks beginning with the latest task.
  */
 function sortTasks() {
-    allTasks.sort(function(a, b) {
+    tasks.sort(function(a, b) { //tasks --> allTasks
         return new Date(a.date) - new Date(b.date);
     });
 }
@@ -63,12 +67,12 @@ function sortTasks() {
  * Renders the upcoming task and its priority.
  */
 function renderUpcomingPrio() {
-    // let upcomingPrio = document.getElementById('upcoming-prio');
-    let prio = allTasks[0]['prio'];
-    let upcomingDate = allTasks[0]['date'];
-    let upcomingTasksAmount = allTasks.filter(t => t['date'] == upcomingDate).length;
+    let upcomingPrio = document.getElementById('upcoming-prio');
+    let prio = tasks[0]['priority']; //tasks --> allTasks
+    let upcomingDate = tasks[0]['date']; //tasks --> allTasks
+    let upcomingTasksAmount = tasks.filter(t => t['date'] == upcomingDate).length; //tasks --> allTasks
     let upcomingTasks = document.getElementById('upcoming-tasks-amount');
-    // upcomingPrio.innerHTML = prio;
+    upcomingPrio.innerHTML = prio;
     changeImageSource('upcoming-prio-image', `/assets/img/Prio${prio}White.png`);
     toggleClass('upcoming-prio-image-wrapper', `prio-${prio}`);
     upcomingTasks.innerHTML = upcomingTasksAmount;
@@ -79,10 +83,56 @@ function renderUpcomingPrio() {
  * Renders the due date of the upcoming task.
  */
 function renderUpcomingDate() {
-    let date = new Date(allTasks[0]['date']);
+    let date = new Date(tasks[0]['date']); //tasks --> allTasks
     let formattedMonth = date.toLocaleString('default', {month: 'long'});
     let year = date.getFullYear();
     let day = date.getDate();
-    let upcomingDate = document.getElementById('upcoming-deadline');
-    upcomingDate.innerHTML = day + ' ' + formattedMonth + ',' + ' ' + year;
+    let upcomingDate = document.getElementById('upcoming-date');
+    let upcomingMessage = document.getElementById('upcoming-message');
+    if (date > new Date().toISOString().split('T')[0]) {
+        upcomingDate.innerHTML = day + ' ' + formattedMonth + ',' + ' ' + year;
+        upcomingMessage.innerHTML = "Upcoming deadline"
+    } else {
+        upcomingMessage.innerHTML = "You don't have any upcoming deadlines"
+    }
+}
+
+
+/**
+ * Renders the amount of tasks which are in progress.
+ */
+function renderTasksInProgress() {
+    let tasksInProgress = document.getElementById('in-progress-amount');
+    let tasksAmount = tasks.filter(t => t['colum'] == 'in-progress').length; //tasks --> allTasks
+    tasksInProgress.innerHTML = tasksAmount;
+}
+
+
+/**
+ * Renders the amount of tasks which await feedback.
+ */
+function renderTasksAwaitingFeedback() {
+    let tasksAwaitingFeedback = document.getElementById('awaiting-feedback-amount');
+    let tasksAmount = tasks.filter(t => t['colum'] == 'awaiting-feedback').length; //tasks --> allTasks
+    tasksAwaitingFeedback.innerHTML = tasksAmount;
+}
+
+
+/**
+ * Renders the amount of tasks which have to be done.
+ */
+function renderTasksInToDo() {
+    let tasksToDo = document.getElementById('to-do-amount');
+    let tasksAmount = tasks.filter(t => t['colum'] == 'todo').length; //tasks --> allTasks
+    tasksToDo.innerHTML = tasksAmount;
+}
+
+
+/**
+ * Renders the amount of tasks which are done.
+ */
+function renderTasksDone() {
+    let tasksDone = document.getElementById('done-amount');
+    let tasksAmount = tasks.filter(t => t['status'] == 'done').length; //tasks --> allTasks
+    tasksDone.innerHTML = tasksAmount;
 }

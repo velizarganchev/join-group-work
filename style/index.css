@@ -72,6 +72,7 @@
 }
 
 footer {
+    text-wrap: nowrap;
     position: fixed;
     top: 90%;
     left: 50%;
@@ -188,7 +189,7 @@ form input:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 630px;
+    height: 627px;
     width: 598px;
     border-radius: 30px;
     padding: 48px 88px;
@@ -214,14 +215,22 @@ form input:focus {
 .arrow-left {
     border: unset;
     position: absolute;
-    top: 12%;
-    left: 12%;
+    top: 10%;
+    left: 10%;
     cursor: pointer;
     padding: 0;
     background-color: transparent;
 }
 
 #password-message {
+    color: #FF8190;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    align-self: flex-start;
+}
+
+#error-message {
     color: #FF8190;
     font-size: 12px;
     font-family: 'Poppins', sans-serif;
@@ -250,7 +259,7 @@ form input:focus {
 .confirmation-message {
     background-color: #2A3647;
     position: fixed;
-    bottom: -10%;
+    bottom: -13%;
     left: 50%;
     transform: translate(-50%);
     z-index: 2;
@@ -260,6 +269,7 @@ form input:focus {
     padding: 20px;
     border-radius: 20px;
     margin: 0;
+    text-wrap: nowrap;
 }
 
 #confirmation-wrapper {
