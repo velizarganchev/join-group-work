@@ -1,4 +1,4 @@
-const contacts = [
+let contacts = [
   {
     name: "Alice Smith",
     email: "alice@example.com",
@@ -506,7 +506,7 @@ function generateRandomColor() {
 
 
 /**
- * Displays a confirmation message and hides it after 2 seconds.
+ * Displays a confirmation message and hides it.
  */
 function showConfirmationMessage() {
     const confirmationMessage = document.getElementById("confirmationMessage");
