@@ -93,18 +93,13 @@
                         </div>
                 </div>
                 <div class="Subcontent">
-                    <div>
-                        <div id="Category" class="simulateSelectElement hover" onclick="getAllCategories(id)">Select task category<img src="/assets/img/+.png"></div>
+                    <div class="CategoryInputContainer hover" onclick="getAllCategories(id)">
+                        <div id="Category" class="simulateSelectElement">Select task category</div><div id="+"><img src="/assets/img/+.png"></div>
                     </div>
                     <div id="categories" class="categories d-none">
-                        <div class="category hover" onclick="setCategory(1)">Technical Task</div>
-                        <div class="category category2 hover" onclick="setCategory(2)">User Story</div>
+                        <div class="category hover" onclick="setCategory('Technical Task')">Technical Task</div>
+                        <div class="category category2 hover" onclick="setCategory('User Story')">User Story</div>
                     </div>
-                    <!-- <select required id="category" class="selection hover arrowdown" onclick="getAllCategories('category')" placeholder="Select task category">
-                        <option value="" disabled selected hidden>Select task category</option>
-                        <option class="selectionOption margin-top hover">Technical Task</option>
-                        <option class="selectionOption hover">User Story</option>
-                    </select> -->
                 </div>
             </div>
             <div id="SubtasksContent">
@@ -115,17 +110,16 @@
                     <div class="subtaskInput">
                         <input id="subtask" class="Inputfield subtasks" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
                         <div class="subtasksImgagesContainer">
-                            <img id="+" class="subtaskImg hover" src="/assets/img/+.png">
+                            <img id="plus" class="subtaskImg hover" src="/assets/img/+.png">
                             <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
                             <div class="d-none verticalLine" id="verticalLine"></div>
                             <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
                         </div>
                     </div>
                     <div id="overlay" class="overlay d-none" onclick="activateAndDeactivateSubtaskInput()">
-
                     </div>
                     <div >
-                        <ul id="subTaskList">
+                        <ul class="subTaskList" id="subTaskList">
 
                         </ul>
                     </div>

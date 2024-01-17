@@ -1,6 +1,5 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
 
-
 /**
  * Initializes certain functions once the body of the page has fully loaded.
  */
@@ -9,8 +8,6 @@ async function initAddTask() {
     await init('add-task');
     minDate();
 }
-
-
 
 /** changes the HTML back to standard (=no Prio chosen)
  * 
@@ -87,13 +84,12 @@ function changeColorOfPrio(Prio, i){
  * This function toggles the Images from the Subtask Input
  */
 function activateAndDeactivateSubtaskInput(){
-    let task = document.getElementById('subtask').value
-        document.getElementById('+').classList.toggle('d-none'); //toggleClass('+', 'd-none');
-        document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
-        document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
-        document.getElementById('hook').classList.toggle('d-none'); //toggleClass('hook', 'd-none');
-        document.getElementById('overlay').classList.toggle('d-none'); //toggleClass('overlay', 'd-none');
-        cancelSubtask();
+    document.getElementById('plus').classList.toggle('d-none'); //toggleClass('+', 'd-none');
+    document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
+    document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
+    document.getElementById('hook').classList.toggle('d-none'); //toggleClass('hook', 'd-none');
+    document.getElementById('overlay').classList.toggle('d-none'); //toggleClass('overlay', 'd-none');
+    cancelSubtask();
 }
 
 /**
@@ -107,24 +103,29 @@ function cancelSubtask(){
  * this function adds new Subtasks to a List and to an Array
  */
 function addSubtask(){
+    let subtasks = [];
     let task = document.getElementById('subtask').value;
-    document.getElementById('subTaskList').innerHTML += `<li>${task}</li>`;
+    document.getElementById('subTaskList').innerHTML += `<li>${task} <a class="deletebutton hover" type="text" onclick="deleteSubtask()">delete</a></li>`;
     allSubtasks.push(task);
     activateAndDeactivateSubtaskInput();
     cancelSubtask();
 }
 
+function deleteSubtask(){
+    alert('test');
+}
 
 /**
  * collects the values of all inputs
  */
 function getAllInputs(){ // Json auslagern -> funktioniert nicht..
+    let id = 1;
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = document.getElementById('assignedToSelect').value;
     let date = document.getElementById('date').value;
     let prio = currentchosenPrio;
-    let category = document.getElementById('category').value;
+    let category = document.getElementById('Category').innerHTML;
     let contacts= [];
     const task = {
         'id': id, //dynamisch
@@ -171,7 +172,7 @@ function clearForm(){
     document.getElementById('description').value = '';
     document.getElementById('assignedToSelect').value = '';;
     document.getElementById('date').value = '';
-    document.getElementById('category').value = '';
+    document.getElementById('Category').value = '';
     document.getElementById('subtask').value = '';
     resetPrio();
 }
@@ -313,30 +314,21 @@ function filterContacts(){
     }
 }
 
-function checkBoxesAtSecondOpening(){
-
-}
-
-function setCategory(category){ //Var. einfügen flip the image funktionsfähig machen
+/**
+ * this function sets the category
+ * @param {string} category - sends the Category to this functions
+ */
+function setCategory(category){ 
     let chosenCategory = document.getElementById('Category');
-    chosenCategory.innerHTML = `${category}<img src="/assets/img/+.png">`;
-    // flipTheImage(id);
+    chosenCategory.innerHTML = `${category}`;
+    document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('Category').setAttribute('style','color:black')
 }
 
-function getAllCategories(id){
-    // flipTheImage(id);
-    document.getElementById('categories').classList.toggle('d-none');
-    // validateCategory();    
-}
-
-function validateCategory() {
-    var categorySelect = document.getElementById('category');
-
-    if (categorySelect.value === '') {
-        categorySelect.setCustomValidity('Please select a task category');
-    } else {
-        categorySelect.setCustomValidity('');
-    }
+/**
+ * This function toggles a list of all possible categorys
+ */
+function getAllCategories(){
+    document.getElementById('categories').classList.toggle('d-none');  
 }
