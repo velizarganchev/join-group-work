@@ -318,6 +318,26 @@ function checkBoxesAtSecondOpening(){
 
 }
 
+function setCategory(category){ //Var. einfügen flip the image funktionsfähig machen
+    let chosenCategory = document.getElementById('Category');
+    chosenCategory.innerHTML = `${category}<img src="/assets/img/+.png">`;
+    // flipTheImage(id);
+    document.getElementById('categories').classList.toggle('d-none');
+    document.getElementById('Category').setAttribute('style','color:black')
+}
+
 function getAllCategories(id){
-    flipTheImage(id);
+    // flipTheImage(id);
+    document.getElementById('categories').classList.toggle('d-none');
+    // validateCategory();    
+}
+
+function validateCategory() {
+    var categorySelect = document.getElementById('category');
+
+    if (categorySelect.value === '') {
+        categorySelect.setCustomValidity('Please select a task category');
+    } else {
+        categorySelect.setCustomValidity('');
+    }
 }

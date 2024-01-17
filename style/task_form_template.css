@@ -358,3 +358,37 @@
   ::-webkit-scrollbar-button:single-button:vertical:increment {
     background-image: url('/assets/img/arrow_down.png');
   }
+
+  .simulateSelectElement{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border:1px solid rgb(209, 209, 209);
+    border-radius:10px;
+    padding:12px;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    color:rgb(209, 209, 209);
+  }
+
+  .categories{
+    position:absolute;
+    top:600px;
+    width:440px;
+    z-index:999;
+    background-color: rgb(255, 255, 255);
+    margin-top:-10px;
+  }
+
+  .category{
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    border-radius:10px;
+    padding-top:8px;
+  }
+
+  .category:hover{
+    background-color:rgb(240, 240, 240);
+  }

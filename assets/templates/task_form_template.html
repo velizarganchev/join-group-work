@@ -93,11 +93,18 @@
                         </div>
                 </div>
                 <div class="Subcontent">
-                    <select required id="category" class="selection hover arrowdown" onclick="getAllCategories('category')" value="Select task category">
-                        <option class="selectionOption" value="">Select contacts to assign</option>
-                        <option class="selectionOption">1</option>
-                        <option class="selectionOption">2</option>
-                    </select>
+                    <div>
+                        <div id="Category" class="simulateSelectElement hover" onclick="getAllCategories(id)">Select task category<img src="/assets/img/+.png"></div>
+                    </div>
+                    <div id="categories" class="categories d-none">
+                        <div class="category hover" onclick="setCategory(1)">Technical Task</div>
+                        <div class="category category2 hover" onclick="setCategory(2)">User Story</div>
+                    </div>
+                    <!-- <select required id="category" class="selection hover arrowdown" onclick="getAllCategories('category')" placeholder="Select task category">
+                        <option value="" disabled selected hidden>Select task category</option>
+                        <option class="selectionOption margin-top hover">Technical Task</option>
+                        <option class="selectionOption hover">User Story</option>
+                    </select> -->
                 </div>
             </div>
             <div id="SubtasksContent">
