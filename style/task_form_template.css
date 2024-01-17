@@ -153,7 +153,6 @@
     display:flex;
     justify-content: flex-end;
     gap:16px;
-    margin-top:130px;
 }
 
 .cancelButton{
@@ -206,7 +205,7 @@
     width:20px;
     height:20px;
     margin-right:2px;
-    z-index:999;
+    z-index:99;
 }
 
 .subtaskImg:hover{
@@ -285,6 +284,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(255,255,255,0.9);
+    z-index:999;
   }
 
   .ContainerForAllChosenContacts{
@@ -359,7 +359,7 @@
     background-image: url('/assets/img/arrow_down.png');
   }
 
-  .simulateSelectElement{
+  /* .simulateSelectElement{
     display:flex;
     justify-content: space-between;
     align-items: center;
@@ -369,6 +369,13 @@
     font-family: 'Inter',sans-serif;
     font-size: 20px;
     font-style: normal;
+    color:rgb(209, 209, 209);
+  } */
+
+  .deletebutton{
+    border-radius:10px;
+    padding:2px;
+    border:2px solid rgb(209, 209, 209);
     color:rgb(209, 209, 209);
   }
 
@@ -391,4 +398,28 @@
 
   .category:hover{
     background-color:rgb(240, 240, 240);
+  }
+
+  .CategoryInputContainer{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border:1px solid rgb(209, 209, 209);
+    border-radius:10px;
+    padding:12px;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    color:rgb(209, 209, 209);
+    height:56px;
+  }
+
+  .subTaskList{
+    height:200px;
+    overflow-y:scroll;
+  }
+
+  .subTaskList li{
+    margin-top:16px;
+    margin-bottom:16px;
   }

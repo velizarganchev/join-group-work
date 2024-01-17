@@ -1,6 +1,5 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
 
-
 /**
  * Initializes certain functions once the body of the page has fully loaded.
  */
@@ -9,8 +8,6 @@ async function initAddTask() {
     await init('add-task');
     minDate();
 }
-
-
 
 /** changes the HTML back to standard (=no Prio chosen)
  * 
@@ -87,13 +84,12 @@ function changeColorOfPrio(Prio, i){
  * This function toggles the Images from the Subtask Input
  */
 function activateAndDeactivateSubtaskInput(){
-    let task = document.getElementById('subtask').value
-        document.getElementById('+').classList.toggle('d-none'); //toggleClass('+', 'd-none');
-        document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
-        document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
-        document.getElementById('hook').classList.toggle('d-none'); //toggleClass('hook', 'd-none');
-        document.getElementById('overlay').classList.toggle('d-none'); //toggleClass('overlay', 'd-none');
-        cancelSubtask();
+    document.getElementById('plus').classList.toggle('d-none'); //toggleClass('+', 'd-none');
+    document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
+    document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
+    document.getElementById('hook').classList.toggle('d-none'); //toggleClass('hook', 'd-none');
+    document.getElementById('overlay').classList.toggle('d-none'); //toggleClass('overlay', 'd-none');
+    cancelSubtask();
 }
 
 /**
@@ -107,24 +103,29 @@ function cancelSubtask(){
  * this function adds new Subtasks to a List and to an Array
  */
 function addSubtask(){
+    // let subtasks = [];
     let task = document.getElementById('subtask').value;
-    document.getElementById('subTaskList').innerHTML += `<li>${task}</li>`;
+    document.getElementById('subTaskList').innerHTML += `<li>${task} <a class="deletebutton hover" type="text" onclick="deleteSubtask()">delete</a></li>`;
     allSubtasks.push(task);
     activateAndDeactivateSubtaskInput();
     cancelSubtask();
 }
 
+function deleteSubtask(){
+    alert('test');
+}
 
 /**
  * collects the values of all inputs
  */
 function getAllInputs(){ // Json auslagern -> funktioniert nicht..
+    let id = allTasks.length +1; // Aufgaben dürfen erst aus allTasks gelöscht werden,wenn sie abgeschlossen sind!!
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = document.getElementById('assignedToSelect').value;
     let date = document.getElementById('date').value;
     let prio = currentchosenPrio;
-    let category = document.getElementById('category').value;
+    let category = document.getElementById('Category').innerHTML;
     let contacts= [];
     const task = {
         'id': id, //dynamisch
@@ -171,7 +172,7 @@ function clearForm(){
     document.getElementById('description').value = '';
     document.getElementById('assignedToSelect').value = '';;
     document.getElementById('date').value = '';
-    document.getElementById('category').value = '';
+    document.getElementById('Category').value = '';
     document.getElementById('subtask').value = '';
     resetPrio();
 }
@@ -215,128 +216,21 @@ function flipTheImage(id){
     document.getElementById(`${id}`).classList.toggle('arrowup');
 }
 
-function getAllContacts(id){
-    flipTheImage(id);
-    document.getElementById('ContainerForAllPossibleContacts').classList.toggle('d-none');
-    generateContactsContainer();
-}
-
-function generateContactsContainer(){
-    let contactsContainer = document.getElementById('ContainerForAllPossibleContacts');
-    contactsContainer.innerHTML = '';
-    for (let i = 0; i < contacts.length; i++){
-        generateContactsCirle(contactsContainer, i);
-    }
-}
-
-function generateContactsCirle(contactsContainer, i){
-    let color = contacts[i]['color'];
-    let contact = contacts[i]['name'];
-    let firstLetterName = contact;
-    firstLetterName = firstLetterName.toUpperCase().slice(0,1);
-    let firstLetterLastName = contact.toUpperCase().slice(contact.lastIndexOf(' ')+1,contact.lastIndexOf(' ')+2);
-    let circle = generateCircle(i, firstLetterName, firstLetterLastName);
-    generateContactsHTML(contactsContainer, i, contact, color, circle);
-}
-
-function generateContactsHTML(contactsContainer, i, contact, color, circle){
-    contactsContainer.innerHTML += `
-    <div class="ContentContacts">
-        <div id="contactCircle${i}" class="contact hover">
-            ${circle}
-            <div>${contact}</div>
-        </div>
-        <div id="checkbox">
-            <input type="checkbox" id="checkboxFor${i}" class="checkboxes hover" onclick="safeContact(${i})">
-        </div>
-    </div>`;
-    document.getElementById(`circle${i}`).style = `background-color:${color}`;
-}
-
-function generateCircle(i, firstLetterName, firstLetterLastName){
-    return `
-    <div id="circle${i}" class="circle">${firstLetterName}${firstLetterLastName}</div>
-    `;
-}
-
-// let chosenContactsForTask = [];
-// function safeContact(id){
-//     let checkbox = document.getElementById(`checkboxFor${id}`).checked;
-//     let chosenContact = document.getElementById('ContainerForAllChosenContacts');
-//     if(checkbox){
-//         addChosenContact(id, chosenContact);
-//     }else{
-//         deletechosenContact(id, chosenContact);
-//     }
-// }
-
-// function addChosenContact(id, chosenContact){
-//     if(chosenContactsForTask.includes(id)){
-
-//     }
-//     else{
-//         chosenContactsForTask.push(id);
-//         chosenContact.innerHTML = '';
-//         for(let j = 0; j < chosenContactsForTask.length; j++){
-//             chosenContact.innerHTML += chosenContactsForTask[j];
-//         }
-//     }
-// }
-
-// function deletechosenContact(id, chosenContact){
-//     chosenContactsForTask.splice(id,1);
-//     chosenContact.innerHTML = '';
-//     for(let j = 0; j < chosenContactsForTask.length; j++){
-//         chosenContact.innerHTML += chosenContactsForTask[j];
-//     }
-// }
-
-function filterContacts(){
-    let search = document.getElementById('assignedToSelect').value;
-    search = search.toLowerCase();
-    let ContactList = document.getElementById('ContainerForAllPossibleContacts');
-    ContactList.innerHTML = '';
-    for(let i = 0; i < contacts.length; i++){
-        let name = contacts[i]['name'];
-        if (name.toLowerCase().includes(search)){
-            ContactList.innerHTML += `
-                <div class="ContentContacts">
-                    <div id="contactCircle${i}" class="contact hover">
-                        Kreis
-                        <div>${contacts[i]['name']}</div>
-                    </div>
-                    <div id="checkbox">
-                        <input type="checkbox" id="checkboxFor${i}" class="checkboxes hover" onclick="safeContact(${i})">
-                    </div>
-                </div>`;
-        }
-    }
-}
-
-function checkBoxesAtSecondOpening(){
-
-}
-
-function setCategory(category){ //Var. einfügen flip the image funktionsfähig machen
+/**
+ * this function sets the category
+ * @param {string} category - sends the Category to this functions
+ */
+function setCategory(category){ 
     let chosenCategory = document.getElementById('Category');
-    chosenCategory.innerHTML = `${category}<img src="/assets/img/+.png">`;
-    // flipTheImage(id);
+    chosenCategory.innerHTML = `${category}`;
+    document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('Category').setAttribute('style','color:black')
 }
 
-function getAllCategories(id){
-    // flipTheImage(id);
-    document.getElementById('categories').classList.toggle('d-none');
-    // validateCategory();    
-}
-
-function validateCategory() {
-    var categorySelect = document.getElementById('category');
-
-    if (categorySelect.value === '') {
-        categorySelect.setCustomValidity('Please select a task category');
-    } else {
-        categorySelect.setCustomValidity('');
-    }
+/**
+ * This function toggles a list of all possible categorys
+ */
+function getAllCategories(){
+    document.getElementById('categories').classList.toggle('d-none');  
 }
