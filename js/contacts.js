@@ -320,7 +320,7 @@ function renderContactDetails(contact, toEdit) {
                 ${calculateContactInitials(contact.name.split(" "))}
             </div>
             <div class="contactDetailsNameAndButtons">
-                <div class="contactDetailsName">${contact.name}</div>
+                <div class="contactDetailsNameFull">${contact.name}</div>
                 <div class="contactNameIcons">
                     ${renderEditDeleteButtons()}
                 </div>
