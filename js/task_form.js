@@ -1,5 +1,5 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
-
+let subtasks = [];
 /**
  * Initializes certain functions once the body of the page has fully loaded.
  */
@@ -100,19 +100,41 @@ function cancelSubtask(){
 }
 
 /**
- * this function adds new Subtasks to a List and to an Array
+ * This function adds a new subtask to the Array "subtasks"
  */
 function addSubtask(){
-    // let subtasks = [];
     let task = document.getElementById('subtask').value;
-    document.getElementById('subTaskList').innerHTML += `<li>${task} <a class="deletebutton hover" type="text" onclick="deleteSubtask()">delete</a></li>`;
-    allSubtasks.push(task);
+    subtasks.push(task);
+    showSubtasksafterAddingATask();
+}
+
+/**
+ * This function generates and displays the Content of the Array "subtasks"
+ */
+function showSubtasks(){
+    let subtasksList = document.getElementById('subTaskList');
+    subtasksList.innerHTML = '';
+    for (let i = 0; i < subtasks.length; i++){
+        subtasksList.innerHTML +=`<li>${subtasks[i]} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
+    }
+}
+/**
+ * This functions starts the Subtask adding process
+ */
+function showSubtasksafterAddingATask(){
+    showSubtasks();
     activateAndDeactivateSubtaskInput();
     cancelSubtask();
 }
 
-function deleteSubtask(){
-    alert('test');
+/**
+ * This function deletes a Subtasks from Array "subtasks" and displays the Array afterwards
+ * @param {int} i - id of the Subtasks
+ */
+function deleteSubtask(i){
+    subtasks.splice(i,1);
+    console.log(subtasks);
+    showSubtasks();
 }
 
 /**
