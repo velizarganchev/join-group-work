@@ -93,23 +93,78 @@
 
 @media (max-width: 820px) {
     .contactPageRightHeader {
-        left: 70%;
+        left: 71%;
     }
 
     #contactDetailsView {
-        left: 80%;
+        left: 85%;
     }
 
     #contactPageHeaderText {
         width: 110px;
     }
 
-    .contactDetails{
-        width: auto;
+    #contactPageHeaderName {
+        font-size: 40px;
+    }
+
+    .contactItem,
+    .contactItem:hover{
+        gap: 35px;
+    }
+
+    .contactDetails {
+        width: 159px;
     }
 
     .contactDetailsNameFull {
         height: auto;
         width: 260px;
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 665px) {
+    .contactPageRightHeader {
+        display: none;
+    }
+
+    #contactDetailsView {
+        display: none !important;
+    }
+
+    #contactOverview {
+        width: 100%;
+    }
+
+    #contactOverviewContent {
+        width: 100%;
+    }
+
+    .groupHeader {
+        padding: 17px 36px 17px 61px;
+    }
+
+    .contactItem,
+    .contactItem:hover,
+    .groupDivider {
+        width: 352px;
+    }
+}
+
+@media (max-width: 490px) {
+
+    .contactItem,
+    .contactItem:hover,
+    .contact-group {
+        width: 90%;
+    }
+
+    .groupHeader{
+        padding: 17px 36px 17px 45px;
+    }
+
+    .contact-group{
+        width: 320px;
     }
 }
