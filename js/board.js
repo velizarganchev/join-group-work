@@ -7,19 +7,22 @@ let tasks = [
         priority: 'Medium',
         subtasks: [
             {
+                id: 1,
                 name: 'Implement Recipe Recommendation',
-                done: true
+                done: false
             },
             {
+                id: 2,
                 name: 'Start Page Layout',
                 done: false
             },
             {
+                id: 3,
                 name: 'Start Page Layout',
-                done: true
+                done: false
             }
         ],
-        subtasksProgress: 1,
+        subtasksProgress: 0,
         category: 'User Story',
         colum: 'todo',
         contacts: [
@@ -43,15 +46,17 @@ let tasks = [
         priority: 'Urgent',
         subtasks: [
             {
+                id: 1,
                 name: 'Establish CSS Methodology',
                 done: false
             },
             {
+                id: 2,
                 name: 'Setup Base Styles',
                 done: false
             }
         ],
-        subtasksProgress: 1,
+        subtasksProgress: 0,
         category: 'User Story',
         colum: 'in-progress',
         contacts: [
@@ -75,23 +80,27 @@ let tasks = [
         priority: 'Low',
         subtasks: [
             {
+                id: 1,
                 name: 'Implement Recipe Recommendation',
                 done: false
             },
             {
+                id: 2,
                 name: 'Start Page Layout',
                 done: false
             },
             {
+                id: 3,
                 name: 'Start Page Layout',
                 done: false
             },
             {
+                id: 4,
                 name: 'Start Page Layout',
                 done: false
             },
         ],
-        subtasksProgress: 3,
+        subtasksProgress: 0,
         category: 'User Story',
         colum: 'in-progress',
         contacts: [
@@ -115,11 +124,12 @@ let tasks = [
         priority: 'Low',
         subtasks: [
             {
+                id: 1,
                 name: 'Start Page Layout',
                 done: false
             }
         ],
-        subtasksProgress: 1,
+        subtasksProgress: 0,
         category: 'User Story',
         colum: 'await-feedback',
         contacts: [
@@ -231,7 +241,7 @@ function openTask(taskId) {
 function generateTaskHtml(task) {
 
     let contactsHtml = task.contacts.map(generateContactHtml).join('');
-    let subtasksHtml = task.subtasks.map(generateSubtaskHtml).join('');
+    let subtasksHtml = task.subtasks.map(subtask => generateSubtaskHtml(subtask, task.id)).join('');
     let priorityIcon = generatePriorityIcon(task.priority);
 
     return /*html*/ `
@@ -288,7 +298,7 @@ function generateTaskHtml(task) {
                     <span>Delete</span>
                 </button>
                 <img src="../assets/img/board/pop-up-footer-vector 3.svg" alt="">
-                <button>
+                <button onclick="editTask(${task.id})">
                     <img src="../assets/img/board/pop-up-footer-edit.svg" alt="">
                     <span>Edit</span>
                 </button>
@@ -298,12 +308,52 @@ function generateTaskHtml(task) {
 }
 
 
+function editTask(taskId) {
+    let taskToEdit = getTask(taskId)
+}
+
+
+/**
+ * Changes the status of a subtask and updates the task's progress.
+ *
+ * @param {HTMLInputElement} status - The checkbox element representing the subtask status.
+ * @param {number} subtaskId - The unique identifier of the subtask.
+ * @param {number} taskId - The unique identifier of the task containing the subtask.
+ */
+function changeSubtaskStatus(status, subtaskId, taskId) {
+    let task = getTask(taskId);
+    let subtaskIndex = task.subtasks.findIndex(sb => sb.id === subtaskId);
+
+    if (status.checked) {
+        task.subtasks[subtaskIndex].done = true;
+        task.subtasksProgress++;
+    } else {
+        task.subtasks[subtaskIndex].done = false;
+        task.subtasksProgress--;
+    }
+
+    clearAllColumns();
+    renderTasks();
+}
+
+
+/**
+ * Retrieves a task based on its unique identifier.
+ *
+ * @param {number} id - The unique identifier of the task.
+ * @returns {Object} - The task object.
+ */
+function getTask(id) {
+    return tasks.find(t => t.id === id);
+}
+
+
 /**
  * Deletes a task with the specified ID.
  *
  * @param {number} id - The ID of the task to be deleted.
  */
-function deleteTask(id) {
+async function deleteTask(id) {
     // Retrieve the index of the task with the specified ID
     let taskToDelete = getTaskIndex(id);
 
@@ -314,6 +364,7 @@ function deleteTask(id) {
     clearAllColumns();
     renderTasks();
     closeTask();
+    //await setItem('AllTasks', tasks);
 }
 
 
@@ -348,10 +399,10 @@ function generateContactHtml(contact) {
  * @param {Object} subtask - The subtask object containing information.
  * @returns {string} - The HTML string representing the subtask.
  */
-function generateSubtaskHtml(subtask) {
+function generateSubtaskHtml(subtask, taskId) {//!!!!!!!!!!!!!!
     return  /*html*/ `
         <div class="pop-up-task-subtask">
-            <input type="checkbox" ${subtask.done ? 'checked' : ''} >
+            <input type="checkbox" onchange="changeSubtaskStatus(this, ${subtask.id}, ${taskId})" ${subtask.done ? 'checked' : ''} >
             <span>${subtask.name}</span>
         </div>`;
 }
