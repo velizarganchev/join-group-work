@@ -320,7 +320,7 @@ function renderContactDetails(contact, toEdit) {
                 ${calculateContactInitials(contact.name.split(" "))}
             </div>
             <div class="contactDetailsNameAndButtons">
-                <div class="contactDetailsName">${contact.name}</div>
+                <div class="contactDetailsNameFull">${contact.name}</div>
                 <div class="contactNameIcons">
                     ${renderEditDeleteButtons()}
                 </div>
@@ -397,11 +397,13 @@ function addContact() {
     let name = document.getElementById("name");
     let email = document.getElementById("email");
     let phone = document.getElementById("phone");
+    let responsiveButton = document.getElementById("responsiveAddContactButton");
 
     name.value = "";
     email.value = "";
     phone.value = "";
 
+    responsiveButton.style.zIndex = "-200";
     addContactOverlay.style.display = "flex";
 
     addContactOverlay.addEventListener("click", function(event) {
@@ -418,6 +420,7 @@ function addContact() {
 function closePopUp() {
     document.getElementById("addContactOverlay").style.display = "none";
     document.getElementById("editContactOverlay").style.display = "none";
+    document.getElementById("responsiveAddContactButton").style.zIndex = "1200";
 }
 
 
