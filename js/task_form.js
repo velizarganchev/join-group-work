@@ -84,6 +84,7 @@ function changeColorOfPrio(Prio, i){
  * This function toggles the Images from the Subtask Input
  */
 function activateAndDeactivateSubtaskInput(){
+    // document.getElementById('subTaskList').classList.toggle('d-none');
     document.getElementById('plus').classList.toggle('d-none'); //toggleClass('+', 'd-none');
     document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
     document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
@@ -104,6 +105,8 @@ function cancelSubtask(){
  */
 function addSubtask(){
     let task = document.getElementById('subtask').value;
+    document.getElementById('subTaskList').classList.remove('d-none');
+    document.getElementById('buttons').setAttribute('style', "margin-top:0");
     subtasks.push(task);
     showSubtasksafterAddingATask();
 }
@@ -133,8 +136,11 @@ function showSubtasksafterAddingATask(){
  */
 function deleteSubtask(i){
     subtasks.splice(i,1);
-    console.log(subtasks);
     showSubtasks();
+    if (subtasks.length == 0){
+        document.getElementById('buttons').setAttribute('style', "margin-top:232px");
+        document.getElementById('subTaskList').classList.add('d-none');
+    }
 }
 
 /**

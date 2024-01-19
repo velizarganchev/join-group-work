@@ -139,7 +139,7 @@
 }
 
 .requiredText{
-    margin-top:73px;
+    margin-top:200px;
     display:flex;
     color: #000;
     font-family: 'Inter', sans-serif;
@@ -153,6 +153,7 @@
     display:flex;
     justify-content: flex-end;
     gap:16px;
+    margin-top:232px;
 }
 
 .cancelButton{
@@ -198,14 +199,13 @@
     display:flex;
     justify-content: space-between;
     align-items:center;
-    z-index:999px;
 }
 
 .subtaskImg{
     width:20px;
     height:20px;
     margin-right:2px;
-    z-index:99;
+    z-index:999;
 }
 
 .subtaskImg:hover{
@@ -245,7 +245,7 @@
     bottom:0;
     left:0;
     right:0;
-    z-index:1;
+    z-index:900;
     height:100vh;
     width:100vw;
 }
@@ -292,6 +292,19 @@
     z-index:999;
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   .ContainerForAllChosenContacts{
     height:150px;
   }
@@ -329,10 +342,14 @@
     align-items:center;
 }
 
-.ContentContacts{
-    display: flex;
-    justify-content: space-between;
-    align-items:center;
+.contactbox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contactName{
+  margin-left:-130px;
 }
 
 .checkboxes{
@@ -341,7 +358,7 @@
     width:20px;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width:10px;
   }
 
@@ -362,7 +379,24 @@
   
   ::-webkit-scrollbar-button:single-button:vertical:increment {
     background-image: url('/assets/img/arrow_down.png');
-  }
+  } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   .deletebutton{
     border-radius:10px;

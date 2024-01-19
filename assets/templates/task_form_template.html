@@ -30,14 +30,18 @@
                         Assigned to
                     </div>
                 </div>
-                <div class="Subcontent">
-                    <input id="assignedToSelect" class="selection hover arrowdown" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
-                    <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts">
+                <div id="SubcontentContacts" class="Subcontent">
+                    <!-- <div> -->
+                        <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
+                        <!-- <img id="arrowdown" src="/assets/img/arrow_down.png">
+                    </div> -->
+                    <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts d-none">
                         
                     </div>
-                    <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts d-none">
+                    <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none">
                         
                     </div>
+                    <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
                 </div>
             </div>
             <div id="requiredText" class="requiredText">
@@ -107,8 +111,8 @@
                         Subtasks
                 </div>
                 <div class="Subcontent">
-                    <div class="subtaskInput">
-                        <input id="subtask" class="Inputfield subtasks" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
+                    <div id="subtaskInput" class="subtaskInput">
+                        <input id="subtask" class="Inputfield subtasks" autocomplete="off" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
                         <div class="subtasksImgagesContainer">
                             <img id="plus" class="subtaskImg hover" src="/assets/img/+.png">
                             <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
@@ -119,13 +123,13 @@
                     <div id="overlay" class="overlay d-none" onclick="activateAndDeactivateSubtaskInput()">
                     </div>
                     <div >
-                        <ul class="subTaskList" id="subTaskList">
+                        <ul class="subTaskList d-none" id="subTaskList">
 
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="buttons">
+            <div id="buttons" class="buttons">
                 <button type ="reset" class="cancelButton hover" onclick="resetPrio()">Clear <img src="/assets/img/cancel_dark.png"></button>
                 <button id="addTastButton" class="createTaskButton hover">Create Task <img src="/assets/img/confirm.png"></button>
             </div>
