@@ -42,9 +42,11 @@
             </button>
             <div class="contactLeft">
                 <img class="contactPopUpImage" src="/assets/img/join-logo.png" alt="join logo">
-                <p class="contactHeadline">Add contact</p>
-                <p id="addContactHeadlineText">Tasks are better with a team!</p>
-                <div class="contactHeaderLine"></div>
+                <div class="contactLeftText">
+                    <p class="contactHeadline">Add contact</p>
+                    <p id="addContactHeadlineText">Tasks are better with a team!</p>
+                    <div class="contactHeaderLine"></div>
+                </div>
             </div>
             <img id="addContactEmptyProfile" src="/assets/img/new-contact-icon.png" alt="new contact icon">
             <div class="contactRight">
@@ -73,7 +75,9 @@
             </div>
         </div>
     </div>
-
+    <div id="responsiveAddContactButton" onclick="addContact()">
+        <img src="/assets/img/add-contact.png" alt="add contact image">
+    </div>
     <div id="editContactOverlay">
         <div id="editContactPopUp">
             <button class="closeContactButton" type="button" onclick="closePopUp()">
