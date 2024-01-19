@@ -186,7 +186,6 @@ async function renderTasks(searchedTasks) {
 }
 
 
-
 /**
  * Searches tasks based on the entered search term and renders the matching tasks.
  *
@@ -284,7 +283,7 @@ function generateTaskHtml(task) {
             </div>  
             <!-- Footer with task actions -->
             <div class="pop-up-task-footer">
-                <button>
+                <button onclick="deleteTask(${task.id})">
                     <img src="../assets/img/board/pop-up-footer-delete.svg" alt="">
                     <span>Delete</span>
                 </button>
@@ -298,6 +297,35 @@ function generateTaskHtml(task) {
     `;
 }
 
+
+/**
+ * Deletes a task with the specified ID.
+ *
+ * @param {number} id - The ID of the task to be deleted.
+ */
+function deleteTask(id) {
+    // Retrieve the index of the task with the specified ID
+    let taskToDelete = getTaskIndex(id);
+
+    // Remove the task from the tasks array
+    tasks.splice(taskToDelete, 1);
+
+    // Clear all columns, render updated tasks, and close the task popup
+    clearAllColumns();
+    renderTasks();
+    closeTask();
+}
+
+
+/**
+ * Retrieves the index of a task in the tasks array based on its ID.
+ *
+ * @param {number} taskId - The ID of the task to find in the tasks array.
+ * @returns {number} - The index of the task in the tasks array.
+ */
+function getTaskIndex(taskId) {
+    return tasks.findIndex(t => t.id === taskId);
+}
 
 /**
  * Generates HTML for a contact in the pop-up task details.
@@ -375,7 +403,7 @@ function startDragging(id) {
  */
 function moveTo(columnId) {
     // Update the column value for the dragged task
-    tasks[currentDraggedElement - 1]['colum'] = columnId;
+    tasks[currentDraggedElement]['colum'] = columnId;
     // Clear all columns before re-rendering
     clearAllColumns();
     // Re-render tasks after moving
@@ -450,7 +478,7 @@ function generateCardHtml(cardId, task) {
     let priorityIcon = generatePriorityIcon(task.priority);
     if (task) {
         return /*html*/ `
-        <div class="card-container" onclick="openTask(${task.id})" draggable="true" ondragstart="startDragging(${task.id})" id="${cardId}">
+        <div class="card-container" onclick="openTask(${task.id})" draggable="true" ondragstart="startDragging(${getTaskIndex(task.id)})" id="${cardId}">
             <button class="card-label">${task.category}</button>
             <h3 class="card-title">${task.title}</h3>
             <p class="card-content">${task.description}</p>
