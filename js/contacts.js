@@ -244,6 +244,15 @@ function showContactDetails(contactItemId, toEdit) {
     let selectedContact = sortContactsAlphabetically()[sortedIndex];
   
     renderContactDetails(selectedContact, toEdit);
+
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 665){
+      document.getElementById("contactOverview").style.display = "none";
+      document.getElementById("contactPageRightHeader").style.display = "none";
+      document.getElementById("contactPageRightHeaderResponsive").style.display = "flex";
+      document.getElementById("contactDetailsView").style.display = "flex !important";
+    }
   }
 
 
@@ -276,7 +285,7 @@ function showSelectedContactDetails(clickedItem) {
     const sortedIndex = parseInt(clickedItem.id.split('_')[1]);
     const selectedContact = sortContactsAlphabetically()[sortedIndex];
     renderContactDetails(selectedContact);
-    document.getElementById("contactDetailsView").style.display = "block";
+    document.getElementById("contactDetailsView").style.display = "flex";
 }
 
 /**
@@ -302,6 +311,15 @@ function unselectOtherContactItems(clickedItem) {
     });
 }
 
+
+function returnToContactBook(){
+  document.getElementById("contactOverview").style.display = "flex";
+  document.getElementById("contactPageRightHeaderResponsive").style.display = "none";
+  document.getElementById("contactDetailsView").style.display = "none";
+  document.getElementById("responsiveContactDetailBack").style.display = "none";
+
+  renderContactBook();
+}
   
 
 /**
@@ -340,6 +358,9 @@ function renderContactDetails(contact, toEdit) {
     if (toEdit) {
         renderEditFields(contact);
     }
+
+    document.getElementById("responsiveContactDetailBack").style.display = "flex";
+
 }
 
 /**
