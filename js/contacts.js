@@ -312,6 +312,10 @@ function unselectOtherContactItems(clickedItem) {
 }
 
 
+/**
+ * closes contact detail view and returns to contact book when viewed on mobile device
+ * 
+ */
 function returnToContactBook(){
   document.getElementById("contactOverview").style.display = "flex";
   document.getElementById("contactPageRightHeaderResponsive").style.display = "none";
@@ -363,6 +367,7 @@ function renderContactDetails(contact, toEdit) {
 
 }
 
+
 /**
  * Renders the edit fields with the contact's information for editing.
  *
@@ -379,11 +384,12 @@ function renderEditFields(contact) {
 
     const initialIcon = document.getElementById("iconInEditContact");
     initialIcon.innerHTML = `
-        <div class="circle circleInDetailView" style="background-color: ${contact.color};">
+        <div class="circle circleInDetailView responsiveCircle" style="background-color: ${contact.color};">
             ${calculateContactInitials(contact.name.split(" "))}
         </div>
     `;
 }
+
 
 /**
  * Renders the buttons for editing and deleting a contact.
@@ -442,6 +448,9 @@ function closePopUp() {
     document.getElementById("addContactOverlay").style.display = "none";
     document.getElementById("editContactOverlay").style.display = "none";
     document.getElementById("responsiveAddContactButton").style.zIndex = "1200";
+    let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
+
+    responsiveAddContactButton.setAttribute('style', 'display:flex !important');
 }
 
 
@@ -561,7 +570,10 @@ function closePopUpWithConfirmation() {
  * @param {string} phone - The phone number of the contact.
  */
 function editContact() {
-    const editContactOverlay = document.getElementById("editContactOverlay");
+    let editContactOverlay = document.getElementById("editContactOverlay");
+    let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
+
+    responsiveAddContactButton.setAttribute('style', 'display:none !important');
     editContactOverlay.style.display = "flex";
 }
 
