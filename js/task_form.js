@@ -150,11 +150,10 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
     let id = allTasks.length +1; // Aufgaben dürfen erst aus allTasks gelöscht werden,wenn sie abgeschlossen sind!!
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
-    let assignedTo = document.getElementById('assignedToSelect').value;
+    let assignedTo = chosenContacts;
     let date = document.getElementById('date').value;
     let prio = currentchosenPrio;
     let category = document.getElementById('Category').innerHTML;
-    let contacts= [];
     const task = {
         'id': id, //dynamisch
         'title': title,
@@ -162,11 +161,11 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
         'assigned': assignedTo,
         'date': date,
         'priority': prio,
-        'subtask': allSubtasks,
+        'subtask': subtasks,
         'subtasksProgress': 0,
         'category': category,
         'colum': 'todo',
-        'contacts': contacts,
+        'contacts': assignedTo,
         token: STORAGE_TOKEN
     }
     creatingJson(task);

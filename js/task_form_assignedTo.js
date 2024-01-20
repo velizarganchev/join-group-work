@@ -1,5 +1,9 @@
 let chosenContacts = []; // Array for "Assigned to" - for all contacts which checkboxes are checked
 
+/**
+ * This function opens a dropdown-menu so that the user can select a contact, which should work at the task in the future
+ * @param {string} id - id of the Element which should be flipped around 
+ */
 function getAllContacts(id){
     flipTheImage(id);
     displayContacts();
@@ -46,6 +50,9 @@ function openOverlay(){
     document.getElementById('overlayContacts').classList.toggle('d-none');
 }
 
+/**
+ * This function generates the HTML-Container for every contact and fills it with information
+ */
 function generatingHTMLForContactsContainer(){
     let contactsContainer = document.getElementById('ContainerForAllPossibleContacts');
     contactsContainer.innerHTML = '';
@@ -70,6 +77,9 @@ function generatingHTMLForContactsContainer(){
     }
 }
 
+/**
+ * This function checks, if a checkbox was checked, if so it will be checked after reopening the dropdown-menu
+ */
 function checkIfCheckboxesWereChecked(){
     for (let j = 0; j<chosenContacts.length; j++){
         let id = chosenContacts[j];
@@ -107,6 +117,9 @@ function deleteChosenContact(i){
     createCirclesToChosenContactContainer();
 }
 
+/**
+ * This function creates the circles with the initials under the inputs after a contact was chosen
+ */
 function createCirclesToChosenContactContainer(){
     let adress = 'ContainerForAllChosenContacts';
     let Content = document.getElementById(`${adress}`);
@@ -116,6 +129,13 @@ function createCirclesToChosenContactContainer(){
         creatingCircle(id, adress);
     }
     document.getElementById('ContainerForAllChosenContacts').classList.remove('d-none');
+    repositionRequiredTextContainer();
+}
+
+/**
+ * This function changes the margin attribute to avoid a moving container (=requiredText) by creating a chosenContact list under the Assigned To input 
+ */
+function repositionRequiredTextContainer(){
     document.getElementById('requiredText').setAttribute('style', 'margin-top:46px');
 }
 
@@ -142,22 +162,15 @@ function gettingInitials(i){
 /**
  * This function creates the circle at the "assigned to" Container
  * @param {int} i - the position of the contact in the Json-Array
+ * @param {string} adress - carries the information about the id, where the Circle should be displayed
  */
 function creatingCircle(i, adress){
     let firstLetterName = gettingInitials(i).firstLetterName;
     let firstLetterLastname = gettingInitials(i).firstLetterLastname;
     let color = contacts[i]['color'];
     document.getElementById(`${adress}`).innerHTML +=`
-    <div id="circle${i}" class="circle">${firstLetterName}${firstLetterLastname}</div>
+    <div id="circle${i}" class="circle" style="background-color:${color}">${firstLetterName}${firstLetterLastname}</div>
     `;
-    colorTheCircle(i, color);
-}
-
-/**
- * This function colors the circle for the "assigned to" Container
- */
-function colorTheCircle(i, color){
-    document.getElementById(`circle${i}`).style = `background-color:${color}`;
 }
 
 /**
@@ -169,6 +182,9 @@ function gettingNames(i){
     document.getElementById(`ContactName${i}`).innerHTML +=`${name}`;
 }
 
+/**
+ * This function let the user search for a contact in the Assigned To input-field by typing in the searched name
+ */
 function filterContacts(){
     let search = document.getElementById('assignedToSelect').value;
     search = search.toLowerCase();
@@ -188,7 +204,7 @@ function filterContacts(){
                     </div>
                 </div>
                 <div id="checkboxContainer${i}" class="checkboxContainer">
-                    <input id="checkbox${i}" type="checkbox" class="checkboxes hover onclick="addContactToArray(${i})">
+                    <input id="checkbox${i}" type="checkbox" class="checkboxes hover" onclick="addContactToArray(${i})">
                 </div>
             </div>`;
             creatingCircle(i, adress);
