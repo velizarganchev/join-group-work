@@ -2,8 +2,8 @@ let chosenContacts = []; // Array for "Assigned to" - for all contacts which che
 
 function getAllContacts(id){
     flipTheImage(id);
-    generateContactsContainer();
     displayContacts();
+    generateContactsContainer();
     putAssignedToInForeground();
     checkIfCheckboxesWereChecked();
 }
@@ -31,8 +31,10 @@ function closecontacts(){
     document.getElementById('overlayContacts').classList.toggle('d-none');
     document.getElementById('ContainerForAllPossibleContacts').innerHTML = '';
     document.getElementById('ContainerForAllPossibleContacts').classList.add('d-none');
-    document.getElementById('ContainerForAllChosenContacts').classList.add('d-none');
-    document.getElementById('ContainerForAllChosenContacts').classList.add('d-none');
+    if (chosenContacts.length == 0){
+        document.getElementById('ContainerForAllChosenContacts').classList.add('d-none');
+        document.getElementById('requiredText').setAttribute('style', 'margin-top:200px');
+    }
     document.getElementById('assignedToSelect').setAttribute('z-index','0');
     document.getElementById('ContainerForAllPossibleContacts').setAttribute('z-index','0');
 }
@@ -48,6 +50,7 @@ function generatingHTMLForContactsContainer(){
     let contactsContainer = document.getElementById('ContainerForAllPossibleContacts');
     contactsContainer.innerHTML = '';
     for (let i = 0; i < contacts.length; i++){
+        let adress = `contactCircle${i}`;
         contactsContainer.innerHTML +=`
         <div id="contact${i}" class="contactbox contact">
             <div id="contactCircle${i}">
@@ -62,7 +65,7 @@ function generatingHTMLForContactsContainer(){
                 <input id="checkbox${i}" type="checkbox" class="checkboxes hover" onclick="addContactToArray(${i})">
             </div>
         </div>`;
-        creatingCircle(i);
+        creatingCircle(i, adress);
         gettingNames(i);
     }
 }
@@ -92,6 +95,7 @@ function addContactToArray(i){
  */
 function addChosenContact(i){
     chosenContacts.push(i);
+    createCirclesToChosenContactContainer();
 }
 
 /**
@@ -100,7 +104,19 @@ function addChosenContact(i){
  */
 function deleteChosenContact(i){
     chosenContacts.splice(chosenContacts.indexOf(i), 1);
-    console.log(chosenContacts);
+    createCirclesToChosenContactContainer();
+}
+
+function createCirclesToChosenContactContainer(){
+    let adress = 'ContainerForAllChosenContacts';
+    let Content = document.getElementById(`${adress}`);
+    Content.innerHTML = '';
+    for (let j = 0; j<chosenContacts.length; j++){
+        let id = chosenContacts[j];
+        creatingCircle(id, adress);
+    }
+    document.getElementById('ContainerForAllChosenContacts').classList.remove('d-none');
+    document.getElementById('requiredText').setAttribute('style', 'margin-top:46px');
 }
 
 /**
@@ -127,12 +143,11 @@ function gettingInitials(i){
  * This function creates the circle at the "assigned to" Container
  * @param {int} i - the position of the contact in the Json-Array
  */
-function creatingCircle(i){
+function creatingCircle(i, adress){
     let firstLetterName = gettingInitials(i).firstLetterName;
     let firstLetterLastname = gettingInitials(i).firstLetterLastname;
-    gettingInitials(i, firstLetterName, firstLetterLastname);
     let color = contacts[i]['color'];
-    document.getElementById(`contactCircle${i}`).innerHTML =`
+    document.getElementById(`${adress}`).innerHTML +=`
     <div id="circle${i}" class="circle">${firstLetterName}${firstLetterLastname}</div>
     `;
     colorTheCircle(i, color);
@@ -160,12 +175,12 @@ function filterContacts(){
     let ContactList = document.getElementById('ContainerForAllPossibleContacts');
     ContactList.innerHTML = '';
     for(let i = 0; i < contacts.length; i++){
+        let adress = `contactCircle${i}`;
         let name = contacts[i]['name'];
         if (name.toLowerCase().includes(search)){
             ContactList.innerHTML += `
             <div id="contact${i}" class="contactbox contact">
                 <div id="contactCircle${i}">
-
                 </div>
                 <div>
                     <div id="ContactName${i}" class="contactName">
@@ -173,10 +188,10 @@ function filterContacts(){
                     </div>
                 </div>
                 <div id="checkboxContainer${i}" class="checkboxContainer">
-                    <input id="checkbox${i}" type="checkbox" class="checkboxes hover">
+                    <input id="checkbox${i}" type="checkbox" class="checkboxes hover onclick="addContactToArray(${i})">
                 </div>
             </div>`;
-            creatingCircle(i);
+            creatingCircle(i, adress);
         }
     }
 }

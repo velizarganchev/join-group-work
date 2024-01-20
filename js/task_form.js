@@ -254,11 +254,18 @@ function setCategory(category){
     document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('Category').setAttribute('style','color:black')
+    document.getElementById('overlayCategories').classList.toggle('d-none'); 
 }
 
 /**
  * This function toggles a list of all possible categorys
  */
 function getAllCategories(){
-    document.getElementById('categories').classList.toggle('d-none');  
+    document.getElementById('categories').classList.toggle('d-none');
+    document.getElementById('overlayCategories').classList.toggle('d-none');  
+}
+
+function closeOverlayCategories(){
+    document.getElementById('overlayCategories').classList.toggle('d-none'); 
+    document.getElementById('categories').classList.toggle('d-none');
 }
