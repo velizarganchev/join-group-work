@@ -105,10 +105,16 @@ function cancelSubtask(){
  */
 function addSubtask(){
     let task = document.getElementById('subtask').value;
+    let taskJSON = {
+        'id' : subtasks.length +1,
+        'name' : task,
+        'done' : false
+    }
     document.getElementById('subTaskList').classList.remove('d-none');
     document.getElementById('buttons').setAttribute('style', "margin-top:0");
-    subtasks.push(task);
+    subtasks.push(taskJSON);
     showSubtasksafterAddingATask();
+    console.log(subtasks);
 }
 
 /**
@@ -118,7 +124,7 @@ function showSubtasks(){
     let subtasksList = document.getElementById('subTaskList');
     subtasksList.innerHTML = '';
     for (let i = 0; i < subtasks.length; i++){
-        subtasksList.innerHTML +=`<li>${subtasks[i]} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
+        subtasksList.innerHTML +=`<li>${subtasks[i]['name']} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
     }
 }
 /**
@@ -150,15 +156,14 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
     let id = allTasks.length +1; // Aufgaben dürfen erst aus allTasks gelöscht werden,wenn sie abgeschlossen sind!!
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
-    let assignedTo = chosenContacts;
+    let assignedTo = chosenContactsJson;
     let date = document.getElementById('date').value;
     let prio = currentchosenPrio;
     let category = document.getElementById('Category').innerHTML;
     const task = {
-        'id': id, //dynamisch
+        'id': id,
         'title': title,
         'description': description,
-        'assigned': assignedTo,
         'date': date,
         'priority': prio,
         'subtask': subtasks,
@@ -188,7 +193,7 @@ function minDate(){
  */
 function creatingJson(task){
     allTasks.push(task);
-    // safeAllTasksToStorage('AllTasks',allTasks);
+    safeAllTasksToStorage('AllTasks',allTasks);
 }
 
 /**

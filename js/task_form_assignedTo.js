@@ -1,4 +1,5 @@
 let chosenContacts = []; // Array for "Assigned to" - for all contacts which checkboxes are checked
+let chosenContactsJson = [];
 
 /**
  * This function opens a dropdown-menu so that the user can select a contact, which should work at the task in the future
@@ -104,6 +105,16 @@ function addContactToArray(i){
  * @param {int} i - the position of the contact in the Json-Array
  */
 function addChosenContact(i){
+    let name = contacts[i]['name'];
+    let firstname = name.slice(0,name.lastIndexOf(' '));
+    let lastname = name.slice(name.lastIndexOf(' ')+1,);
+    let color = contacts[i]['color'];
+    let contactsJSON = {
+        'firstname' : firstname,
+        'lastname' : lastname,
+        'color' : color
+    };
+    chosenContactsJson.push(contactsJSON);
     chosenContacts.push(i);
     createCirclesToChosenContactContainer();
 }
