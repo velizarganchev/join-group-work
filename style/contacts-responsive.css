@@ -91,12 +91,14 @@
         transform: translate(-50%, -10%);
     }
 
-    #addContactPopUp {
+    #addContactPopUp,
+    #editContactPopUp {
         width: 90%;
     }
 
     .contactLeft {
         height: 460px;
+        padding: 66px 10px 66px 48px;
     }
 
     #cancelButton {
@@ -114,6 +116,23 @@
     .contactForm {
         width: auto;
     }
+
+    #editContactPopUp {
+        width: 90%;
+    }
+
+    #deleteButtonInForm {
+        height: unset;
+    }
+
+    #saveEditButton {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .responsiveCircle {
+        margin: 10px;
+    }
 }
 
 @media (max-width: 910px) {
@@ -124,7 +143,9 @@
 }
 
 @media (max-width: 890px) {
-    #addContactPopUp {
+
+    #addContactPopUp,
+    #editContactPopUp {
         flex-direction: column;
         width: 396px;
         height: 750px;
@@ -138,6 +159,7 @@
         border-top-right-radius: 30px;
         border-bottom-left-radius: 0;
         width: 301px;
+        padding: 66px 48px 66px 48px;
     }
 
     .contactLeftText {
@@ -148,10 +170,15 @@
         font-size: 47px;
     }
 
-    #addContactEmptyProfile {
+    #addContactEmptyProfile,
+    #iconInEditContact {
         height: 120px;
         width: 120px;
         margin-top: -60px;
+    }
+
+    .responsiveCircle {
+        margin: 0;
     }
 
     .contactRight {
@@ -160,6 +187,7 @@
 
     .contactForm {
         margin-right: 0;
+        margin-top: 10px;
     }
 
     .contactFormInput {
@@ -180,6 +208,14 @@
         right: 28%;
         top: 5%;
         filter: invert(98%) sepia(25%) saturate(0%) hue-rotate(285deg) brightness(101%) contrast(103%);
+    }
+
+    #deleteButtonInForm {
+        width: 82px;
+    }
+
+    #saveEditButton {
+        width: 99px;
     }
 }
 
@@ -207,7 +243,11 @@
 
     .contactItem,
     .contactItem:hover {
-        gap: 35px;
+        gap: 0px;
+    }
+
+    .groupHeader{
+        padding: 12px 36px 12px 53px;
     }
 
     .contactDetails {
@@ -237,7 +277,7 @@
         width: 90px;
     }
 
-    #contactPageHeaderTextResponsive{
+    #contactPageHeaderTextResponsive {
         width: 200px;
         text-align: unset;
     }
@@ -257,7 +297,7 @@
     }
 
     .groupHeader {
-        padding: 17px 36px 17px 61px;
+        padding: 17px 36px 17px 71px
     }
 
     .contactItem,
@@ -276,7 +316,7 @@
         top: 80%;
         left: 80%;
         z-index: 1200;
-        position: absolute;
+        position: fixed;
         background-color: #2b3647;
         border-radius: 50%;
         display: flex !important;
@@ -317,8 +357,12 @@
 
     #responsiveContactDetailBack {
         top: 128px;
-        position: absolute;
+        position: fixed;
         right: 3%;
+    }
+
+    .circle{
+        margin-right: 35px;
     }
 }
 
@@ -331,7 +375,7 @@
     }
 
     .groupHeader {
-        padding: 17px 36px 17px 45px;
+        padding: 17px 36px 17px 55px;
     }
 
     .contact-group {
@@ -352,13 +396,15 @@
         }
 
         to {
-            right: -25%;
+            right: -30%;
         }
     }
 }
 
 @media (max-width: 400px) {
-    #addContactPopUp {
+
+    #addContactPopUp,
+    #editContactPopUp {
         width: 320px;
     }
 
@@ -372,7 +418,7 @@
     }
 
     .contactForm {
-        width: 318px;
+        width: 310px;
     }
 
     .contactFormButtons {
@@ -391,6 +437,11 @@
         to {
             right: -40%;
         }
+    }
+
+    .contactDetailsNameFull {
+        width: 100px;
+        line-height: normal;
     }
 }
 

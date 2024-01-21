@@ -84,6 +84,7 @@ function changeColorOfPrio(Prio, i){
  * This function toggles the Images from the Subtask Input
  */
 function activateAndDeactivateSubtaskInput(){
+    // document.getElementById('subTaskList').classList.toggle('d-none');
     document.getElementById('plus').classList.toggle('d-none'); //toggleClass('+', 'd-none');
     document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
     document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
@@ -104,8 +105,16 @@ function cancelSubtask(){
  */
 function addSubtask(){
     let task = document.getElementById('subtask').value;
-    subtasks.push(task);
+    let taskJSON = {
+        'id' : subtasks.length +1,
+        'name' : task,
+        'done' : false
+    }
+    document.getElementById('subTaskList').classList.remove('d-none');
+    document.getElementById('buttons').setAttribute('style', "margin-top:0");
+    subtasks.push(taskJSON);
     showSubtasksafterAddingATask();
+    console.log(subtasks);
 }
 
 /**
@@ -115,7 +124,7 @@ function showSubtasks(){
     let subtasksList = document.getElementById('subTaskList');
     subtasksList.innerHTML = '';
     for (let i = 0; i < subtasks.length; i++){
-        subtasksList.innerHTML +=`<li>${subtasks[i]} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
+        subtasksList.innerHTML +=`<li>${subtasks[i]['name']} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
     }
 }
 /**
@@ -133,8 +142,11 @@ function showSubtasksafterAddingATask(){
  */
 function deleteSubtask(i){
     subtasks.splice(i,1);
-    console.log(subtasks);
     showSubtasks();
+    if (subtasks.length == 0){
+        document.getElementById('buttons').setAttribute('style', "margin-top:232px");
+        document.getElementById('subTaskList').classList.add('d-none');
+    }
 }
 
 /**
@@ -144,23 +156,21 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
     let id = allTasks.length +1; // Aufgaben dürfen erst aus allTasks gelöscht werden,wenn sie abgeschlossen sind!!
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
-    let assignedTo = document.getElementById('assignedToSelect').value;
+    let assignedTo = chosenContactsJson;
     let date = document.getElementById('date').value;
     let prio = currentchosenPrio;
     let category = document.getElementById('Category').innerHTML;
-    let contacts= [];
     const task = {
-        'id': id, //dynamisch
+        'id': id,
         'title': title,
         'description': description,
-        'assigned': assignedTo,
         'date': date,
         'priority': prio,
-        'subtask': allSubtasks,
+        'subtask': subtasks,
         'subtasksProgress': 0,
         'category': category,
         'colum': 'todo',
-        'contacts': contacts,
+        'contacts': assignedTo,
         token: STORAGE_TOKEN
     }
     creatingJson(task);
@@ -183,7 +193,7 @@ function minDate(){
  */
 function creatingJson(task){
     allTasks.push(task);
-    // safeAllTasksToStorage('AllTasks',allTasks);
+    safeAllTasksToStorage('AllTasks',allTasks);
 }
 
 /**
@@ -248,11 +258,18 @@ function setCategory(category){
     document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('Category').setAttribute('style','color:black')
+    document.getElementById('overlayCategories').classList.toggle('d-none'); 
 }
 
 /**
  * This function toggles a list of all possible categorys
  */
 function getAllCategories(){
-    document.getElementById('categories').classList.toggle('d-none');  
+    document.getElementById('categories').classList.toggle('d-none');
+    document.getElementById('overlayCategories').classList.toggle('d-none');  
+}
+
+function closeOverlayCategories(){
+    document.getElementById('overlayCategories').classList.toggle('d-none'); 
+    document.getElementById('categories').classList.toggle('d-none');
 }

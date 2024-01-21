@@ -269,6 +269,15 @@
     width: 60px;
 }
 
+#editName,
+#editEmail,
+#editPhone,
+#name,
+#email,
+#phone{
+    width: 100%;
+}
+
 .contactDeleteButton {
     width: 78px;
 }
@@ -648,6 +657,11 @@
     padding: 16px;
     border: none;
     border-radius: 10px;
+}
+
+#saveEditButton:hover{
+    cursor: pointer;
+    background-color: #29ABE2;
 }
 
 #responsiveAddContactButton{
