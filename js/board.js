@@ -3,7 +3,7 @@ let tasks = [
         id: 1,
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation',
-        date: new Date().getTime(),
+        date: new Date(),
         priority: 'Medium',
         subtasks: [
             {
@@ -309,7 +309,104 @@ function generateTaskHtml(task) {
 
 
 function editTask(taskId) {
-    let taskToEdit = getTask(taskId)
+    let taskToEdit = getTask(taskId);
+    let taskPopUp = document.getElementById('pop-up');
+    taskPopUp.style.display = "flex";
+
+    taskPopUp.innerHTML = generateEditTaskHtml(taskToEdit);
+}
+
+
+function generateEditTaskHtml(taskToEdit) {
+    console.log(taskToEdit);
+    return /*html*/`
+        <div class="pop-up-task-container" onclick="stopPropagation(event)">
+            <div class="edit-close-button-container">
+                <button class="pop-up-close-button" onclick="closeTask()">
+                    <img src="../assets/img/board/close-task.svg" alt="Close">
+                </button>
+            </div>
+            <div class="edit-title-container">
+                <span>Title</span>
+                <input type="text" id="edit-title" placeholder="Enter Title" name="title">
+            </div>
+            <div class="edit-description-container">
+                <span>Description</span>
+                <textarea id="edit-description" placeholder="Enter Description" name="description" rows="4" cols="30"></textarea>
+            </div>
+            <div class="edit-date-container">
+                <span>Due date</span>
+                <input type="date" id="edit-date" name="date">
+            </div>
+            <div class="edit-priority-container">
+                <span>Priority</span>
+                <div class="edit-priority-buttons">
+                    <button>
+                        <span>Urgent</span>
+                        <img src="../assets/img/board/prio-urgent.svg" alt="">
+                    </button>
+                    <button>
+                        <span>Medium</span>
+                        <img src="../assets/img/board/prio-medium.svg" alt="">
+                    </button>
+                    <button>
+                        <span>Low</span>
+                        <img src="../assets/img/board/prio-low.svg" alt="">
+                    </button>
+                </div> 
+            </div>
+            <div class="edit-priority-container">
+                <label for="edit-contacts">Assignet to:</label>
+                <select name="contacts" id="edit-contacts">
+                  <option value="1">Anton Mayer</option>
+                  <option value="2">Anja Schulz</option>
+                </select>
+                <div class="edit-contacts-container">
+                    <div class="edit-contact">MP</div>
+                    <div class="edit-contact">MP</div>
+                    <div class="edit-contact">MP</div>
+                </div>
+            </div>
+            <div class="edit-subtasks-container">
+                <form onsubmit="#">
+                    <input id="search-text" type="text" minlength="3" required placeholder="add new subtask">
+                    <img src="../assets/img/board/subtask-plus.svg" alt="">
+                </form>
+                <ul class="edit-subtask-list">
+                    <li class="edit-subtask-item">
+                        <span>Subtask1</span>
+                        <div class="edit-subtask-icons">
+                            <button>
+                                <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
+                            </button>
+                            <img src="../assets/img/board/vector3.svg" alt="">
+                            <button>
+                                <img src="../assets/img/board/delete-subtask-icon.svg" alt="">
+                            </button>
+                        </div>
+                    </li>
+                    <li class="edit-subtask-item">
+                        <span>Subtask2</span>
+                        <div class="edit-subtask-icons">
+                            <button>
+                                <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
+                            </button>
+                            <img src="../assets/img/board/vector3.svg" alt="">
+                            <button>
+                                <img src="../assets/img/board/delete-subtask-icon.svg" alt="">
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="edit-button-container">
+                <button>
+                    <span>OK</span>
+                    <img src="../assets/img/board/check.svg" alt="">
+                </button>
+            </div>
+        </div>
+    `;
 }
 
 
@@ -327,9 +424,12 @@ function changeSubtaskStatus(status, subtaskId, taskId) {
     if (status.checked) {
         task.subtasks[subtaskIndex].done = true;
         task.subtasksProgress++;
+        //await setItem('AllTasks', tasks);
+
     } else {
         task.subtasks[subtaskIndex].done = false;
         task.subtasksProgress--;
+        //await setItem('AllTasks', tasks);
     }
 
     clearAllColumns();
@@ -377,6 +477,7 @@ async function deleteTask(id) {
 function getTaskIndex(taskId) {
     return tasks.findIndex(t => t.id === taskId);
 }
+
 
 /**
  * Generates HTML for a contact in the pop-up task details.
