@@ -30,7 +30,11 @@ function renderWelcomeMessage() {
 }
 
 
-
+/**
+ * Renders the welcome message when on mobile device.
+ * @param {string} username - Name of the current user.
+ * @param {number} time - Current hour.
+ */
 function renderMessageMobile(username, time) {
     let mobileWelcomeMessage = document.getElementById('mobile-welcome');
     let welcomeMessage = document.getElementById('mobile-welcome-message');
@@ -42,7 +46,11 @@ function renderMessageMobile(username, time) {
 }
 
 
-
+/**
+ * Renders the welcome message when on desktop.
+ * @param {string} username - Name of the current user.
+ * @param {number} time - Current hour.
+ */
 function renderMessageDesktop(username, time) {
     let welcomeMessage = document.getElementById('welcome-message');
     let usernameWrapper = document.getElementById('username-wrapper');
@@ -123,12 +131,8 @@ function renderUpcomingDate() {
     let day = date.getDate();
     let upcomingDate = document.getElementById('upcoming-date');
     let upcomingMessage = document.getElementById('upcoming-message');
-    if (date > new Date().toISOString().split('T')[0]) {
-        upcomingDate.innerHTML = day + ' ' + formattedMonth + ',' + ' ' + year;
-        upcomingMessage.innerHTML = "Upcoming deadline"
-    } else {
-        upcomingMessage.innerHTML = "You don't have any upcoming deadlines"
-    }
+    upcomingDate.innerHTML = day + ' ' + formattedMonth + ',' + ' ' + year;
+    upcomingMessage.innerHTML = "Upcoming deadline";
 }
 
 
