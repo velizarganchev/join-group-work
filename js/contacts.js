@@ -619,7 +619,6 @@ async function deleteContact() {
     if (selectedContactItem) {
         const contactItemId = selectedContactItem.id;
         const index = parseInt(contactItemId.split('_')[1]);
-        console.log("Index to delete:", index);
 
         contacts.splice(index, 1);
 
