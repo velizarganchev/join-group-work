@@ -17,6 +17,13 @@ body {
     z-index: 1;
 }
 
+#responsiveJoinLogoDark{
+    display: none;
+    height: 39.05px;
+    width: 32px;
+    margin-left: 32px;
+}
+
 .title {
     font-size: 21px;
     margin-left: 348px;
