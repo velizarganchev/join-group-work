@@ -146,6 +146,87 @@ let tasks = [
         ],
     }
 ];
+let contacts = [
+    {
+        name: "Alice Smith",
+        email: "alice@example.com",
+        phone: "+49 123 456789",
+        color: "#3498db",
+    },
+    {
+        name: "Bob Johnson",
+        email: "bob@example.com",
+        phone: "+49 234 567890",
+        color: "#2ecc71",
+    },
+    {
+        name: "Brad Williams",
+        email: "brad@example.com",
+        phone: "+49 345 678901",
+        color: "#e74c3c",
+    },
+    {
+        name: "Michael Davis",
+        email: "michael@example.com",
+        phone: "+49 456 789012",
+        color: "#f39c12",
+    },
+    {
+        name: "David Clark",
+        email: "david@example.com",
+        phone: "+49 567 890123",
+        color: "#9b59b6",
+    },
+    {
+        name: "Diana Martinez",
+        email: "diana@example.com",
+        phone: "+49 678 901234",
+        color: "#1abc9c",
+    },
+    {
+        name: "Eva Miller",
+        email: "eva@example.com",
+        phone: "+49 789 012345",
+        color: "#3498db",
+    },
+    {
+        name: "Sam Taylor",
+        email: "sam@example.com",
+        phone: "+49 890 123456",
+        color: "#2ecc71",
+    },
+    {
+        name: "Sara Brown",
+        email: "sara@example.com",
+        phone: "+49 901 234567",
+        color: "#e74c3c",
+    },
+    {
+        name: "Ross Wilson",
+        email: "ross@example.com",
+        phone: "+49 012 345678",
+        color: "#f39c12",
+    },
+    {
+        name: "Kate Moore",
+        email: "kate@example.com",
+        phone: "+49 345 678901",
+        color: "#9b59b6",
+    },
+    {
+        name: "Karl Lee",
+        email: "karl@example.com",
+        phone: "+49 567 890123",
+        color: "#1abc9c",
+    },
+    {
+        name: "John Turner",
+        email: "john@example.com",
+        phone: "+49 789 012345",
+        color: "#3498db",
+    },
+];
+currPriority = '';
 let editSubtasks = [];
 let columns;
 let currentDraggedElement;
@@ -299,7 +380,7 @@ function generateTaskHtml(task) {
                     <span>Delete</span>
                 </button>
                 <img src="../assets/img/board/pop-up-footer-vector 3.svg" alt="">
-                <button onclick="editTask(${task.id})">
+                <button onclick="showEditTask(${task.id})">
                     <img src="../assets/img/board/pop-up-footer-edit.svg" alt="">
                     <span>Edit</span>
                 </button>
@@ -309,20 +390,37 @@ function generateTaskHtml(task) {
 }
 
 
-function editTask(taskId) {
-    let taskToEdit = getTask(taskId);
-    let taskPopUp = document.getElementById('pop-up');
+/**
+ * Displays the edit task popup with the details of the specified task.
+ *
+ * @param {string} taskId - The ID of the task to be edited.
+ */
+function showEditTask(taskId) {
+    const taskToEdit = getTask(taskId);
+    const taskPopUp = document.getElementById('pop-up');
+
+    // Display the popup
     taskPopUp.style.display = "flex";
 
+    // Set the HTML content of the popup using the generated HTML
     taskPopUp.innerHTML = generateEditTaskHtml(taskToEdit);
+
+    // Handle priority, contacts, and subtasks in the edit task popup
     handleEditPriority(taskToEdit.priority);
     handleEditContacts(taskToEdit.contacts);
-    showSubtasks(taskToEdit.subtasks);
+    generateContactsSelectHtml();
+    showSubtasks(taskToEdit.id, taskToEdit.subtasks);
 }
 
 
+
+/**
+ * Generates HTML for the task editing popup.
+ *
+ * @param {Object} taskToEdit - The task object being edited.
+ * @returns {string} - HTML markup for the task editing popup.
+ */
 function generateEditTaskHtml(taskToEdit) {
-    console.log(taskToEdit);
     return /*html*/`
         <div class="pop-up-task-container" onclick="stopPropagation(event)">
             <div class="edit-close-button-container">
@@ -345,42 +443,38 @@ function generateEditTaskHtml(taskToEdit) {
             <div class="edit-priority-container">
                 <span>Priority</span>
                 <div class="edit-priority-buttons">
-                    <button id="urgent">
+                    <button id="urgent" onclick="changePriority('urgent',${taskToEdit.id})">
                         <span>Urgent</span>
                         <img id="edit-urgent-img" src="../assets/img/board/prio-urgent.svg" alt="">
                     </button>
-                    <button id="medium">
+                    <button id="medium" onclick="changePriority('medium',${taskToEdit.id})">
                         <span>Medium</span>
                         <img id="edit-medium-img" src="../assets/img/board/prio-medium.svg" alt="">
                     </button>
-                    <button id="low">
+                    <button id="low" onclick="changePriority('low',${taskToEdit.id})">
                         <span>Low</span>
                         <img id="edit-low-img" src="../assets/img/board/prio-low.svg" alt="">
                     </button>
-                </div> 
+                </div>
             </div>
-            <div class="edit-priority-container">
+            <div class="edit-assign-container">
                 <label for="edit-contacts">Assignet to:</label>
-                <select name="contacts" id="edit-contacts">
-                <option value="">Select contacts to assign</option>
-                  <option value="1">Anton Mayer</option>
-                  <option value="2">Anja Schulz</option>
+                <select name="contacts" id="edit-contacts" >
+                    <option value="">Select contacts to assign</option>
                 </select>
                 <div id="edit-contacts-list" class="edit-contacts-container"></div>
             </div>
             <div class="edit-subtasks-container">
-                <form onsubmit="addSubtask(event)">
+                <form onsubmit="addSubtask(event, ${taskToEdit.id})">
                     <input id="subtask-text" type="text" minlength="3" required placeholder="add new subtask">
                     <button type="submit" class="add-subtask-btn">
                         <img src="../assets/img/board/subtask-plus.svg" alt="">
                     </button>
                 </form>
-                <ul class="edit-subtask-list">
-                    
-                </ul>
+                <ul class="edit-subtask-list"></ul>
             </div>
             <div class="edit-button-container">
-                <button>
+                <button onclick="editTask(${taskToEdit.id})">
                     <span>OK</span>
                     <img src="../assets/img/board/check.svg" alt="">
                 </button>
@@ -391,11 +485,55 @@ function generateEditTaskHtml(taskToEdit) {
 
 
 /**
+ * Bearbeitet eine Aufgabe, indem die eingegebenen Werte aus den Bearbeitungsfeldern genommen und in die Aufgabe aktualisiert werden.
+ *
+ * @param {string} taskId - Die ID der zu bearbeitenden Aufgabe.
+ */
+function editTask(taskId) {
+    const task = getTask(taskId);
+    task.title = document.getElementById('edit-title').value;
+    task.description = document.getElementById('edit-description').value;
+    task.date = new Date(document.getElementById('edit-date').value);
+    task.priority = currPriority ? currPriority : task.priority;
+
+    task.subtasks = [...task.subtasks, ...editSubtasks];
+
+    clearAllColumns();
+    renderTasks();
+    closeTask();
+}
+
+
+/**
+ * Generiert HTML für die Auswahl von Kontakten und fügt es dem entsprechenden Dropdown-Element hinzu.
+ */
+function generateContactsSelectHtml() {
+    const contactsDropdown = document.getElementById('edit-contacts');
+    contacts.forEach((contact, index) => {
+        contactsDropdown.innerHTML += `<option value="${index}">${contact.name}</option>`;
+    });
+}
+
+
+/**
+ * Löscht eine Teilaufgabe aus einer bestimmten Aufgabe und aktualisiert die Anzeige der Teilaufgaben.
+ *
+ * @param {string} taskId - Die ID der Aufgabe, zu der die Teilaufgabe gehört.
+ * @param {string} subtaskId - Die ID der zu löschenden Teilaufgabe.
+ */
+function deleteSubtask(taskId, subtaskId) {
+    const task = getTask(taskId);
+    task.subtasks = task.subtasks.filter(subtask => subtask.id !== subtaskId);
+    showSubtasks(taskId, task.subtasks);
+}
+
+
+/**
  * Renders a list of subtasks in the edit subtasks section.
  *
  * @param {Array} subtasks - An array of subtask objects.
  */
-function showSubtasks(subtasks) {
+function showSubtasks(taskId, subtasks) {
     let subtasksList = document.querySelector('.edit-subtask-list');
     subtasksList.innerHTML = '';  // Clear the existing content before rendering new subtasks
 
@@ -409,7 +547,7 @@ function showSubtasks(subtasks) {
                         <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
                     </button>
                     <img src="../assets/img/board/vector3.svg" alt="">
-                    <button>
+                    <button onclick="deleteSubtask(${taskId}, ${element.id})">
                         <img src="../assets/img/board/delete-subtask-icon.svg" alt="">
                     </button>
                 </div>
@@ -420,16 +558,25 @@ function showSubtasks(subtasks) {
 
 
 /**
- * Handles the addition of a subtask by updating the editSubtasks array and clearing the input field.
+ * Handles the addition of a subtask to a specific task by updating the task's subtasks array and clearing the input field.
  *
  * @param {Event} e - The event object.
+ * @param {string} taskId - The ID of the task to which the subtask will be added.
  */
-function addSubtask(e) {
+function addSubtask(e, taskId) {
     e.preventDefault();
+
+    const task = getTask(taskId);
     const subtaskInput = document.getElementById('subtask-text');
-    editSubtasks.push(subtaskInput.value);
+
+    const subtaskToAdd = {
+        id: Math.round(Math.random() * 100),
+        name: subtaskInput.value,
+        done: false
+    };
+    task.subtasks.push(subtaskToAdd);
     subtaskInput.value = '';
-    console.log(editSubtasks);
+    showSubtasks(taskId, task.subtasks);
 }
 
 
@@ -457,9 +604,39 @@ function generateEditContactHtml(contact) {
 
 
 /**
- * Handles the editing of priority by updating the button color and background image.
+ * Resets the CSS for priority buttons.
+ */
+function resetPriorityButtons() {
+    const priorities = ['low', 'medium', 'urgent'];
+
+    priorities.forEach(priority => {
+        const button = document.getElementById(priority);
+        const img = document.getElementById(`edit-${priority}-img`);
+
+        button.style.color = '';  // Set color to default (or an empty string)
+        button.style.background = '';  // Set background to default (or an empty string)
+        img.src = `../assets/img/board/prio-${priority}.svg`;  // Set image source to default
+    });
+}
+
+
+/**
+ * Changes the priority of a task and updates the UI.
  *
- * @param {string} priority - The priority value ('Low', 'Medium', or 'Urgent').
+ * @param {string} btnId - ID of the priority button.
+ * @param {string} taskId - ID of the task.
+ */
+function changePriority(btnId) {
+    resetPriorityButtons();  // Reset the CSS for priority buttons
+    handleEditPriority(capitalizeFirstLetter(btnId));
+    currPriority = capitalizeFirstLetter(btnId);
+}
+
+
+/**
+ * Handles the CSS changes for priority buttons.
+ *
+ * @param {string} priority - Priority level.
  */
 function handleEditPriority(priority) {
     const priorityMappings = {
@@ -481,12 +658,13 @@ function handleEditPriority(priority) {
 
 
 /**
- * Sets the background color for the edit button based on the priority.
+ * Sets the background color for a priority button.
  *
- * @param {string} idButton - The button ID.
- * @returns {string} - The background color.
+ * @param {string} idButton - ID of the priority button.
+ * @returns {string} - Background color for the button.
  */
 function setEditButtonBackground(idButton) {
+    // Implement your background color logic here
     switch (idButton) {
         case 'low':
             return '#7AE229';
@@ -495,7 +673,7 @@ function setEditButtonBackground(idButton) {
         case 'urgent':
             return '#FF3D00';
         default:
-            return '';
+            return '';  // Default or empty string
     }
 }
 
@@ -840,3 +1018,15 @@ function generateContactsHtml(contacts, id) {
 function takeFirstLetters(contacts) {
     return contacts.map(c => c.name[0] + c.lastName[0]);
 }
+
+
+/**
+ * Capitalizes the first letter of a string.
+ *
+ * @param {string} string - The input string.
+ * @returns {string} - The string with the first letter capitalized.
+ */
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+

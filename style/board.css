@@ -509,6 +509,7 @@
 .edit-description-container,
 .edit-date-container,
 .edit-priority-container,
+.edit-assign-container,
 .edit-subtasks-container {
     display: flex;
     flex-direction: column;
