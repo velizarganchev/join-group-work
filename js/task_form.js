@@ -144,7 +144,7 @@ function deleteSubtask(i){
     subtasks.splice(i,1);
     showSubtasks();
     if (subtasks.length == 0){
-        document.getElementById('buttons').setAttribute('style', "margin-top:232px");
+        // document.getElementById('buttons').setAttribute('style', "margin-top:232px");
         document.getElementById('subTaskList').classList.add('d-none');
     }
 }
