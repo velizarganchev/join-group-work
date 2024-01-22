@@ -35,7 +35,8 @@
             <p id="contactPageHeaderTextResponsive">Better with a team</p>
             <div class="horizontal"></div>
         </div>
-        <button onclick="returnToContactBook()" id="responsiveContactDetailBack"><img src="/assets/img/arrow-left-line.png" alt="arrow left" class="arrow"></button>
+        <button onclick="returnToContactBook()" id="responsiveContactDetailBack"><img
+                src="/assets/img/arrow-left-line.png" alt="arrow left" class="arrow"></button>
         <div id="contactDetailsView"></div>
     </div>
     <div id="confirmationMessage" class="confirmationMessage">
@@ -84,6 +85,19 @@
     <div id="responsiveAddContactButton" onclick="addContact()">
         <img src="/assets/img/add-contact.png" alt="add contact image">
     </div>
+    <div id="responsiveEditContactButton" onclick="toggleEditDeleteButtonPopUp()">
+        <img src="/assets/img/show-more.png" alt="add contact image">
+    </div>
+    <div id="editDeleteButtonPopUp" class="editDeleteButtonPopUp">
+        <div class="contactEditButton" onclick="editContact()">
+            <img class="contactDetailsNameIcons" src="/assets/img/edit-contact.png" alt="edit contact">
+            <p>Edit</p>
+        </div>
+        <div class="contactDeleteButton" onclick="deleteContact()">
+            <img class="contactDetailsNameIcons" src="/assets/img/delete-contact.png" alt="delete contact">
+            <p>Delete</p>
+        </div>
+    </div>      
     <div id="editContactOverlay">
         <div id="editContactPopUp">
             <button class="closeContactButton" type="button" onclick="closePopUp()">

@@ -252,6 +252,10 @@ function showContactDetails(contactItemId, toEdit) {
       document.getElementById("contactPageRightHeader").style.display = "none";
       document.getElementById("contactPageRightHeaderResponsive").style.display = "flex";
       document.getElementById("contactDetailsView").style.display = "flex !important";
+      document.getElementById("responsiveAddContactButton").setAttribute('style', 'display:none !important');
+      document.getElementById("responsiveEditContactButton").setAttribute('style', 'display:flex !important');
+      document.querySelector(".contactEditButton").setAttribute('style', 'display:none !important');
+      document.querySelector(".contactDeleteButton").setAttribute('style', 'display:none !important');
     }
   }
 
@@ -321,6 +325,8 @@ function returnToContactBook(){
   document.getElementById("contactPageRightHeaderResponsive").style.display = "none";
   document.getElementById("contactDetailsView").style.display = "none";
   document.getElementById("responsiveContactDetailBack").style.display = "none";
+  document.getElementById("responsiveAddContactButton").setAttribute('style', 'display:flex !important');
+  document.getElementById("responsiveEditContactButton").setAttribute('style', 'display:none !important');
 
   renderContactBook();
 }
@@ -448,8 +454,8 @@ function closePopUp() {
     document.getElementById("addContactOverlay").style.display = "none";
     document.getElementById("editContactOverlay").style.display = "none";
     document.getElementById("responsiveAddContactButton").style.zIndex = "1200";
-    let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
 
+    let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
     responsiveAddContactButton.setAttribute('style', 'display:flex !important');
 }
 
@@ -624,6 +630,15 @@ async function deleteContact() {
         
         detailView.style.display = "none";
     }
+}
+
+/**
+ * shows edit and delete contact button in responsive mode and hides it
+ * 
+ */
+function toggleEditDeleteButtonPopUp() {
+  let popUp = document.getElementById('editDeleteButtonPopUp');
+  popUp.style.display = (popUp.style.display === 'block') ? 'none' : 'block';
 }
 
 /*
