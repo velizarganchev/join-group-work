@@ -7,9 +7,9 @@
         height: 80px;
     }
 
-    .side-bar {
+    /* .side-bar {
         display: none;
-    }
+    } */
 
     #contactOverview {
         top: 81px;
@@ -90,6 +90,14 @@
     #contactDetailsView {
         left: 69%;
         transform: translate(-50%, -10%);
+        overflow-y: scroll;
+        gap: 0;
+        justify-content: start;
+        top: 270px;
+    }
+
+    #emailDetails{
+        margin-top: 0;
     }
 
     #addContactPopUp,
@@ -140,7 +148,7 @@
         display: none !important;
         width: 56px;
         height: 56px;
-        top: 80%;
+        bottom: 100px;
         right: 35px;
         z-index: 900;
         position: fixed;
