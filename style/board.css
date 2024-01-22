@@ -87,9 +87,10 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    text-decoration: none;
     width: 160px;
     height: 48px;
-    font-size: 21px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 25.2px;
     color: #FFFFFF;
@@ -559,6 +560,11 @@
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.20);
 }
 
+.edit-contacts-container {
+    display: flex;
+    gap: 8px;
+}
+
 .edit-contact {
     display: inline-block;
     text-align: center;
@@ -570,6 +576,13 @@
     font-weight: 400;
     line-height: 32px;
     border-radius: 50%;
+}
+
+.add-subtask-btn {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: inherit;
 }
 
 .edit-subtasks-container form {

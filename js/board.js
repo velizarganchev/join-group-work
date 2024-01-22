@@ -42,7 +42,7 @@ let tasks = [
         id: 2,
         title: 'CSS Architecture Planning',
         description: 'Define CSS naming conventions and structure.',
-        date: new Date().getTime(),
+        date: new Date(),
         priority: 'Urgent',
         subtasks: [
             {
@@ -76,7 +76,7 @@ let tasks = [
         id: 3,
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation',
-        date: new Date().getTime(),
+        date: new Date(),
         priority: 'Low',
         subtasks: [
             {
@@ -120,7 +120,7 @@ let tasks = [
         id: 4,
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation',
-        date: new Date().getTime(),
+        date: new Date(),
         priority: 'Low',
         subtasks: [
             {
@@ -146,6 +146,7 @@ let tasks = [
         ],
     }
 ];
+let editSubtasks = [];
 let columns;
 let currentDraggedElement;
 
@@ -314,6 +315,9 @@ function editTask(taskId) {
     taskPopUp.style.display = "flex";
 
     taskPopUp.innerHTML = generateEditTaskHtml(taskToEdit);
+    handleEditPriority(taskToEdit.priority);
+    handleEditContacts(taskToEdit.contacts);
+    showSubtasks(taskToEdit.subtasks);
 }
 
 
@@ -328,75 +332,51 @@ function generateEditTaskHtml(taskToEdit) {
             </div>
             <div class="edit-title-container">
                 <span>Title</span>
-                <input type="text" id="edit-title" placeholder="Enter Title" name="title">
+                <input type="text" id="edit-title" placeholder="Enter Title" name="title" value="${taskToEdit.title}">
             </div>
             <div class="edit-description-container">
                 <span>Description</span>
-                <textarea id="edit-description" placeholder="Enter Description" name="description" rows="4" cols="30"></textarea>
+                <textarea id="edit-description" placeholder="Enter Description" name="description" rows="4" cols="30">${taskToEdit.description}</textarea>
             </div>
             <div class="edit-date-container">
                 <span>Due date</span>
-                <input type="date" id="edit-date" name="date">
+                <input value="${taskToEdit.date.toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}" max="2024-01-31" type="date" id="edit-date" name="date">
             </div>
             <div class="edit-priority-container">
                 <span>Priority</span>
                 <div class="edit-priority-buttons">
-                    <button>
+                    <button id="urgent">
                         <span>Urgent</span>
-                        <img src="../assets/img/board/prio-urgent.svg" alt="">
+                        <img id="edit-urgent-img" src="../assets/img/board/prio-urgent.svg" alt="">
                     </button>
-                    <button>
+                    <button id="medium">
                         <span>Medium</span>
-                        <img src="../assets/img/board/prio-medium.svg" alt="">
+                        <img id="edit-medium-img" src="../assets/img/board/prio-medium.svg" alt="">
                     </button>
-                    <button>
+                    <button id="low">
                         <span>Low</span>
-                        <img src="../assets/img/board/prio-low.svg" alt="">
+                        <img id="edit-low-img" src="../assets/img/board/prio-low.svg" alt="">
                     </button>
                 </div> 
             </div>
             <div class="edit-priority-container">
                 <label for="edit-contacts">Assignet to:</label>
                 <select name="contacts" id="edit-contacts">
+                <option value="">Select contacts to assign</option>
                   <option value="1">Anton Mayer</option>
                   <option value="2">Anja Schulz</option>
                 </select>
-                <div class="edit-contacts-container">
-                    <div class="edit-contact">MP</div>
-                    <div class="edit-contact">MP</div>
-                    <div class="edit-contact">MP</div>
-                </div>
+                <div id="edit-contacts-list" class="edit-contacts-container"></div>
             </div>
             <div class="edit-subtasks-container">
-                <form onsubmit="#">
-                    <input id="search-text" type="text" minlength="3" required placeholder="add new subtask">
-                    <img src="../assets/img/board/subtask-plus.svg" alt="">
+                <form onsubmit="addSubtask(event)">
+                    <input id="subtask-text" type="text" minlength="3" required placeholder="add new subtask">
+                    <button type="submit" class="add-subtask-btn">
+                        <img src="../assets/img/board/subtask-plus.svg" alt="">
+                    </button>
                 </form>
                 <ul class="edit-subtask-list">
-                    <li class="edit-subtask-item">
-                        <span>Subtask1</span>
-                        <div class="edit-subtask-icons">
-                            <button>
-                                <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
-                            </button>
-                            <img src="../assets/img/board/vector3.svg" alt="">
-                            <button>
-                                <img src="../assets/img/board/delete-subtask-icon.svg" alt="">
-                            </button>
-                        </div>
-                    </li>
-                    <li class="edit-subtask-item">
-                        <span>Subtask2</span>
-                        <div class="edit-subtask-icons">
-                            <button>
-                                <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
-                            </button>
-                            <img src="../assets/img/board/vector3.svg" alt="">
-                            <button>
-                                <img src="../assets/img/board/delete-subtask-icon.svg" alt="">
-                            </button>
-                        </div>
-                    </li>
+                    
                 </ul>
             </div>
             <div class="edit-button-container">
@@ -407,6 +387,116 @@ function generateEditTaskHtml(taskToEdit) {
             </div>
         </div>
     `;
+}
+
+
+/**
+ * Renders a list of subtasks in the edit subtasks section.
+ *
+ * @param {Array} subtasks - An array of subtask objects.
+ */
+function showSubtasks(subtasks) {
+    let subtasksList = document.querySelector('.edit-subtask-list');
+    subtasksList.innerHTML = '';  // Clear the existing content before rendering new subtasks
+
+    for (let i = 0; i < subtasks.length; i++) {
+        const element = subtasks[i];
+        subtasksList.innerHTML += /*html*/ `
+            <li class="edit-subtask-item">
+                <span>${element.name}</span>
+                <div class="edit-subtask-icons">
+                    <button>
+                        <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
+                    </button>
+                    <img src="../assets/img/board/vector3.svg" alt="">
+                    <button>
+                        <img src="../assets/img/board/delete-subtask-icon.svg" alt="">
+                    </button>
+                </div>
+            </li>
+        `;
+    }
+}
+
+
+/**
+ * Handles the addition of a subtask by updating the editSubtasks array and clearing the input field.
+ *
+ * @param {Event} e - The event object.
+ */
+function addSubtask(e) {
+    e.preventDefault();
+    const subtaskInput = document.getElementById('subtask-text');
+    editSubtasks.push(subtaskInput.value);
+    subtaskInput.value = '';
+    console.log(editSubtasks);
+}
+
+
+/**
+ * Handles the editing of contacts by updating the contacts list in the edit form.
+ *
+ * @param {Array} contacts - An array of contact objects.
+ */
+function handleEditContacts(contacts) {
+    const contactsDiv = document.getElementById('edit-contacts-list');
+
+    contactsDiv.innerHTML = contacts.map(generateEditContactHtml).join('');
+}
+
+
+/**
+ * Generates HTML for an edit contact and returns it as a string.
+ *
+ * @param {Object} contact - The contact object.
+ * @returns {string} - The HTML string for the edit contact.
+ */
+function generateEditContactHtml(contact) {
+    return /*html*/ `<div class="edit-contact" style="background-color: ${contact.color};">${contact.name[0]}${contact.lastName[0]}</div>`;
+}
+
+
+/**
+ * Handles the editing of priority by updating the button color and background image.
+ *
+ * @param {string} priority - The priority value ('Low', 'Medium', or 'Urgent').
+ */
+function handleEditPriority(priority) {
+    const priorityMappings = {
+        'Low': ['low', 'edit-low-img'],
+        'Medium': ['medium', 'edit-medium-img'],
+        'Urgent': ['urgent', 'edit-urgent-img']
+    };
+
+    const [idButton, idImg] = priorityMappings[priority];
+    const button = document.getElementById(idButton);
+    const img = document.getElementById(idImg);
+
+    const background = setEditButtonBackground(idButton);
+
+    button.style.color = 'white';
+    button.style.background = background;
+    img.src = `../assets/img/board/prio-${idButton}-white.svg`;
+}
+
+
+/**
+ * Sets the background color for the edit button based on the priority.
+ *
+ * @param {string} idButton - The button ID.
+ * @returns {string} - The background color.
+ */
+function setEditButtonBackground(idButton) {
+    switch (idButton) {
+        case 'low':
+            return '#7AE229';
+        case 'medium':
+            return '#FFA800';
+        case 'urgent':
+            return '#FF3D00';
+        default:
+            return '';
+    }
 }
 
 
