@@ -223,7 +223,6 @@
     top: 270px;
     left: 750px;
     gap: 21px;
-    overflow-y: scroll;
 }
 
 .circleInDetailView {
