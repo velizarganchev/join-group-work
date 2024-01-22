@@ -155,16 +155,6 @@
         }
     }
 
-    @keyframes background-fade-out {
-        0% {
-            opacity: 1;
-        }
-
-        100% {
-            opacity: 0;
-        }
-    }
-
     @keyframes fly-in {
         0% {bottom: -13%}
         100% {bottom: 23%}
