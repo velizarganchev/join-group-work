@@ -8,6 +8,10 @@
         flex-direction: unset;
     }
 
+    .content-margin {
+        margin-top: 85px;
+    }
+
     #joinLogoSideBar {
         display: none;
     }
