@@ -12,16 +12,21 @@
 
 @media (max-width: 530px){
     .legalNoticeHeader h1{
-        font-size: 40px;
+        font-size: 47px;
+    }
+
+    .content-margin{
+        margin-left: 16.5px;
+        margin-right: 16.5px;
     }
 }
 
 @media (max-width: 390px){
     .legalNoticeHeader h1{
-        font-size: 30px;
+        font-size: 35px;
     }
 
-    .legalNoticeText h2 {
+    .legalNoticeText h2{
         font-size: 20px;
     }
 }

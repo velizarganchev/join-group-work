@@ -356,7 +356,7 @@ function renderContactDetails(contact, toEdit) {
         </div>
         <p class="contactInformation">Contact Information</p>
         <div class="emailAndPhoneDetails">
-            <p><b>Email</b></p>
+            <p id="emailDetails"><b>Email</b></p>
             <div class="emailDetails"><a href="mailto:${contact.email}">${contact.email}</a></div>
             <p><b>Phone</b></p>
             <div class="phoneDetails"><a href="tel:${contact.phone}">${contact.phone}</a></div>
