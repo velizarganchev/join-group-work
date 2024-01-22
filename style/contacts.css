@@ -664,6 +664,13 @@
     background-color: #29ABE2;
 }
 
-#responsiveAddContactButton{
-    display: none !important;
+#editDeleteButtonPopUp {
+    display: none;
+    position: absolute;
+    top: 66%;
+    right: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
