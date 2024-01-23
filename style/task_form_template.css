@@ -494,8 +494,10 @@ body{
     }
 }
 
-@media(max-height:1220px){
+/* @media(max-height:1220px){   // Velizar !!!! 
     .buttonsAndInfotext{
         margin-bottom: 80px;
     }
-}
+} */   
+
+

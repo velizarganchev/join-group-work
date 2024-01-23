@@ -238,7 +238,6 @@ let currentDraggedElement;
 async function initBoard() {
     checkLogInStatus();
     await init('board', 'task_from');
-    // await init('task_from');
     renderTasks();
 }
 
@@ -250,7 +249,7 @@ async function initBoard() {
  */
 async function renderTasks(searchedTasks) {
     // Retrieves all tasks from storage
-    let allTasks = await getItem('AllTasks');
+    let allTasks = JSON.parse(await getItem('AllTasks'));
     console.log(allTasks);
     columns = document.getElementById('board-distribution').children;
 
@@ -273,10 +272,15 @@ async function renderTasks(searchedTasks) {
     iterateByEachColumn(columns);
 }
 
+
+/**
+ * Opens the pop-up window for adding a new task.
+ */
 function openAddTask() {
-    let addTaskDiv = document.getElementById('pop-up-add-task');
+    const addTaskDiv = document.getElementById('pop-up-add-task');
     addTaskDiv.style.display = 'flex';
 }
+
 
 /**
  * Searches tasks based on the entered search term and renders the matching tasks.
@@ -386,8 +390,8 @@ function showEditTask(taskId) {
     taskPopUp.innerHTML = generateEditTaskHtml(taskToEdit);
 
     handleEditPriority(taskToEdit.priority);
-    handleEditContacts(taskToEdit.contacts);
-    generateContactsSelectHtml();
+    // handleEditContacts(taskToEdit.contacts);
+    // generateContactsSelectHtml();
     showSubtasks(taskToEdit.id, taskToEdit.subtasks);
 }
 
@@ -439,10 +443,16 @@ function generateEditTaskHtml(taskToEdit) {
             <div class="edit-assign-container">
                 <label for="edit-contacts">Assignet to:</label> 
                 <!-- !!!!!!! -->
-                <select name="contacts" id="edit-contacts" >
+                <div id="SubcontentContacts" class="Subcontent">
+                        <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
+                        <div id="ContainerForAllChosenContacts"class="ContainerForAllChosenContacts d-none"></div>
+                        <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none"></div>
+                        <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
+                </div>
+                <!-- <select name="contacts" id="edit-contacts" >
                     <option value="">Select contacts to assign</option>
                 </select>
-                <div id="edit-contacts-list" class="edit-contacts-container"></div>
+                <div id="edit-contacts-list" class="edit-contacts-container"></div> -->
             </div>
             <div class="edit-subtasks-container">
                 <form onsubmit="addSubtask(event, ${taskToEdit.id})">
@@ -487,12 +497,12 @@ function editTask(taskId) {
 /**
  * Generiert HTML für die Auswahl von Kontakten und fügt es dem entsprechenden Dropdown-Element hinzu.
  */
-function generateContactsSelectHtml() {
-    const contactsDropdown = document.getElementById('edit-contacts');
-    contacts.forEach((contact, index) => {
-        contactsDropdown.innerHTML += `<option value="${index}">${contact.name}</option>`;
-    });
-}
+// function generateContactsSelectHtml() {
+//     const contactsDropdown = document.getElementById('edit-contacts');
+//     contacts.forEach((contact, index) => {
+//         contactsDropdown.innerHTML += `<option value="${index}">${contact.name}</option>`;
+//     });
+// }
 
 
 /**
@@ -565,11 +575,10 @@ function addSubtask(e, taskId) {
  *
  * @param {Array} contacts - An array of contact objects.
  */
-function handleEditContacts(contacts) {
-    const contactsDiv = document.getElementById('edit-contacts-list');
-
-    contactsDiv.innerHTML = contacts.map(generateEditContactHtml).join('');
-}
+// function handleEditContacts(contacts) {
+//     const contactsDiv = document.getElementById('edit-contacts-list');
+//     contactsDiv.innerHTML = contacts.map(generateEditContactHtml).join('');
+// }
 
 
 /**
