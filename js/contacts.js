@@ -95,7 +95,7 @@ async function initContacts() {
  * Renders contact overview section
  */
 function renderContactBook() {
-    const contactOverview = document.getElementById("contactOverviewContent");
+    let contactOverview = document.getElementById("contactOverviewContent");
     let currentAlphabetLetter = null;
 
     contactOverview.innerHTML = "";
@@ -104,15 +104,15 @@ function renderContactBook() {
     sortContactsAlphabetically();
 
     for (let i = 0; i < contacts.length; i++) {
-        const contact = contacts[i];
-        const contactFirstLetter = contact.name.charAt(0).toUpperCase();
+        let contact = contacts[i];
+        let contactFirstLetter = contact.name.charAt(0).toUpperCase();
         handleLetterChange(currentAlphabetLetter, contactFirstLetter, contactOverview);
         currentAlphabetLetter = contactFirstLetter;
 
-        const circleStyle = `background-color: ${contact.color};`;
-        const circleClass = `circle-${contact.name.charAt(0).toUpperCase()}`;
-        const nameParts = contact.name.split(" ");
-        const contactInitials = calculateContactInitials(nameParts);
+        let circleStyle = `background-color: ${contact.color};`;
+        let circleClass = `circle-${contact.name.charAt(0).toUpperCase()}`;
+        let nameParts = contact.name.split(" ");
+        let contactInitials = calculateContactInitials(nameParts);
 
         renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, i);
     }
@@ -120,11 +120,12 @@ function renderContactBook() {
     handleLastLetter(currentAlphabetLetter, contactOverview);
 }
 
+
   /**
    * Generates HTML for the "Add new contact" button.
    */
 function renderAddContactButton() {
-    const addContactButtonHTML = `
+    let addContactButtonHTML = `
       <button id="addContactButton" onclick="addContact()">
         Add new contact <img src="/assets/img/add-contact.png" alt="add contact image">
       </button>
@@ -170,8 +171,8 @@ function handleLetterChange(currentAlphabetLetter, newLetter, contactOverview) {
  * @param {number} index - The index of the contact.
  */
 function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, index) {
-  const contactItemId = `contactItem_${index}`;
-  const contactItemHTML = `
+  let contactItemId = `contactItem_${index}`;
+  let contactItemHTML = `
         <div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}', true)">
             <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
             <div class="contactDetails">
@@ -245,7 +246,7 @@ function showContactDetails(contactItemId, toEdit) {
   
     renderContactDetails(selectedContact, toEdit);
 
-    const screenWidth = window.innerWidth;
+    let screenWidth = window.innerWidth;
 
     if (screenWidth <= 665){
       document.getElementById("contactOverview").style.display = "none";
@@ -267,9 +268,9 @@ function showContactDetails(contactItemId, toEdit) {
  * @param {string} contactItemId - The ID of the contact item.
  */
 function toggleSelectedClass(contactItemId) {
-    const clickedItem = document.getElementById(contactItemId);
-    const contactDetailsView = document.getElementById("contactDetailsView");
-    const isSelected = clickedItem.classList.toggle("selectedContact");
+    let clickedItem = document.getElementById(contactItemId);
+    let contactDetailsView = document.getElementById("contactDetailsView");
+    let isSelected = clickedItem.classList.toggle("selectedContact");
 
     if (isSelected) {
         showSelectedContactDetails(clickedItem);
@@ -286,8 +287,8 @@ function toggleSelectedClass(contactItemId) {
  * @param {HTMLElement} clickedItem - The clicked contact item.
  */
 function showSelectedContactDetails(clickedItem) {
-    const sortedIndex = parseInt(clickedItem.id.split('_')[1]);
-    const selectedContact = sortContactsAlphabetically()[sortedIndex];
+    let sortedIndex = parseInt(clickedItem.id.split('_')[1]);
+    let selectedContact = sortContactsAlphabetically()[sortedIndex];
     renderContactDetails(selectedContact);
     document.getElementById("contactDetailsView").style.display = "flex";
 }
@@ -307,7 +308,7 @@ function hideContactDetails(contactDetailsView) {
  * @param {HTMLElement} clickedItem - The clicked contact item.
  */
 function unselectOtherContactItems(clickedItem) {
-    const contactItems = document.querySelectorAll(".contactItem");
+    let contactItems = document.querySelectorAll(".contactItem");
     contactItems.forEach(item => {
         if (item !== clickedItem) {
             item.classList.remove("selectedContact");
@@ -320,13 +321,20 @@ function unselectOtherContactItems(clickedItem) {
  * closes contact detail view and returns to contact book when viewed on mobile device
  * 
  */
-function returnToContactBook(){
-  document.getElementById("contactOverview").style.display = "flex";
-  document.getElementById("contactPageRightHeaderResponsive").style.display = "none";
-  document.getElementById("contactDetailsView").style.display = "none";
-  document.getElementById("responsiveContactDetailBack").style.display = "none";
-  document.getElementById("responsiveAddContactButton").setAttribute('style', 'display:flex !important');
-  document.getElementById("responsiveEditContactButton").setAttribute('style', 'display:none !important');
+function returnToContactBook() {
+  let contactOverview = document.getElementById("contactOverview");
+  let contactPageRightHeaderResponsive = document.getElementById("contactPageRightHeaderResponsive");
+  let contactDetailsView = document.getElementById("contactDetailsView");
+  let responsiveContactDetailBack = document.getElementById("responsiveContactDetailBack");
+  let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
+  let responsiveEditContactButton = document.getElementById("responsiveEditContactButton");
+
+  contactOverview.style.display = "flex";
+  contactPageRightHeaderResponsive.style.display = "none";
+  contactDetailsView.style.display = "none";
+  responsiveContactDetailBack.style.display = "none";
+  responsiveAddContactButton.style.display = "flex";
+  responsiveEditContactButton.style.display = "none";
 
   renderContactBook();
 }
@@ -339,10 +347,10 @@ function returnToContactBook(){
  * @param {boolean} toEdit - True if in edit mode.
  */
 function renderContactDetails(contact, toEdit) {
-    const contactDetailsView = document.getElementById("contactDetailsView");
+    let contactDetailsView = document.getElementById("contactDetailsView");
     contactDetailsView.innerHTML = "";
 
-    const contactDetailsHTML = `
+    let contactDetailsHTML = `
         <div class="contactDetailsName">
             <div class="circle circleInDetailView" style="background-color: ${contact.color};">
                 ${calculateContactInitials(contact.name.split(" "))}
@@ -380,15 +388,15 @@ function renderContactDetails(contact, toEdit) {
  * @param {Object} contact - The contact information.
  */
 function renderEditFields(contact) {
-    const editNameField = document.getElementById("editName");
-    const editEmailField = document.getElementById("editEmail");
-    const editPhoneField = document.getElementById("editPhone");
+    let editNameField = document.getElementById("editName");
+    let editEmailField = document.getElementById("editEmail");
+    let editPhoneField = document.getElementById("editPhone");
 
     editNameField.value = contact.name;
     editEmailField.value = contact.email;
     editPhoneField.value = contact.phone;
 
-    const initialIcon = document.getElementById("iconInEditContact");
+    let initialIcon = document.getElementById("iconInEditContact");
     initialIcon.innerHTML = `
         <div class="circle circleInDetailView responsiveCircle" style="background-color: ${contact.color};">
             ${calculateContactInitials(contact.name.split(" "))}
@@ -425,8 +433,7 @@ function renderEditDeleteButtons() {
  * @param {string} phone - The phone number of the contact.
  */
 function addContact() {
-    const addContactOverlay = document.getElementById("addContactOverlay");
-
+    let addContactOverlay = document.getElementById("addContactOverlay");
     let name = document.getElementById("name");
     let email = document.getElementById("email");
     let phone = document.getElementById("phone");
@@ -451,12 +458,14 @@ function addContact() {
  * Closes the pop-up.
  */
 function closePopUp() {
-    document.getElementById("addContactOverlay").style.display = "none";
-    document.getElementById("editContactOverlay").style.display = "none";
-    document.getElementById("responsiveAddContactButton").style.zIndex = "1200";
+  let addContactOverlay = document.getElementById("addContactOverlay");
+  let editContactOverlay = document.getElementById("editContactOverlay");
+  let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
 
-    let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
-    responsiveAddContactButton.setAttribute('style', 'display:flex !important');
+  addContactOverlay.style.display = "none";
+  editContactOverlay.style.display = "none";
+  responsiveAddContactButton.style.zIndex = "1200";
+  responsiveAddContactButton.style.display = "flex";
 }
 
 
@@ -464,27 +473,27 @@ function closePopUp() {
  * Function for adding new contact
  */
 function createContact() {
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const phone = document.getElementById("phone").value;
-    const saveButton = document.getElementById("saveButton");
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let saveButton = document.getElementById("saveButton");
   
     createLoadingAnimation(saveButton);
   
     setTimeout(async function () {
-      const newContact = {
-        name: name,
-        email: email,
-        phone: phone,
-        color: generateRandomColor(),
+      let newContact = {
+          name: name,
+          email: email,
+          phone: phone,
+          color: generateRandomColor(),
       };
   
       await addContactAndRender(newContact);
       closePopUpWithConfirmation();
       resetSaveButton(saveButton);
   
-      const newIndex = findContactIndex(newContact);
-      const contactItemId = `contactItem_${newIndex}`;
+      let newIndex = findContactIndex(newContact);
+      let contactItemId = `contactItem_${newIndex}`;
       showContactDetails(contactItemId);
     }, 1000);
   }
@@ -528,7 +537,7 @@ async function addContactAndRender(newContact) {
  * @returns {number} - The index of the contact in the sorted array.
  */
 function findContactIndex(contactToFind) {
-    const sortedContacts = sortContactsAlphabetically();
+    let sortedContacts = sortContactsAlphabetically();
     return sortedContacts.findIndex(contact =>
         contact.name === contactToFind.name && contact.email === contactToFind.email && contact.phone === contactToFind.phone
     );
@@ -541,7 +550,7 @@ function findContactIndex(contactToFind) {
  * @returns {string} - Random hex color.
  */
 function generateRandomColor() {
-    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    let randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
     return randomColor;
 }
 
@@ -550,7 +559,7 @@ function generateRandomColor() {
  * Displays a confirmation message and hides it.
  */
 function showConfirmationMessage() {
-    const confirmationMessage = document.getElementById("confirmationMessage");
+    let confirmationMessage = document.getElementById("confirmationMessage");
     confirmationMessage.style.display = "flex";
     
     setTimeout(function () {
@@ -588,12 +597,12 @@ function editContact() {
  * Saves the edited contact information, updates the contact book, and shows the edited contact details.
  */
 async function saveEditedContact() {
-    const editedName = document.getElementById("editName").value;
-    const editedEmail = document.getElementById("editEmail").value;
-    const editedPhone = document.getElementById("editPhone").value;
+    let editedName = document.getElementById("editName").value;
+    let editedEmail = document.getElementById("editEmail").value;
+    let editedPhone = document.getElementById("editPhone").value;
 
-    const selectedContactItem = document.querySelector(".selectedContact");
-    const index = parseInt(selectedContactItem.id.split('_')[1]);
+    let selectedContactItem = document.querySelector(".selectedContact");
+    let index = parseInt(selectedContactItem.id.split('_')[1]);
 
     contacts[index].name = editedName;
     contacts[index].email = editedEmail;
@@ -613,12 +622,12 @@ async function saveEditedContact() {
  * Deletes the selected contact, updates the contacts array, and re-renders the contact book.
  */
 async function deleteContact() {
-    const selectedContactItem = document.querySelector(".selectedContact");
-    const detailView = document.getElementById("contactDetailsView");
+    let selectedContactItem = document.querySelector(".selectedContact");
+    let detailView = document.getElementById("contactDetailsView");
 
     if (selectedContactItem) {
-        const contactItemId = selectedContactItem.id;
-        const index = parseInt(contactItemId.split('_')[1]);
+        let contactItemId = selectedContactItem.id;
+        let index = parseInt(contactItemId.split('_')[1]);
 
         contacts.splice(index, 1);
 
@@ -631,6 +640,7 @@ async function deleteContact() {
     }
 }
 
+
 /**
  * shows edit and delete contact button in responsive mode and hides it
  * 
@@ -640,7 +650,6 @@ function toggleEditDeleteButtonPopUp() {
   popUp.style.display = (popUp.style.display === 'block') ? 'none' : 'block';
 }
 
-/*
 
 /**
  * Stores data on the server using the specified key.
@@ -649,10 +658,10 @@ function toggleEditDeleteButtonPopUp() {
  * @param {string} value - The data to be stored.
  * @returns {Promise} - A promise that resolves to the server response in JSON format.
  */
-// async function setItemContacts(key, value) {
-//     const payload = { key, value, token: STORAGE_TOKEN };
-//     return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) }).then((res) => res.json());
-// }
+async function setItemContacts(key, value) {
+    const payload = { key, value, token: STORAGE_TOKEN };
+    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) }).then((res) => res.json());
+}
 
 // /**
 //  * Retrieves data from the server using the specified key.

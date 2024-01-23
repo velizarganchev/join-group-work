@@ -61,7 +61,7 @@
                 <form class="contactForm" onsubmit="createContact(); return false;">
                     <div class="contactFormInput">
                         <div class="contactInputFields">
-                            <input type="text" id="name" name="name" placeholder="Name" required>
+                            <input type="text" id="name" name="name" pattern="[a-zA-Z]*" placeholder="Name" required>
                             <img src="/assets/img/person.png" alt="profile icon">
                         </div>
                         <div class="contactInputFields">
@@ -69,7 +69,7 @@
                             <img src="/assets/img/mail.png" alt="email icon">
                         </div>
                         <div class="contactInputFields">
-                            <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+                            <input type="tel" id="phone" name="phone" pattern="[0-9+]+" placeholder="Phone" required>
                             <img src="/assets/img/phone-icon.png" alt="phone icon">
                         </div>
                     </div>
