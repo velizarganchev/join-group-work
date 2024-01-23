@@ -183,7 +183,6 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
  */
 function minDate(){
     let TodaysDate = new Date().toISOString().split('T')[0];;
-    console.log(TodaysDate);
     document.getElementById('date').setAttribute('min',TodaysDate);
 }
 
