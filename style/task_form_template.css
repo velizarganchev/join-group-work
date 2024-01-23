@@ -1,5 +1,4 @@
 .addTaskHeadline{
-    text-align:center;
     color: #000;
     font-family: 'Inter', sans-serif;
     font-size: 61px;
@@ -416,14 +415,13 @@ body{
 
   .buttonsAndInfotext{
     position:fixed;
-    /* bottom:250px; */
     width:70%;
     display:flex;
     justify-content: space-between;
     align-items:center;
   }
 
-  @media(max-width:1400px){
+@media(max-width:1400px){
     .CompleteContent svg{
         display:none;
     }
@@ -446,58 +444,58 @@ body{
         gap:20px; 
         position:relative;
     }
-  }
+}
 
-    @media(max-width:1200px){
-        .content-margin{
-            margin-left:0;
-            margin-right:0;
-        }
+@media(max-width:1200px){
+    .content-margin{
+        margin-left:0;
+        margin-right:0;
+    }
+}
+
+@media(max-width:480px){
+    .CompleteContent{
+        width:100%;
     }
 
-    @media(max-width:480px){
-        .CompleteContent{
-            width:100%;
-        }
-
-        #TitleContent, #DescriptionContent, #AssignedToContent, .selection, #DueDateContent, #SubtasksContent, .subtaskInput, .SubcontentPrio{
-            width:300px;
-        }
-
-        #subtask{
-            width:250px;
-        }
-
-        .SubcontentPrio{
-            gap:4px;
-        }
-
-        .prioclass{
-            gap:2px;
-            padding:16px 5px;
-        }
-
-        .textarea{
-            min-width:300px;
-            max-width:300px;
-        }
-
-        .Content{
-            width:300px;
-        }        
-
-        .createTaskButton{
-            font-size:16px;
-            padding:8px;
-        }
-
-        .requiredText{
-            font-size:12px;
-        }
+    #TitleContent, #DescriptionContent, #AssignedToContent, .selection, #DueDateContent, #SubtasksContent, .subtaskInput, .SubcontentPrio{
+        width:300px;
     }
 
-    @media(max-height:1220px){
-        .buttonsAndInfotext{
-            margin-bottom: 80px;
-        }
+    #subtask{
+        width:250px;
     }
+
+    .SubcontentPrio{
+        gap:4px;
+    }
+
+    .prioclass{
+        gap:2px;
+        padding:16px 5px;
+    }
+
+    .textarea{
+        min-width:300px;
+        max-width:300px;
+    }
+
+    .Content{
+        width:300px;
+    }        
+
+    .createTaskButton{
+        font-size:16px;
+        padding:8px;
+    }
+
+    .requiredText{
+        font-size:12px;
+    }
+}
+
+@media(max-height:1220px){
+    .buttonsAndInfotext{
+        margin-bottom: 80px;
+    }
+}
