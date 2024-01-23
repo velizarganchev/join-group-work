@@ -439,12 +439,12 @@ body{
 
     .buttonsAndInfotext{
         justify-content: center;
-        bottom:80px;
+        bottom:0;
         padding:16px; 
         margin:0;  
         width:100%;
         gap:20px; 
-        position:static;
+        position:relative;
     }
   }
 
@@ -493,5 +493,11 @@ body{
 
         .requiredText{
             font-size:12px;
+        }
+    }
+
+    @media(max-height:1220px){
+        .buttonsAndInfotext{
+            margin-bottom: 80px;
         }
     }
