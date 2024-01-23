@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .board-header-container {
     width: 1056px;
     height: 73px;

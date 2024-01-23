@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="/style/desktop_template.css">
     <link rel="stylesheet" href="/style/mobile_template.css">
     <link rel="stylesheet" href="/style/summary.css">
+    <link rel="stylesheet" href="/style/summary-responsive.css">
+    <link rel="stylesheet" href="/style/desktop-template-responsive.css">
+    
     <script src="/js/script.js"></script>
     <script src="/js/summary.js"></script>
     <script src="/js/board.js"></script> <!--Delete later on-->
@@ -19,8 +22,9 @@
     <div class="content-margin">
         <header class="summary-headlines">
             <h1>Join 360</h1>
-            <div></div>
+            <div class="headline-border"></div>
             <h2>Key metrics at a glance</h2>
+            <div class="mobile-headline-border"></div>
         </header>
         <div class="summary-box">
             <div class="summary-content">
@@ -79,9 +83,15 @@
                     </a>
                 </div>
             </div>
-            <span>
+            <span class="welcome">
                 <p id="welcome-message"></p>
                 <p id="username-wrapper"></p>
+            </span>
+        </div>
+        <div id="mobile-welcome">
+            <span>
+                <p id="mobile-welcome-message"></p>
+                <p id="mobile-username-wrapper"></p>
             </span>
         </div>
     </div>

@@ -38,7 +38,7 @@ function closecontacts(){
     document.getElementById('ContainerForAllPossibleContacts').classList.add('d-none');
     if (chosenContacts.length == 0){
         document.getElementById('ContainerForAllChosenContacts').classList.add('d-none');
-        document.getElementById('requiredText').setAttribute('style', 'margin-top:200px');
+        // document.getElementById('requiredText').setAttribute('style', 'margin-top:200px');
     }
     document.getElementById('assignedToSelect').setAttribute('z-index','0');
     document.getElementById('ContainerForAllPossibleContacts').setAttribute('z-index','0');
@@ -140,14 +140,14 @@ function createCirclesToChosenContactContainer(){
         creatingCircle(id, adress);
     }
     document.getElementById('ContainerForAllChosenContacts').classList.remove('d-none');
-    repositionRequiredTextContainer();
+    // repositionRequiredTextContainer();
 }
 
 /**
  * This function changes the margin attribute to avoid a moving container (=requiredText) by creating a chosenContact list under the Assigned To input 
  */
 function repositionRequiredTextContainer(){
-    document.getElementById('requiredText').setAttribute('style', 'margin-top:46px');
+    document.getElementById('requiredText').setAttribute('style', 'margin-top:0');
 }
 
 /**

@@ -7,9 +7,9 @@
         height: 80px;
     }
 
-    .side-bar {
+    /* .side-bar {
         display: none;
-    }
+    } */
 
     #contactOverview {
         top: 81px;
@@ -90,6 +90,15 @@
     #contactDetailsView {
         left: 69%;
         transform: translate(-50%, -10%);
+        overflow-y: scroll;
+        gap: 0;
+        justify-content: start;
+        top: 270px;
+        animation: slideInDetails 0.5s ease-in-out;
+    }
+
+    #emailDetails {
+        margin-top: 0;
     }
 
     #addContactPopUp,
@@ -140,7 +149,7 @@
         display: none !important;
         width: 56px;
         height: 56px;
-        top: 80%;
+        bottom: 100px;
         right: 35px;
         z-index: 900;
         position: fixed;
@@ -378,6 +387,21 @@
         font-size: 16px;
         line-height: 19.2px;
         filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
+    }
+
+    #addContactPopUp,
+    #editContactPopUp {
+        animation: slideInFromBottom 0.5s ease-in-out;
+    }
+
+    @keyframes slideInFromBottom {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
     }
 }
 

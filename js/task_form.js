@@ -7,6 +7,7 @@ async function initAddTask() {
     checkLogInStatus();
     await init('add-task');
     minDate();
+    choosePrio(2);
 }
 
 /** changes the HTML back to standard (=no Prio chosen)
@@ -84,12 +85,11 @@ function changeColorOfPrio(Prio, i){
  * This function toggles the Images from the Subtask Input
  */
 function activateAndDeactivateSubtaskInput(){
-    // document.getElementById('subTaskList').classList.toggle('d-none');
-    document.getElementById('plus').classList.toggle('d-none'); //toggleClass('+', 'd-none');
-    document.getElementById('cancel').classList.toggle('d-none'); //toggleClass('cancel', 'd-none');
-    document.getElementById('verticalLine').classList.toggle('d-none'); //toggleClass('verticalLine', 'd-none');
-    document.getElementById('hook').classList.toggle('d-none'); //toggleClass('hook', 'd-none');
-    document.getElementById('overlay').classList.toggle('d-none'); //toggleClass('overlay', 'd-none');
+    toggleClass('plus', 'd-none');
+    toggleClass('cancel', 'd-none');
+    toggleClass('verticalLine', 'd-none');
+    toggleClass('hook', 'd-none');
+    toggleClass('overlay', 'd-none');
     cancelSubtask();
 }
 
@@ -110,11 +110,10 @@ function addSubtask(){
         'name' : task,
         'done' : false
     }
-    document.getElementById('subTaskList').classList.remove('d-none');
+    // document.getElementById('subTaskList').classList.remove('d-none');
     document.getElementById('buttons').setAttribute('style', "margin-top:0");
     subtasks.push(taskJSON);
     showSubtasksafterAddingATask();
-    console.log(subtasks);
 }
 
 /**
@@ -143,17 +142,13 @@ function showSubtasksafterAddingATask(){
 function deleteSubtask(i){
     subtasks.splice(i,1);
     showSubtasks();
-    if (subtasks.length == 0){
-        document.getElementById('buttons').setAttribute('style', "margin-top:232px");
-        document.getElementById('subTaskList').classList.add('d-none');
-    }
 }
 
 /**
  * collects the values of all inputs
  */
 function getAllInputs(){ // Json auslagern -> funktioniert nicht..
-    let id = allTasks.length +1; // Aufgaben dürfen erst aus allTasks gelöscht werden,wenn sie abgeschlossen sind!!
+    let id = allTasks.length +1;
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = chosenContactsJson;
@@ -268,6 +263,9 @@ function getAllCategories(){
     document.getElementById('overlayCategories').classList.toggle('d-none');  
 }
 
+/**
+ * This function opens / closes an Overlay for the Category-Section
+ */
 function closeOverlayCategories(){
     document.getElementById('overlayCategories').classList.toggle('d-none'); 
     document.getElementById('categories').classList.toggle('d-none');

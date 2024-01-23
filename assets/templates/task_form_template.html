@@ -1,134 +1,133 @@
 <section id="Content">  
-    <form class="CompleteContent" onsubmit="getAllInputs(); return false;">
-        <div class="Content">
-            <div id="TitleContent">
-                <div class="Subheadline">
-                    <div>
-                        Title
+    <form  onsubmit="getAllInputs(); return false;">
+        <div class="CompleteContent">
+            <div class="Content">
+                <div id="TitleContent">
+                    <div class="Subheadline">
+                        <div>
+                            Title
+                        </div>
+                        <div class="star">
+                            *
+                        </div>
                     </div>
-                    <div class="star">
-                        *
-                    </div>
-                </div>
-                <div class="Subcontent">
-                    <input required id="title" class="Inputfield" placeholder="Enter a title">
-                </div>
-            </div>
-            <div id="DescriptionContent">
-                <div class="Subheadline">
-                    <div>
-                        Description
+                    <div class="Subcontent">
+                        <input required id="title" class="Inputfield" placeholder="Enter a title">
                     </div>
                 </div>
-                <div class="Subcontent">
-                    <textarea id="description" class="Inputfield textarea" placeholder="Enter a description"></textarea>
-                </div>
-            </div>
-            <div id="AssignedToContent">
-                <div class="Subheadline">
-                    <div>
-                        Assigned to
+                <div id="DescriptionContent">
+                    <div class="Subheadline">
+                        <div>
+                            Description
+                        </div>
+                    </div>
+                    <div class="Subcontent">
+                        <textarea id="description" class="Inputfield textarea" placeholder="Enter a description"></textarea>
                     </div>
                 </div>
-                <div id="SubcontentContacts" class="Subcontent">
-                    <!-- <div> -->
-                        <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
-                        <!-- <img id="arrowdown" src="/assets/img/arrow_down.png">
-                    </div> -->
-                    <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts d-none">
-                        
+                <div id="AssignedToContent">
+                    <div class="Subheadline">
+                        <div>
+                            Assigned to
+                        </div>
                     </div>
-                    <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none">
-                        
-                    </div>
-                    <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
-                </div>
-            </div>
-            <div id="requiredText" class="requiredText">
-                <div class="star">*</div>This field is required
-            </div>
-        </div>
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="2" height="426" viewBox="0 0 2 426" fill="none">
-            <path d="M1.24805 1L1.24854 425" stroke="#D1D1D1" stroke-linecap="round"/>
-        </svg>
-        <div class="Content">
-            <div id="DueDateContent">
-                <div class="Subheadline">
-                    <div>
-                        Due date
-                    </div>
-                    <div class="star">
-                        *
-                    </div>
-                </div>
-                <div class="Subcontent">
-                    <input required id="date" type="date" class="Inputfield" min ="todaydate" pattern="">
-                </div>
-            </div>
-            <div id="PrioContent">
-                <div class="Subheadline">
-                    <div>
-                        Prio
-                    </div>
-                </div>
-                <div id="SubcontentPrio" class="SubcontentPrio">
-                    <div id="Prio1" class="prioclass hover" onclick="choosePrio(1)">
-                        <div>Urgent</div>
-                        <img id="HighImg" src="/assets/img/PrioHigh.png">
-                    </div>
-                    <div id="Prio2" class="prioclass hover" onclick="choosePrio(2)">
-                        <div>Medium</div>
-                        <img id="MediumImg" src="/assets/img/PrioMedium.png">
-                    </div>
-                    <div id="Prio3" class="prioclass hover" onclick="choosePrio(3)">
-                        <div>Low</div>
-                        <img id="LowImg" src="/assets/img/PrioLow.png">
+                    <div id="SubcontentContacts" class="Subcontent">
+                            <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
+                        <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts d-none">  
+                        </div>
+                        <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none">
+                            
+                        </div>
+                        <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
                     </div>
                 </div>
             </div>
-            <div id="DescriptionContent">
-                <div class="Subheadline">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2" height="426" viewBox="0 0 2 426" fill="none">
+                <path d="M1.24805 1L1.24854 425" stroke="#D1D1D1" stroke-linecap="round"/>
+            </svg>
+            <div class="Content">
+                <div id="DueDateContent">
+                    <div class="Subheadline">
+                        <div>
+                            Due date
+                        </div>
+                        <div class="star">
+                            *
+                        </div>
+                    </div>
+                    <div class="Subcontent">
+                        <input required id="date" type="date" class="Inputfield" min ="todaydate" pattern="">
+                    </div>
+                </div>
+                <div id="PrioContent">
+                    <div class="Subheadline">
+                        <div>
+                            Prio
+                        </div>
+                    </div>
+                    <div id="SubcontentPrio" class="SubcontentPrio">
+                        <div id="Prio1" class="prioclass hover" onclick="choosePrio(1)">
+                            <div>Urgent</div>
+                            <img id="HighImg" src="/assets/img/PrioHigh.png">
+                        </div>
+                        <div id="Prio2" class="prioclass hover" onclick="choosePrio(2)">
+                            <div>Medium</div>
+                            <img id="MediumImg" src="/assets/img/PrioMedium.png">
+                        </div>
+                        <div id="Prio3" class="prioclass hover" onclick="choosePrio(3)">
+                            <div>Low</div>
+                            <img id="LowImg" src="/assets/img/PrioLow.png">
+                        </div>
+                    </div>
+                </div>
+                <div id="DescriptionContent">
+                    <div class="Subheadline">
                         <div>
                             Category
                         </div>
                         <div class="star">
                             *
                         </div>
-                </div>
-                <div class="Subcontent">
-                    <div class="CategoryInputContainer hover" onclick="getAllCategories(id)">
-                        <div id="Category" class="simulateSelectElement">Select task category</div><div id="+"><img src="/assets/img/+.png"></div>
                     </div>
-                    <div id="categories" class="categories d-none">
-                        <div class="category hover" onclick="setCategory('Technical Task')">Technical Task</div>
-                        <div class="category category2 hover" onclick="setCategory('User Story')">User Story</div>
+                    <div class="Subcontent">
+                        <div class="CategoryInputContainer hover" onclick="getAllCategories(id)">
+                            <div id="Category" class="simulateSelectElement">Select task category</div><div id="+"><img src="/assets/img/+.png"></div>
+                        </div>
+                        <div id="categories" class="categories d-none">
+                            <div class="category hover" onclick="setCategory('Technical Task')">Technical Task</div>
+                            <div class="category category2 hover" onclick="setCategory('User Story')">User Story</div>
+                        </div>
+                        <div id="overlayCategories" class="overlay d-none" onclick="closeOverlayCategories()"></div>
                     </div>
-                    <div id="overlayCategories" class="overlay d-none" onclick="closeOverlayCategories()"></div>
                 </div>
-            </div>
-            <div id="SubtasksContent">
-                <div class="Subheadline">
+                <div id="SubtasksContent">
+                    <div class="Subheadline">
                         Subtasks
-                </div>
-                <div class="Subcontent">
-                    <div id="subtaskInput" class="subtaskInput">
-                        <input id="subtask" class="Inputfield subtasks" autocomplete="off" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
-                        <div class="subtasksImgagesContainer">
-                            <img id="plus" class="subtaskImg hover" src="/assets/img/+.png">
-                            <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
-                            <div class="d-none verticalLine" id="verticalLine"></div>
-                            <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
+                    </div>
+                    <div class="Subcontent">
+                        <div id="subtaskInput" class="subtaskInput">
+                            <input id="subtask" class="Inputfield subtasks" autocomplete="off" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
+                            <div class="subtasksImgagesContainer">
+                                <img id="plus" class="subtaskImg hover" src="/assets/img/+.png">
+                                <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
+                                <div class="d-none verticalLine" id="verticalLine"></div>
+                                <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
+                            </div>
+                        </div>
+                        <div id="overlay" class="overlay d-none" onclick="activateAndDeactivateSubtaskInput()">
+                        </div>
+                        <div >
+                            <ul class="subTaskList" id="subTaskList">
+
+                            </ul>
                         </div>
                     </div>
-                    <div id="overlay" class="overlay d-none" onclick="activateAndDeactivateSubtaskInput()">
-                    </div>
-                    <div >
-                        <ul class="subTaskList d-none" id="subTaskList">
-
-                        </ul>
-                    </div>
                 </div>
+            </div>
+        </div>
+        <div id="buttonsAndInfotext" class="buttonsAndInfotext">
+            <div id="requiredText" class="requiredText">
+                <div class="star">*</div>This field is required
             </div>
             <div id="buttons" class="buttons">
                 <button type ="reset" class="cancelButton hover" onclick="resetPrio()">Clear <img src="/assets/img/cancel_dark.png"></button>

@@ -114,11 +114,11 @@ function desktopStartAnimation() {
  */
 function mobileStartAnimation() {
     let mobileStartBackground = document.getElementById('start-background-mobile');
-    setTimeout(function(){
+    setTimeout(() => {
         toggleClass('start-logo-mobile', 'animated-start-logo');
         toggleClass('start-logo', 'animated-start-logo');
     }, 600);
-    setTimeout(function(){
+    setTimeout(() => {
         mobileStartBackground.style.zIndex = -1;
     }, 1000);
 }

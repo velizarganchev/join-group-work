@@ -17,6 +17,13 @@ body {
     z-index: 1;
 }
 
+#responsiveJoinLogoDark{
+    display: none;
+    height: 39.05px;
+    width: 32px;
+    margin-left: 32px;
+}
+
 .title {
     font-size: 21px;
     margin-left: 348px;
@@ -82,6 +89,7 @@ nav {
 .nav-item:hover {
     background-color: #2A3D59;
     color: white !important;
+    border-radius: 16px;
 }
 
 .bottom-nav-item {
