@@ -110,7 +110,7 @@ function addSubtask(){
         'name' : task,
         'done' : false
     }
-    document.getElementById('subTaskList').classList.remove('d-none');
+    // document.getElementById('subTaskList').classList.remove('d-none');
     document.getElementById('buttons').setAttribute('style', "margin-top:0");
     subtasks.push(taskJSON);
     showSubtasksafterAddingATask();
@@ -145,7 +145,7 @@ function deleteSubtask(i){
     showSubtasks();
     if (subtasks.length == 0){
         // document.getElementById('buttons').setAttribute('style', "margin-top:232px");
-        document.getElementById('subTaskList').classList.add('d-none');
+        // document.getElementById('subTaskList').classList.add('d-none');
     }
 }
 

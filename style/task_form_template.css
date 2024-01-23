@@ -416,7 +416,7 @@ body{
 
   .buttonsAndInfotext{
     position:fixed;
-    bottom:250px;
+    /* bottom:250px; */
     width:70%;
     display:flex;
     justify-content: space-between;
