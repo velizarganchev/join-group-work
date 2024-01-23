@@ -649,10 +649,10 @@ function toggleEditDeleteButtonPopUp() {
  * @param {string} value - The data to be stored.
  * @returns {Promise} - A promise that resolves to the server response in JSON format.
  */
-async function setItemContacts(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN };
-    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) }).then((res) => res.json());
-}
+// async function setItemContacts(key, value) {
+//     const payload = { key, value, token: STORAGE_TOKEN };
+//     return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) }).then((res) => res.json());
+// }
 
 // /**
 //  * Retrieves data from the server using the specified key.

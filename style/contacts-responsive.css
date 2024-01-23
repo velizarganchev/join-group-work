@@ -94,9 +94,10 @@
         gap: 0;
         justify-content: start;
         top: 270px;
+        animation: slideInDetails 0.5s ease-in-out;
     }
 
-    #emailDetails{
+    #emailDetails {
         margin-top: 0;
     }
 
@@ -386,6 +387,21 @@
         font-size: 16px;
         line-height: 19.2px;
         filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
+    }
+
+    #addContactPopUp,
+    #editContactPopUp {
+        animation: slideInFromBottom 0.5s ease-in-out;
+    }
+
+    @keyframes slideInFromBottom {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
     }
 }
 

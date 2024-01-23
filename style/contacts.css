@@ -223,6 +223,17 @@
     top: 270px;
     left: 750px;
     gap: 21px;
+    animation: slideInDetails 0.5s ease-in-out;
+}
+
+@keyframes slideInDetails {
+    from {
+        right: -100%;
+    }
+
+    to {
+        left: 750px;
+    }
 }
 
 .circleInDetailView {
@@ -364,6 +375,17 @@
     height: 592px;
     width: 80%;
     max-width: 1212px;
+    position: relative;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(200%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 .closeContactButton {
@@ -622,6 +644,7 @@
     height: 592px;
     width: 80%;
     max-width: 1212px;
+    animation: slideIn 0.5s ease-in-out;
 }
 
 #deleteButtonInForm {
