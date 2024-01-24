@@ -184,6 +184,7 @@ body {
 
 .card-container {
     width: 252px;
+    /* height: 262px; */
     padding: 16px;
     background-color: white;
     border: none;

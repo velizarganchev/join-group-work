@@ -26,7 +26,7 @@ function generateTaskHtml(task) {
             </div>
             <div class="pop-up-task-date">
                 <span>Due date:</span>
-                <span>${new Date(task.date).toLocaleDateString('DE')}</span>
+                <span>${new Date(task.date).toISOString().split('T')[0]}</span>
             </div>
             <div class="pop-up-task-priority">
                 <span>Priority:</span>
@@ -70,6 +70,7 @@ function generateTaskHtml(task) {
  * @returns {string} - HTML markup for the task editing popup.
  */
 function generateEditTaskHtml(taskToEdit) {
+    console.log(new Date(taskToEdit.date).toISOString().split('T')[0]);
     return /*html*/`
         <div class="pop-up-task-container" onclick="stopPropagation(event)">
             <div class="edit-close-button-container">
@@ -87,7 +88,7 @@ function generateEditTaskHtml(taskToEdit) {
             </div>
             <div class="edit-date-container">
                 <span>Due date</span>
-                <input value="${taskToEdit.date}" min="${new Date().toISOString().split('T')[0]}" max="2024-01-31" type="date" id="edit-date" name="date">
+                <input value="${new Date(taskToEdit.date).toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}" max="2024-01-31" type="date" id="edit-date" name="date">
             </div>
             <div class="edit-priority-container">
                 <span>Priority</span>
