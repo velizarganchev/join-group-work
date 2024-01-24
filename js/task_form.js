@@ -152,7 +152,7 @@ function deleteSubtask(i){
 /**
  * collects the values of all inputs
  */
-function getAllInputs(e) { // Json auslagern -> funktioniert nicht..
+function getAllInputs(e) {
     e.preventDefault();
     let id = allTasks.length + 1;
     let title = document.getElementById('title').value;
