@@ -414,8 +414,9 @@ body{
 }
 
   .buttonsAndInfotext{
-    position:fixed;
-    width:70%;
+    /* position:fixed; */
+    margin: 0 auto;
+    width:90%;
     display:flex;
     justify-content: space-between;
     align-items:center;

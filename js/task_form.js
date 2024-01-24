@@ -110,7 +110,9 @@ function addSubtask(){
         'name' : task,
         'done' : false
     }
-    // document.getElementById('subTaskList').classList.remove('d-none');
+    if(subtasks.length >= 4){
+        document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
+    }
     document.getElementById('buttons').setAttribute('style', "margin-top:0");
     subtasks.push(taskJSON);
     showSubtasksafterAddingATask();
@@ -141,6 +143,9 @@ function showSubtasksafterAddingATask(){
  */
 function deleteSubtask(i){
     subtasks.splice(i,1);
+    if(subtasks.length <= 4){
+        document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");
+    }
     showSubtasks();
 }
 
