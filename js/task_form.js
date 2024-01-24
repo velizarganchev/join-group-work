@@ -149,7 +149,7 @@ function deleteSubtask(i) {
  */
 function getAllInputs(e) { // Json auslagern -> funktioniert nicht..
     e.preventDefault();
-    let id = allTasks.length + 1;
+    let id = Math.round(Math.random() * 100); // Velizar - ich denke, es wäre so besser id zu generieren.
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = chosenContactsJson;
