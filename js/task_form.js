@@ -110,7 +110,9 @@ function addSubtask() {
         'name': task,
         'done': false
     }
-    // document.getElementById('subTaskList').classList.remove('d-none');
+    if(subtasks.length >= 4){
+        document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
+    }
     document.getElementById('buttons').setAttribute('style', "margin-top:0");
     subtasks.push(taskJSON);
     showSubtasksafterAddingATask();
@@ -139,15 +141,18 @@ function showSubtasksafterAddingATask() {
  * This function deletes a Subtasks from Array "subtasks" and displays the Array afterwards
  * @param {int} i - id of the Subtasks
  */
-function deleteSubtask(i) {
-    subtasks.splice(i, 1);
+function deleteSubtask(i){
+    subtasks.splice(i,1);
+    if(subtasks.length <= 4){
+        document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");
+    }
     showSubtasks();
 }
 
 /**
  * collects the values of all inputs
  */
-function getAllInputs(e) { // Json auslagern -> funktioniert nicht..
+function getAllInputs(e) {
     e.preventDefault();
     let id = Math.round(Math.random() * 100); // Velizar - ich denke, es wäre so besser id zu generieren.
     let title = document.getElementById('title').value;
