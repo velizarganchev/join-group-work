@@ -5,7 +5,7 @@ let chosenContactsJson = [];
  * This function opens a dropdown-menu so that the user can select a contact, which should work at the task in the future
  * @param {string} id - id of the Element which should be flipped around 
  */
-function getAllContacts(id){
+function getAllContacts(id) {
     flipTheImage(id);
     displayContacts();
     generateContactsContainer();
@@ -16,50 +16,50 @@ function getAllContacts(id){
 /**
  * This function displays the List of all choosable Contacts
  */
-function displayContacts(){
+function displayContacts() {
     document.getElementById('ContainerForAllPossibleContacts').classList.remove('d-none');
 }
 
 /**
  * This function put the necessary fields of "Assigned To" in foreground
  */
-function putAssignedToInForeground(){
-    document.getElementById('ContainerForAllPossibleContacts').setAttribute('style','z-index:999');
-    document.getElementById('SubcontentContacts').setAttribute('style','z-index:999');
+function putAssignedToInForeground() {
+    document.getElementById('ContainerForAllPossibleContacts').setAttribute('style', 'z-index:999');
+    document.getElementById('SubcontentContacts').setAttribute('style', 'z-index:999');
 }
 
 /**
  * This function closes / hides all Containers which belong to the "Assigned To" Area
  */
-function closecontacts(){
+function closecontacts() {
     document.getElementById('assignedToSelect').value = '';
     document.getElementById('overlayContacts').classList.toggle('d-none');
     document.getElementById('ContainerForAllPossibleContacts').innerHTML = '';
     document.getElementById('ContainerForAllPossibleContacts').classList.add('d-none');
-    if (chosenContacts.length == 0){
+    if (chosenContacts.length == 0) {
         document.getElementById('ContainerForAllChosenContacts').classList.add('d-none');
         // document.getElementById('requiredText').setAttribute('style', 'margin-top:200px');
     }
-    document.getElementById('assignedToSelect').setAttribute('z-index','0');
-    document.getElementById('ContainerForAllPossibleContacts').setAttribute('z-index','0');
+    document.getElementById('assignedToSelect').setAttribute('z-index', '0');
+    document.getElementById('ContainerForAllPossibleContacts').setAttribute('z-index', '0');
 }
 
 /**
  * This function opens an overlay to close the current focused section by a click somewhere else
  */
-function openOverlay(){
+function openOverlay() {
     document.getElementById('overlayContacts').classList.toggle('d-none');
 }
 
 /**
  * This function generates the HTML-Container for every contact and fills it with information
  */
-function generatingHTMLForContactsContainer(){
+function generatingHTMLForContactsContainer() {
     let contactsContainer = document.getElementById('ContainerForAllPossibleContacts');
     contactsContainer.innerHTML = '';
-    for (let i = 0; i < contacts.length; i++){
+    for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
-        contactsContainer.innerHTML +=`
+        contactsContainer.innerHTML += `
         <div id="contact${i}" class="contactbox contact">
             <div id="contactCircle${i}">
 
@@ -81,8 +81,8 @@ function generatingHTMLForContactsContainer(){
 /**
  * This function checks, if a checkbox was checked, if so it will be checked after reopening the dropdown-menu
  */
-function checkIfCheckboxesWereChecked(){
-    for (let j = 0; j<chosenContacts.length; j++){
+function checkIfCheckboxesWereChecked() {
+    for (let j = 0; j < chosenContacts.length; j++) {
         let id = chosenContacts[j];
         document.getElementById(`checkbox${id}`).checked = true;
     }
@@ -91,11 +91,11 @@ function checkIfCheckboxesWereChecked(){
 /**
  * This function checks if the checkbox is checked or unchecked and triggers a corresponding function 
  */
-function addContactToArray(i){
+function addContactToArray(i) {
     let checkbox = document.getElementById(`checkbox${i}`).checked;
-    if (checkbox){
+    if (checkbox) {
         addChosenContact(i);
-    }else{
+    } else {
         deleteChosenContact(i);
     }
 }
@@ -104,15 +104,15 @@ function addContactToArray(i){
  * This function pushes the number of the contact into an Array called chosenContacts
  * @param {int} i - the position of the contact in the Json-Array
  */
-function addChosenContact(i){
+function addChosenContact(i) {
     let name = contacts[i]['name'];
-    let firstname = name.slice(0,name.lastIndexOf(' '));
-    let lastname = name.slice(name.lastIndexOf(' ')+1,);
+    let firstname = name.slice(0, name.lastIndexOf(' '));
+    let lastname = name.slice(name.lastIndexOf(' ') + 1,);
     let color = contacts[i]['color'];
     let contactsJSON = {
-        'firstname' : firstname,
-        'lastname' : lastname,
-        'color' : color
+        'firstname': firstname,
+        'lastname': lastname,
+        'color': color
     };
     chosenContactsJson.push(contactsJSON);
     chosenContacts.push(i);
@@ -123,7 +123,7 @@ function addChosenContact(i){
  * This function deletes the number of the contact from the Array called chosenContacts
  * @param {int} i - the position of the contact in the Json-Array
  */
-function deleteChosenContact(i){
+function deleteChosenContact(i) {
     chosenContacts.splice(chosenContacts.indexOf(i), 1);
     createCirclesToChosenContactContainer();
 }
@@ -131,11 +131,11 @@ function deleteChosenContact(i){
 /**
  * This function creates the circles with the initials under the inputs after a contact was chosen
  */
-function createCirclesToChosenContactContainer(){
+function createCirclesToChosenContactContainer() {
     let adress = 'ContainerForAllChosenContacts';
     let Content = document.getElementById(`${adress}`);
     Content.innerHTML = '';
-    for (let j = 0; j<chosenContacts.length; j++){
+    for (let j = 0; j < chosenContacts.length; j++) {
         let id = chosenContacts[j];
         creatingCircle(id, adress);
     }
@@ -146,14 +146,14 @@ function createCirclesToChosenContactContainer(){
 /**
  * This function changes the margin attribute to avoid a moving container (=requiredText) by creating a chosenContact list under the Assigned To input 
  */
-function repositionRequiredTextContainer(){
+function repositionRequiredTextContainer() {
     document.getElementById('requiredText').setAttribute('style', 'margin-top:0');
 }
 
 /**
  * opens the Overlay and triggers the gernerateHTMLForContactsContainer-function
  */
-function generateContactsContainer(){
+function generateContactsContainer() {
     openOverlay();
     generatingHTMLForContactsContainer();
 }
@@ -163,11 +163,11 @@ function generateContactsContainer(){
  * @param {int} i - the position of the contact in the Json-Array
  * @returns the first letter of the first and the last name for the displayed circle
  */
-function gettingInitials(i){
+function gettingInitials(i) {
     let name = contacts[i]['name'];
-    firstLetterName = name.toUpperCase().slice(0,1);
-    firstLetterLastname = name.toUpperCase().slice(name.lastIndexOf(' ')+1,name.lastIndexOf(' ')+2);
-    return {firstLetterName, firstLetterLastname};
+    firstLetterName = name.toUpperCase().slice(0, 1);
+    firstLetterLastname = name.toUpperCase().slice(name.lastIndexOf(' ') + 1, name.lastIndexOf(' ') + 2);
+    return { firstLetterName, firstLetterLastname };
 }
 
 /**
@@ -175,11 +175,11 @@ function gettingInitials(i){
  * @param {int} i - the position of the contact in the Json-Array
  * @param {string} adress - carries the information about the id, where the Circle should be displayed
  */
-function creatingCircle(i, adress){
+function creatingCircle(i, adress) {
     let firstLetterName = gettingInitials(i).firstLetterName;
     let firstLetterLastname = gettingInitials(i).firstLetterLastname;
     let color = contacts[i]['color'];
-    document.getElementById(`${adress}`).innerHTML +=`
+    document.getElementById(`${adress}`).innerHTML += `
     <div id="circle${i}" class="circle" style="background-color:${color}">${firstLetterName}${firstLetterLastname}</div>
     `;
 }
@@ -188,23 +188,23 @@ function creatingCircle(i, adress){
  * This function separates the Name of a person from the Json-Array and safes it in the ContactName - Container of the Person
  * @param {int} i - the position of the contact in the Json-Array
  */
-function gettingNames(i){
+function gettingNames(i) {
     let name = contacts[i]['name'];
-    document.getElementById(`ContactName${i}`).innerHTML +=`${name}`;
+    document.getElementById(`ContactName${i}`).innerHTML += `${name}`;
 }
 
 /**
  * This function let the user search for a contact in the Assigned To input-field by typing in the searched name
  */
-function filterContacts(){
+function filterContacts() {
     let search = document.getElementById('assignedToSelect').value;
     search = search.toLowerCase();
     let ContactList = document.getElementById('ContainerForAllPossibleContacts');
     ContactList.innerHTML = '';
-    for(let i = 0; i < contacts.length; i++){
+    for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
         let name = contacts[i]['name'];
-        if (name.toLowerCase().includes(search)){
+        if (name.toLowerCase().includes(search)) {
             ContactList.innerHTML += `
             <div id="contact${i}" class="contactbox contact">
                 <div id="contactCircle${i}">

@@ -113,6 +113,15 @@ body {
     box-shadow: -2px 0px 6px 0px rgb(0, 0, 0, 0.5);
 }
 
+.buttonsAndInfotext {
+    position: relative;
+    width: auto;
+}
+
+.CompleteContent {
+    gap: 20px;
+}
+
 /* BOARD NAV */
 
 .board-nav-bar-container {
@@ -317,10 +326,40 @@ body {
     gap: 12px;
     width: 525px;
     padding: 25px 20px;
-    /*!!!!! */
     border: none;
     border-radius: 30px;
     background-color: #FFFFFF;
+}
+
+#pop-up-add-task {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.pop-up-add-task-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: auto;
+    padding: 35px 30px;
+    border: none;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+}
+
+.pop-up-add-task-title {
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 56.4px;
+    margin-bottom: 15px;
 }
 
 .pop-up-task-header {
@@ -563,6 +602,10 @@ body {
 
 .edit-priority-buttons button:hover {
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.20);
+}
+
+.ContainerForAllChosenContacts {
+    height: auto;
 }
 
 .edit-contacts-container {

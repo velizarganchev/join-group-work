@@ -237,7 +237,7 @@ let currentDraggedElement;
  */
 async function initBoard() {
     checkLogInStatus();
-    await init('board');
+    await init('board', 'task_from');
     renderTasks();
 }
 
@@ -249,16 +249,13 @@ async function initBoard() {
  */
 async function renderTasks(searchedTasks) {
     // Retrieves all tasks from storage
-    let allTasks = await getItem('AllTasks');
-
-    // Accesses the column elements
+    let allTasks = JSON.parse(await getItem('AllTasks'));
+    console.log(allTasks);
     columns = document.getElementById('board-distribution').children;
 
-    // Functions for accessing column elements
     let getColumnById = (columnId) => document.getElementById(columnId);
     let getColumnByTask = (task) => getColumnById(task.colum);
 
-    // Functions for dynamically rendering cards and subtask progress
     let renderCardAndSubtasks = (task) => {
         let column = getColumnByTask(task);
 
@@ -269,12 +266,19 @@ async function renderTasks(searchedTasks) {
         generateContactsHtml(task.contacts, task.id);
     };
 
-    // Rendering tasks based on the searchedTasks array or all tasks
     let tasksToRender = searchedTasks || tasks;
     tasksToRender.forEach(renderCardAndSubtasks);
 
-    // Iterating through all columns and checking for tasks
     iterateByEachColumn(columns);
+}
+
+
+/**
+ * Opens the pop-up window for adding a new task.
+ */
+function openAddTask() {
+    const addTaskDiv = document.getElementById('pop-up-add-task');
+    addTaskDiv.style.display = 'flex';
 }
 
 
@@ -285,19 +289,13 @@ async function renderTasks(searchedTasks) {
  */
 function search(e) {
     e.preventDefault();
-    // The search input element
     let searchTermInput = document.getElementById('search-text');
 
-    // The entered search term (converted to lowercase for case insensitivity)
     let searchTerm = searchTermInput.value.toLowerCase();
-    // Filters tasks based on the search term
     let searchedTasks = tasks.filter(task => task.title.toLowerCase().includes(searchTerm));
 
-    // Clears all column contents
     clearAllColumns();
-    // Renders the found tasks
     renderTasks(searchedTasks);
-    // Clears the search input field
     searchTermInput.value = '';
 }
 
@@ -310,7 +308,6 @@ function openTask(taskId) {
     let taskPopUp = document.getElementById('pop-up');
     taskPopUp.style.display = "flex";
 
-    // Populate the task pop-up with HTML content
     taskPopUp.innerHTML = generateTaskHtml(task);
 }
 
@@ -327,23 +324,19 @@ function generateTaskHtml(task) {
     let priorityIcon = generatePriorityIcon(task.priority);
 
     return /*html*/ `
-        <!-- HTML content for the task pop-up -->
         <div class="pop-up-task-container" onclick="stopPropagation(event)">
-            <!-- Pop-up header with buttons -->
             <div class="pop-up-task-header">
                 <button class="pop-up-label">${task.category}</button>
-                <button class="pop-up-close-button" onclick="closeTask()">
+                <button class="pop-up-close-button" onclick="closeTask('pop-up')">
                     <img src="../assets/img/board/close-task.svg" alt="Close">
                 </button>
             </div>        
-            <!-- Task title and subtitle -->
             <div class="pop-up-task-title">
                 <h2>${task.title}</h2>
             </div>
             <div class="pop-up-task-subtitle">
                 <p>${task.description}</p>
             </div>
-            <!-- Task date and priority -->
             <div class="pop-up-task-date">
                 <span>Due date:</span>
                 <span>${new Date(task.date).toLocaleDateString('DE')}</span>
@@ -355,25 +348,18 @@ function generateTaskHtml(task) {
                     ${priorityIcon}
                 </button>
             </div>
-            <!-- Assigned contacts -->
             <div class="pop-up-task-contacts-container">
                 <p>Assigned to:</p>
                 <div class="pop-up-task-contacts${task.id}">
-                    <!-- Contacts details -->
                     ${contactsHtml}
-                    <!-- Additional contacts go here -->
                 </div>
             </div>          
-            <!-- Subtasks section -->
             <div class="pop-up-task-subtasks-container">
                 <p>Subtasks:</p>
                 <div class="pop-up-task-subtasks">
-                    <!-- Subtasks details -->
                     ${subtasksHtml}
-                    <!-- Additional subtasks go here -->
                 </div>
             </div>  
-            <!-- Footer with task actions -->
             <div class="pop-up-task-footer">
                 <button onclick="deleteTask(${task.id})">
                     <img src="../assets/img/board/pop-up-footer-delete.svg" alt="">
@@ -399,16 +385,13 @@ function showEditTask(taskId) {
     const taskToEdit = getTask(taskId);
     const taskPopUp = document.getElementById('pop-up');
 
-    // Display the popup
     taskPopUp.style.display = "flex";
 
-    // Set the HTML content of the popup using the generated HTML
     taskPopUp.innerHTML = generateEditTaskHtml(taskToEdit);
 
-    // Handle priority, contacts, and subtasks in the edit task popup
     handleEditPriority(taskToEdit.priority);
-    handleEditContacts(taskToEdit.contacts);
-    generateContactsSelectHtml();
+    // handleEditContacts(taskToEdit.contacts);
+    // generateContactsSelectHtml();
     showSubtasks(taskToEdit.id, taskToEdit.subtasks);
 }
 
@@ -424,7 +407,7 @@ function generateEditTaskHtml(taskToEdit) {
     return /*html*/`
         <div class="pop-up-task-container" onclick="stopPropagation(event)">
             <div class="edit-close-button-container">
-                <button class="pop-up-close-button" onclick="closeTask()">
+                <button class="pop-up-close-button" onclick="closeTask('pop-up')">
                     <img src="../assets/img/board/close-task.svg" alt="Close">
                 </button>
             </div>
@@ -458,11 +441,18 @@ function generateEditTaskHtml(taskToEdit) {
                 </div>
             </div>
             <div class="edit-assign-container">
-                <label for="edit-contacts">Assignet to:</label>
-                <select name="contacts" id="edit-contacts" >
+                <label for="edit-contacts">Assignet to:</label> 
+                <!-- !!!!!!! -->
+                <div id="SubcontentContacts" class="Subcontent">
+                        <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
+                        <div id="ContainerForAllChosenContacts"class="ContainerForAllChosenContacts d-none"></div>
+                        <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none"></div>
+                        <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
+                </div>
+                <!-- <select name="contacts" id="edit-contacts" >
                     <option value="">Select contacts to assign</option>
                 </select>
-                <div id="edit-contacts-list" class="edit-contacts-container"></div>
+                <div id="edit-contacts-list" class="edit-contacts-container"></div> -->
             </div>
             <div class="edit-subtasks-container">
                 <form onsubmit="addSubtask(event, ${taskToEdit.id})">
@@ -500,19 +490,19 @@ function editTask(taskId) {
 
     clearAllColumns();
     renderTasks();
-    closeTask();
+    closeTask("pop-up");
 }
 
 
 /**
  * Generiert HTML für die Auswahl von Kontakten und fügt es dem entsprechenden Dropdown-Element hinzu.
  */
-function generateContactsSelectHtml() {
-    const contactsDropdown = document.getElementById('edit-contacts');
-    contacts.forEach((contact, index) => {
-        contactsDropdown.innerHTML += `<option value="${index}">${contact.name}</option>`;
-    });
-}
+// function generateContactsSelectHtml() {
+//     const contactsDropdown = document.getElementById('edit-contacts');
+//     contacts.forEach((contact, index) => {
+//         contactsDropdown.innerHTML += `<option value="${index}">${contact.name}</option>`;
+//     });
+// }
 
 
 /**
@@ -585,11 +575,10 @@ function addSubtask(e, taskId) {
  *
  * @param {Array} contacts - An array of contact objects.
  */
-function handleEditContacts(contacts) {
-    const contactsDiv = document.getElementById('edit-contacts-list');
-
-    contactsDiv.innerHTML = contacts.map(generateEditContactHtml).join('');
-}
+// function handleEditContacts(contacts) {
+//     const contactsDiv = document.getElementById('edit-contacts-list');
+//     contactsDiv.innerHTML = contacts.map(generateEditContactHtml).join('');
+// }
 
 
 /**
@@ -613,9 +602,9 @@ function resetPriorityButtons() {
         const button = document.getElementById(priority);
         const img = document.getElementById(`edit-${priority}-img`);
 
-        button.style.color = '';  // Set color to default (or an empty string)
-        button.style.background = '';  // Set background to default (or an empty string)
-        img.src = `../assets/img/board/prio-${priority}.svg`;  // Set image source to default
+        button.style.color = '';
+        button.style.background = '';
+        img.src = `../assets/img/board/prio-${priority}.svg`;
     });
 }
 
@@ -627,7 +616,7 @@ function resetPriorityButtons() {
  * @param {string} taskId - ID of the task.
  */
 function changePriority(btnId) {
-    resetPriorityButtons();  // Reset the CSS for priority buttons
+    resetPriorityButtons();
     handleEditPriority(capitalizeFirstLetter(btnId));
     currPriority = capitalizeFirstLetter(btnId);
 }
@@ -673,7 +662,7 @@ function setEditButtonBackground(idButton) {
         case 'urgent':
             return '#FF3D00';
         default:
-            return '';  // Default or empty string
+            return '';
     }
 }
 
@@ -722,16 +711,13 @@ function getTask(id) {
  * @param {number} id - The ID of the task to be deleted.
  */
 async function deleteTask(id) {
-    // Retrieve the index of the task with the specified ID
     let taskToDelete = getTaskIndex(id);
 
-    // Remove the task from the tasks array
     tasks.splice(taskToDelete, 1);
 
-    // Clear all columns, render updated tasks, and close the task popup
     clearAllColumns();
     renderTasks();
-    closeTask();
+    closeTask("pop-up");
     //await setItem('AllTasks', tasks);
 }
 
@@ -780,8 +766,8 @@ function generateSubtaskHtml(subtask, taskId) {//!!!!!!!!!!!!!!
 /**
  * Closes the task pop-up by setting its display style to "none".
  */
-function closeTask() {
-    let taskPopUp = document.getElementById('pop-up');
+function closeTask(id) {
+    let taskPopUp = document.getElementById(id);
     taskPopUp.style.display = "none";
 }
 
@@ -822,11 +808,8 @@ function startDragging(id) {
  * @param {string} columnId - The unique identifier of the target column.
  */
 function moveTo(columnId) {
-    // Update the column value for the dragged task
     tasks[currentDraggedElement]['colum'] = columnId;
-    // Clear all columns before re-rendering
     clearAllColumns();
-    // Re-render tasks after moving
     renderTasks();
 }
 
@@ -960,7 +943,6 @@ function generateNoTaskHtml() {
  * @param {HTMLElement} column - The column element where the card will be appended.
  */
 function renderCard(task, column) {
-    // Append the generated HTML for the task card to the specified column
     column.innerHTML += generateCardHtml(`card${task.id}`, task);
 }
 
@@ -974,19 +956,10 @@ function renderCard(task, column) {
  * @param {number} task.subtasks - The total number of subtasks.
  */
 function setProgressSubtasks(task) {
-    // Get the progress bar element based on the task ID
     let progressDone = document.getElementById(`progress${task.id}`);
-
-    // Calculate the final value of the progress bar (based on subtasksProgress)
     let finalValue = task.subtasksProgress * 10;
-
-    // Calculate the maximum value of the progress bar (based on the total number of subtasks)
     let max = task.subtasks.length * 10;
-
-    // Calculate the progress in percentage
     let progressInPercent = (finalValue / max) * 100;
-
-    // Set the width of the progress bar to represent the calculated percentage
     progressDone.style.width = `${progressInPercent.toString()}%`;
 }
 

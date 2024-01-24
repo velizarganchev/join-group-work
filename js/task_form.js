@@ -13,7 +13,7 @@ async function initAddTask() {
 /** changes the HTML back to standard (=no Prio chosen)
  * 
  */
-function resetPrio(){
+function resetPrio() {
     document.getElementById('SubcontentPrio').innerHTML = `
         <div id="Prio1" class="prioclass hover" onclick="choosePrio(1)">
             <div>Urgent</div>
@@ -36,15 +36,15 @@ function resetPrio(){
  * @param {int} i - gives the function the Prio in int (1 = Urgent / 2 = Medium / 3 = Low Priority)
  * @param {int} currentchosenPrio - safe the current chosen Priority in int (like above)
  */
-function changeItoPrioInString(Prio, i){
-    if (currentchosenPrio == i){
+function changeItoPrioInString(Prio, i) {
+    if (currentchosenPrio == i) {
         currentchosenPrio = '';
-    }else{
-        if (i == 1){
+    } else {
+        if (i == 1) {
             Prio = 'High';
-        }else if(i == 2){
+        } else if (i == 2) {
             Prio = 'Medium';
-        }else {
+        } else {
             Prio = 'Low';
         }
         currentchosenPrio = i;
@@ -56,7 +56,7 @@ function changeItoPrioInString(Prio, i){
  * 
  * @param {int} i - gives the function the Prio in int (1 = Urgent / 2 = Medium / 3 = Low Priority)
  */
-function choosePrio(i){
+function choosePrio(i) {
     resetPrio();
     let Prio;
     changeItoPrioInString(Prio, i);
@@ -66,7 +66,7 @@ function choosePrio(i){
  * 
  * @param {string} Prio - safes the chosen Priority in string-form
  */
-function changeImgOfPrio(Prio){
+function changeImgOfPrio(Prio) {
     let img2 = `/assets/img/Prio${Prio}White.png`;
     document.getElementById(`${Prio}Img`).src = img2;
 }
@@ -76,7 +76,7 @@ function changeImgOfPrio(Prio){
  * @param {string} Prio - changes the given number i to a Prioity in string-form
  * @param {int} i - gives the function the Prio in int (1 = Urgent / 2 = Medium / 3 = Low Priority)
  */
-function changeColorOfPrio(Prio, i){
+function changeColorOfPrio(Prio, i) {
     document.getElementById(`Prio${i}`).classList.toggle(`${Prio}chosen`);
     changeImgOfPrio(Prio);
 }
@@ -84,7 +84,7 @@ function changeColorOfPrio(Prio, i){
 /**
  * This function toggles the Images from the Subtask Input
  */
-function activateAndDeactivateSubtaskInput(){
+function activateAndDeactivateSubtaskInput() {
     toggleClass('plus', 'd-none');
     toggleClass('cancel', 'd-none');
     toggleClass('verticalLine', 'd-none');
@@ -96,19 +96,19 @@ function activateAndDeactivateSubtaskInput(){
 /**
  * This function clears the Subtasks Input
  */
-function cancelSubtask(){
+function cancelSubtask() {
     document.getElementById('subtask').value = '';
 }
 
 /**
  * This function adds a new subtask to the Array "subtasks"
  */
-function addSubtask(){
+function addSubtask() {
     let task = document.getElementById('subtask').value;
     let taskJSON = {
-        'id' : subtasks.length +1,
-        'name' : task,
-        'done' : false
+        'id': Math.round(Math.random() * 100), // Velizar - ich denke, es wäre so besser id zu generieren.
+        'name': task,
+        'done': false
     }
     if(subtasks.length >= 4){
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
@@ -121,17 +121,17 @@ function addSubtask(){
 /**
  * This function generates and displays the Content of the Array "subtasks"
  */
-function showSubtasks(){
+function showSubtasks() {
     let subtasksList = document.getElementById('subTaskList');
     subtasksList.innerHTML = '';
-    for (let i = 0; i < subtasks.length; i++){
-        subtasksList.innerHTML +=`<li>${subtasks[i]['name']} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
+    for (let i = 0; i < subtasks.length; i++) {
+        subtasksList.innerHTML += `<li>${subtasks[i]['name']} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
     }
 }
 /**
  * This functions starts the Subtask adding process
  */
-function showSubtasksafterAddingATask(){
+function showSubtasksafterAddingATask() {
     showSubtasks();
     activateAndDeactivateSubtaskInput();
     cancelSubtask();
@@ -141,19 +141,25 @@ function showSubtasksafterAddingATask(){
  * This function deletes a Subtasks from Array "subtasks" and displays the Array afterwards
  * @param {int} i - id of the Subtasks
  */
+<<<<<<< HEAD
 function deleteSubtask(i){
     subtasks.splice(i,1);
     if(subtasks.length <= 4){
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");
     }
+=======
+function deleteSubtask(i) {
+    subtasks.splice(i, 1);
+>>>>>>> 5045a54cb2b0608b57c64d91c28122e789f9e60f
     showSubtasks();
 }
 
 /**
  * collects the values of all inputs
  */
-function getAllInputs(){ // Json auslagern -> funktioniert nicht..
-    let id = allTasks.length +1;
+function getAllInputs(e) { // Json auslagern -> funktioniert nicht..
+    e.preventDefault();
+    let id = allTasks.length + 1;
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = chosenContactsJson;
@@ -173,32 +179,33 @@ function getAllInputs(){ // Json auslagern -> funktioniert nicht..
         'contacts': assignedTo,
         token: STORAGE_TOKEN
     }
+    console.log(task);
     creatingJson(task);
     clearForm();
-    confirmTheCreationOfATask();   
+    confirmTheCreationOfATask();
 }
 
 /**
  * limits the possible Dates which can be chosen
  */
-function minDate(){
+function minDate() {
     let TodaysDate = new Date().toISOString().split('T')[0];;
-    document.getElementById('date').setAttribute('min',TodaysDate);
+    document.getElementById('date').setAttribute('min', TodaysDate);
 }
 
 /**
  * safes the Json in an Array called "allTasks"
  * @param {Json} task - contains the safed Json
  */
-function creatingJson(task){
+function creatingJson(task) {
     allTasks.push(task);
-    safeAllTasksToStorage('AllTasks',allTasks);
+    setItem('AllTasks', allTasks); // Velizar - ich habe die function getauscht.
 }
 
 /**
  * empties all input-fields
  */
-function clearForm(){
+function clearForm() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
     document.getElementById('assignedToSelect').value = '';;
@@ -211,7 +218,7 @@ function clearForm(){
 /**
  * This function creates an overlay for confirmation that a task was created successfully
  */
-function confirmTheCreationOfATask(){
+function confirmTheCreationOfATask() {
     document.getElementById('Content').innerHTML += `
     <div id="confirmationContent" class="confirmationContent">
         <div class="fly-in">
@@ -227,22 +234,22 @@ function confirmTheCreationOfATask(){
 /**
  * leads the user to board.html
  */
-function backToBoard(){
-    location.href="board.html";
+function backToBoard() {
+    location.href = "board.html";
 }
 
 /**
  * leads the user to "add_task.html"
  */
-function addAnotherTask(){
-    location.href="add_task.html";
+function addAnotherTask() {
+    location.href = "add_task.html";
 }
 
 /**
  * This function toggles the Images of the "Assigned to" Input
  * @param {String} id - ID of the Input-Field "Assigned to"
  */
-function flipTheImage(id){
+function flipTheImage(id) {
     document.getElementById(`${id}`).classList.toggle('arrowdown');
     document.getElementById(`${id}`).classList.toggle('arrowup');
 }
@@ -251,27 +258,27 @@ function flipTheImage(id){
  * this function sets the category
  * @param {string} category - sends the Category to this functions
  */
-function setCategory(category){ 
+function setCategory(category) {
     let chosenCategory = document.getElementById('Category');
     chosenCategory.innerHTML = `${category}`;
     document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
-    document.getElementById('Category').setAttribute('style','color:black')
-    document.getElementById('overlayCategories').classList.toggle('d-none'); 
+    document.getElementById('Category').setAttribute('style', 'color:black')
+    document.getElementById('overlayCategories').classList.toggle('d-none');
 }
 
 /**
  * This function toggles a list of all possible categorys
  */
-function getAllCategories(){
+function getAllCategories() {
     document.getElementById('categories').classList.toggle('d-none');
-    document.getElementById('overlayCategories').classList.toggle('d-none');  
+    document.getElementById('overlayCategories').classList.toggle('d-none');
 }
 
 /**
  * This function opens / closes an Overlay for the Category-Section
  */
-function closeOverlayCategories(){
-    document.getElementById('overlayCategories').classList.toggle('d-none'); 
+function closeOverlayCategories() {
+    document.getElementById('overlayCategories').classList.toggle('d-none');
     document.getElementById('categories').classList.toggle('d-none');
 }
