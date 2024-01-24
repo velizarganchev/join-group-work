@@ -90,11 +90,9 @@
     #contactDetailsView {
         left: 69%;
         transform: translate(-50%, -10%);
-        overflow-y: scroll;
         gap: 0;
         justify-content: start;
         top: 270px;
-        animation: slideInDetails 0.5s ease-in-out;
     }
 
     #emailDetails {
@@ -159,6 +157,16 @@
         align-items: center;
         padding: 6px;
         box-shadow: 0px 4px 4px 0px #00000040;
+    }
+
+    @keyframes slideInRight {
+        from {
+            right: -100%;
+        }
+    
+        to {
+            right: 10%;
+        }
     }
 }
 
@@ -232,8 +240,8 @@
     }
 
     .closeContactButton {
-        right: 28%;
-        top: 5%;
+        right: 25px;
+        top: 50px;
         filter: invert(98%) sepia(25%) saturate(0%) hue-rotate(285deg) brightness(101%) contrast(103%);
     }
 
@@ -351,10 +359,6 @@
     #responsiveEditContactButton:hover {
         cursor: pointer;
         background-color: #29ABE2;
-    }
-
-    .closeContactButton {
-        right: 18%;
     }
 
     .contactDetailsNameFull {

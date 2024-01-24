@@ -1,92 +1,10 @@
-let contacts = [
-  {
-    name: "Alice Smith",
-    email: "alice@example.com",
-    phone: "+49 123 456789",
-    color: "#3498db",
-  },
-  {
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    phone: "+49 234 567890",
-    color: "#2ecc71",
-  },
-  {
-    name: "Brad Williams",
-    email: "brad@example.com",
-    phone: "+49 345 678901",
-    color: "#e74c3c",
-  },
-  {
-    name: "Michael Davis",
-    email: "michael@example.com",
-    phone: "+49 456 789012",
-    color: "#f39c12",
-  },
-  {
-    name: "David Clark",
-    email: "david@example.com",
-    phone: "+49 567 890123",
-    color: "#9b59b6",
-  },
-  {
-    name: "Diana Martinez",
-    email: "diana@example.com",
-    phone: "+49 678 901234",
-    color: "#1abc9c",
-  },
-  {
-    name: "Eva Miller",
-    email: "eva@example.com",
-    phone: "+49 789 012345",
-    color: "#3498db",
-  },
-  {
-    name: "Sam Taylor",
-    email: "sam@example.com",
-    phone: "+49 890 123456",
-    color: "#2ecc71",
-  },
-  {
-    name: "Sara Brown",
-    email: "sara@example.com",
-    phone: "+49 901 234567",
-    color: "#e74c3c",
-  },
-  {
-    name: "Ross Wilson",
-    email: "ross@example.com",
-    phone: "+49 012 345678",
-    color: "#f39c12",
-  },
-  {
-    name: "Kate Moore",
-    email: "kate@example.com",
-    phone: "+49 345 678901",
-    color: "#9b59b6",
-  },
-  {
-    name: "Karl Lee",
-    email: "karl@example.com",
-    phone: "+49 567 890123",
-    color: "#1abc9c",
-  },
-  {
-    name: "John Turner",
-    email: "john@example.com",
-    phone: "+49 789 012345",
-    color: "#3498db",
-  },
-];
-
-
 /**
  * Initializes certain functions once the body of the page has fully loaded.
  */
 async function initContacts() {
   checkLogInStatus();
   await init('contacts');
-//   await loadContactsFromServer();
+  await loadContactsFromServer();
   renderContactBook();
 }
 
@@ -121,19 +39,6 @@ function renderContactBook() {
 }
 
 
-  /**
-   * Generates HTML for the "Add new contact" button.
-   */
-function renderAddContactButton() {
-    let addContactButtonHTML = `
-      <button id="addContactButton" onclick="addContact()">
-        Add new contact <img src="/assets/img/add-contact.png" alt="add contact image">
-      </button>
-    `;
-    return addContactButtonHTML;
-  }
-
-
 /**
  * Sorts the contacts alphabetically based on the name.
  *
@@ -161,31 +66,6 @@ function handleLetterChange(currentAlphabetLetter, newLetter, contactOverview) {
 
 
 /**
- * Renders a contact item with circle and details.
- *
- * @param {HTMLElement} contactOverview - The element where contacts are rendered.
- * @param {string} circleStyle - The CSS style for the circle.
- * @param {string} circleClass - The class for the circle.
- * @param {string} contactInitials - The contact's initials.
- * @param {Object} contact - The contact information.
- * @param {number} index - The index of the contact.
- */
-function renderContactItem(contactOverview, circleStyle, circleClass, contactInitials, contact, index) {
-  let contactItemId = `contactItem_${index}`;
-  let contactItemHTML = `
-        <div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}', true)">
-            <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
-            <div class="contactDetails">
-                <div class="contactNameInOverview">${contact.name}</div>
-                <div class="emailInOverview">${contact.email}</div>
-            </div>
-        </div>
-    `;
-  contactOverview.innerHTML += contactItemHTML;
-}
-
-
-/**
  * Calculates the contact initials based on name parts.
  *
  * @param {Array} nameParts - The parts of the contact's name.
@@ -193,29 +73,6 @@ function renderContactItem(contactOverview, circleStyle, circleClass, contactIni
  */
 function calculateContactInitials(nameParts) {
   return `${nameParts[0].charAt(0)}${nameParts[nameParts.length - 1].charAt(0)}`;
-}
-
-
-/**
- * Opens a new contact group.
- *
- * @param {string} newLetter - The new letter group.
- * @param {HTMLElement} contactOverview - The element where contacts are rendered.
- */
-function openLetterGroup(newLetter, contactOverview) {
-  contactOverview.innerHTML += `<div class="contact-group">
-                                    <div class="groupHeader">${newLetter}</div>
-                                    <hr class="groupDivider">`;
-}
-
-
-/**
- * Closes the current contact group.
- *
- * @param {HTMLElement} contactOverview - The element where contacts are rendered.
- */
-function closeLetterGroup(contactOverview) {
-  contactOverview.innerHTML += `</div>`;
 }
 
 
@@ -246,9 +103,7 @@ function showContactDetails(contactItemId, toEdit) {
   
     renderContactDetails(selectedContact, toEdit);
 
-    let screenWidth = window.innerWidth;
-
-    if (screenWidth <= 665){
+    if (window.innerWidth <= 665){
       document.getElementById("contactOverview").style.display = "none";
       document.getElementById("contactPageRightHeader").style.display = "none";
       document.getElementById("contactPageRightHeaderResponsive").style.display = "flex";
@@ -281,6 +136,7 @@ function toggleSelectedClass(contactItemId) {
     unselectOtherContactItems(clickedItem);
 }
 
+
 /**
  * Shows details of the selected contact.
  *
@@ -292,6 +148,7 @@ function showSelectedContactDetails(clickedItem) {
     renderContactDetails(selectedContact);
     document.getElementById("contactDetailsView").style.display = "flex";
 }
+
 
 /**
  * Hides the contact details view.
@@ -328,6 +185,7 @@ function returnToContactBook() {
   let responsiveContactDetailBack = document.getElementById("responsiveContactDetailBack");
   let responsiveAddContactButton = document.getElementById("responsiveAddContactButton");
   let responsiveEditContactButton = document.getElementById("responsiveEditContactButton");
+  let editDeleteButton = document.getElementById("editDeleteButtonPopUp");
 
   contactOverview.style.display = "flex";
   contactPageRightHeaderResponsive.style.display = "none";
@@ -335,94 +193,10 @@ function returnToContactBook() {
   responsiveContactDetailBack.style.display = "none";
   responsiveAddContactButton.style.display = "flex";
   responsiveEditContactButton.style.display = "none";
+  editDeleteButton.style.display = "none";
 
   renderContactBook();
 }
-  
-
-/**
- * Renders the detailed view of a contact, including name, buttons, and contact information.
- *
- * @param {Object} contact - The contact information.
- * @param {boolean} toEdit - True if in edit mode.
- */
-function renderContactDetails(contact, toEdit) {
-    let contactDetailsView = document.getElementById("contactDetailsView");
-    contactDetailsView.innerHTML = "";
-
-    let contactDetailsHTML = `
-        <div class="contactDetailsName">
-            <div class="circle circleInDetailView" style="background-color: ${contact.color};">
-                ${calculateContactInitials(contact.name.split(" "))}
-            </div>
-            <div class="contactDetailsNameAndButtons">
-                <div class="contactDetailsNameFull">${contact.name}</div>
-                <div class="contactNameIcons">
-                    ${renderEditDeleteButtons()}
-                </div>
-            </div>
-        </div>
-        <p class="contactInformation">Contact Information</p>
-        <div class="emailAndPhoneDetails">
-            <p id="emailDetails"><b>Email</b></p>
-            <div class="emailDetails"><a href="mailto:${contact.email}">${contact.email}</a></div>
-            <p><b>Phone</b></p>
-            <div class="phoneDetails"><a href="tel:${contact.phone}">${contact.phone}</a></div>
-        </div>
-    `;
-
-    contactDetailsView.innerHTML = contactDetailsHTML;
-
-    if (toEdit) {
-        renderEditFields(contact);
-    }
-
-    document.getElementById("responsiveContactDetailBack").style.display = "flex";
-
-}
-
-
-/**
- * Renders the edit fields with the contact's information for editing.
- *
- * @param {Object} contact - The contact information.
- */
-function renderEditFields(contact) {
-    let editNameField = document.getElementById("editName");
-    let editEmailField = document.getElementById("editEmail");
-    let editPhoneField = document.getElementById("editPhone");
-
-    editNameField.value = contact.name;
-    editEmailField.value = contact.email;
-    editPhoneField.value = contact.phone;
-
-    let initialIcon = document.getElementById("iconInEditContact");
-    initialIcon.innerHTML = `
-        <div class="circle circleInDetailView responsiveCircle" style="background-color: ${contact.color};">
-            ${calculateContactInitials(contact.name.split(" "))}
-        </div>
-    `;
-}
-
-
-/**
- * Renders the buttons for editing and deleting a contact.
- *
- * @returns {string} - HTML for the edit and delete buttons.
- */
-function renderEditDeleteButtons() {
-    return `
-        <div class="contactEditButton" onclick="editContact()">
-            <img class="contactDetailsNameIcons" src="/assets/img/edit-contact.png" alt="edit contact">
-            <p>Edit</p>
-        </div>
-        <div class="contactDeleteButton" onclick="deleteContact()">
-            <img class="contactDetailsNameIcons" src="/assets/img/delete-contact.png" alt="delete contact">
-            <p>Delete</p>
-        </div>
-    `;
-}
-
 
 
 /**
@@ -497,27 +271,7 @@ function createContact() {
       showContactDetails(contactItemId);
     }, 1000);
   }
-/**
- * Creates a loading animation for the save button, disabling it and displaying a loader.
- *
- * @param {HTMLElement} saveButton - The save button element.
- */
-function createLoadingAnimation(saveButton) {
-    saveButton.disabled = true;
-    saveButton.style.justifyContent = 'center';
-    saveButton.innerHTML = '<div class="loader"></div>';
-}
 
-/**
- * Resets the save button after loading animation, enabling it and setting the default content.
- *
- * @param {HTMLElement} saveButton - The save button element.
- */
-function resetSaveButton(saveButton) {
-    saveButton.disabled = false;
-    saveButton.innerHTML = 'Create Contact <img src="/assets/img/check.png" alt="confirm icon">';
-    saveButton.style.justifyContent = 'space-between';
-}
 
 /**
  * Adds a new contact to the contacts array and renders the contact book.
@@ -529,6 +283,7 @@ async function addContactAndRender(newContact) {
     await setItemContacts("contacts", JSON.stringify(contacts));
     renderContactBook();
 }
+
 
 /**
  * Finds the index of a contact in the sorted contacts array.
@@ -543,7 +298,6 @@ function findContactIndex(contactToFind) {
     );
 }
   
-
 
 /**
  * Generates a random hex color.
@@ -609,11 +363,8 @@ async function saveEditedContact() {
     contacts[index].phone = editedPhone;
 
     await setItemContacts("contacts", JSON.stringify(contacts));
-
     closePopUp();
-
     renderContactBook();
-
     showContactDetails(selectedContactItem.id);
 }
 
@@ -624,6 +375,7 @@ async function saveEditedContact() {
 async function deleteContact() {
     let selectedContactItem = document.querySelector(".selectedContact");
     let detailView = document.getElementById("contactDetailsView");
+    let editDeleteButton = document.getElementById("editDeleteButtonPopUp");
 
     if (selectedContactItem) {
         let contactItemId = selectedContactItem.id;
@@ -637,6 +389,8 @@ async function deleteContact() {
         renderContactBook();
         
         detailView.style.display = "none";
+        editDeleteButton.style.display = "none";
+        returnToContactBook();
     }
 }
 
@@ -649,48 +403,3 @@ function toggleEditDeleteButtonPopUp() {
   let popUp = document.getElementById('editDeleteButtonPopUp');
   popUp.style.display = (popUp.style.display === 'block') ? 'none' : 'block';
 }
-
-
-/**
- * Stores data on the server using the specified key.
- *
- * @param {string} key - The key under which the data will be stored.
- * @param {string} value - The data to be stored.
- * @returns {Promise} - A promise that resolves to the server response in JSON format.
- */
-async function setItemContacts(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN };
-    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) }).then((res) => res.json());
-}
-
-// /**
-//  * Retrieves data from the server using the specified key.
-//  *
-//  * @param {string} key - The key for which data is to be retrieved.
-//  * @returns {Promise} - A promise that resolves to the retrieved data value from the server.
-//  */
-// async function getItemContacts(key) {
-//     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-//     return fetch(url).then((res) => res.json()).then((res) => res.data.value);
-// }
-
-// /**
-//  * Loads contacts from the server and updates the local 'contacts' array.
-//  */
-// async function loadContactsFromServer() {
-//     try {
-//         contacts = JSON.parse(await getItemContacts("contacts"));
-//     } catch (e) {
-//       console.error("Loading error:", e);
-//     }
-// }
-
-// /**
-//  * Saves a new contact to the server and updates the local 'contacts' array.
-//  *
-//  * @param {Object} newContact - The contact object to be saved.
-//  */
-// async function saveContactsToServer(newContact) {
-//     contacts.push(newContact);
-//     await setItemContacts("contacts", JSON.stringify(contacts));
-// }
