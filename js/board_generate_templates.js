@@ -7,6 +7,7 @@ function generateTaskHtml(task) {
 
     let contactsHtml = task.contacts.map(generateContactHtml).join('');
     let subtasksHtml = task.subtasks.map(subtask => generateSubtaskHtml(subtask, task.id)).join('');
+    let priorityText = generatePriorityText(task.priority);
     let priorityIcon = generatePriorityIcon(task.priority);
 
     return /*html*/ `
@@ -30,7 +31,7 @@ function generateTaskHtml(task) {
             <div class="pop-up-task-priority">
                 <span>Priority:</span>
                 <button class="pop-up-task-priority-button">
-                    <span>${task.priority}</span>
+                    <span>${priorityText}</span>
                     ${priorityIcon}
                 </button>
             </div>
@@ -86,20 +87,20 @@ function generateEditTaskHtml(taskToEdit) {
             </div>
             <div class="edit-date-container">
                 <span>Due date</span>
-                <input value="${taskToEdit.date.toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}" max="2024-01-31" type="date" id="edit-date" name="date">
+                <input value="${taskToEdit.date}" min="${new Date().toISOString().split('T')[0]}" max="2024-01-31" type="date" id="edit-date" name="date">
             </div>
             <div class="edit-priority-container">
                 <span>Priority</span>
                 <div class="edit-priority-buttons">
-                    <button id="urgent" onclick="changePriority('urgent',${taskToEdit.id})">
+                    <button id="urgent" onclick="changePriority(1)">
                         <span>Urgent</span>
                         <img id="edit-urgent-img" src="../assets/img/board/prio-urgent.svg" alt="">
                     </button>
-                    <button id="medium" onclick="changePriority('medium',${taskToEdit.id})">
+                    <button id="medium" onclick="changePriority(2)">
                         <span>Medium</span>
                         <img id="edit-medium-img" src="../assets/img/board/prio-medium.svg" alt="">
                     </button>
-                    <button id="low" onclick="changePriority('low',${taskToEdit.id})">
+                    <button id="low" onclick="changePriority(3)">
                         <span>Low</span>
                         <img id="edit-low-img" src="../assets/img/board/prio-low.svg" alt="">
                     </button>
@@ -154,8 +155,8 @@ function generateEditContactHtml(contact) {
 function generateContactHtml(contact) {
     return  /*html*/ `
         <div class="pop-up-task-contact">
-            <div class="contact-label" style="background:${contact.color};">${contact.name[0] + contact.lastName[0]}</div>
-            <div class="contact-name">${contact.name} ${contact.lastName}</div>
+            <div class="contact-label" style="background:${contact.color};">${contact.firstname[0] + contact.lastname[0]}</div>
+            <div class="contact-name">${contact.firstname} ${contact.lastName}</div>
         </div>`;
 }
 
@@ -209,6 +210,27 @@ function generateCardHtml(cardId, task) {
 
 
 /**
+ * Generates a textual representation of priority based on numerical values.
+ *
+ * @param {number} priority - The numerical priority value (1, 2, or 3).
+ * @returns {string} - The corresponding priority text ('Urgent', 'Medium', or 'Low').
+ */
+function generatePriorityText(priority) {
+    switch (priority) {
+        case 3:
+            return 'Low';
+        case 2:
+            return 'Medium';
+        case 1:
+            return 'Urgent';
+        // Handle unexpected cases, if any
+        default:
+            return 'Unknown Priority';
+    }
+}
+
+
+/**
  * Generates HTML for a priority icon based on the specified priority level.
  *
  * @param {string} priority - The priority level ('Low', 'Medium', or 'Urgent').
@@ -216,11 +238,11 @@ function generateCardHtml(cardId, task) {
  */
 function generatePriorityIcon(priority) {
     switch (priority) {
-        case 'Low':
+        case 3:
             return /*html*/`<img src="../assets/img/board/prio-low.svg" alt="Priority Icon">`;
-        case 'Medium':
+        case 2:
             return /*html*/`<img src="../assets/img/board/prio-medium.svg" alt="Priority Icon">`;
-        case 'Urgent':
+        case 1:
             return /*html*/`<img src="../assets/img/board/prio-urgent.svg" alt="Priority Icon">`;
     }
 }

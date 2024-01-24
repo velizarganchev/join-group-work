@@ -1,236 +1,8 @@
-let tasks = [
-    {
-        id: 1,
-        title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build start page with recipe recommendation',
-        date: new Date(),
-        priority: 'Medium',
-        subtasks: [
-            {
-                id: 1,
-                name: 'Implement Recipe Recommendation',
-                done: false
-            },
-            {
-                id: 2,
-                name: 'Start Page Layout',
-                done: false
-            },
-            {
-                id: 3,
-                name: 'Start Page Layout',
-                done: false
-            }
-        ],
-        subtasksProgress: 0,
-        category: 'User Story',
-        colum: 'todo',
-        contacts: [
-            {
-                name: 'Anton',
-                lastName: 'Mayer',
-                color: 'gold'
-            },
-            {
-                name: 'Anja',
-                lastName: 'Schulz',
-                color: 'palevioletred'
-            }
-        ],
-    },
-    {
-        id: 2,
-        title: 'CSS Architecture Planning',
-        description: 'Define CSS naming conventions and structure.',
-        date: new Date(),
-        priority: 'Urgent',
-        subtasks: [
-            {
-                id: 1,
-                name: 'Establish CSS Methodology',
-                done: false
-            },
-            {
-                id: 2,
-                name: 'Setup Base Styles',
-                done: false
-            }
-        ],
-        subtasksProgress: 0,
-        category: 'User Story',
-        colum: 'in-progress',
-        contacts: [
-            {
-                name: 'Gerd',
-                lastName: 'Mayer',
-                color: 'red'
-            },
-            {
-                name: 'Maria',
-                lastName: 'Schulz',
-                color: 'sandybrown'
-            }
-        ],
-    },
-    {
-        id: 3,
-        title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build start page with recipe recommendation',
-        date: new Date(),
-        priority: 'Low',
-        subtasks: [
-            {
-                id: 1,
-                name: 'Implement Recipe Recommendation',
-                done: false
-            },
-            {
-                id: 2,
-                name: 'Start Page Layout',
-                done: false
-            },
-            {
-                id: 3,
-                name: 'Start Page Layout',
-                done: false
-            },
-            {
-                id: 4,
-                name: 'Start Page Layout',
-                done: false
-            },
-        ],
-        subtasksProgress: 0,
-        category: 'User Story',
-        colum: 'in-progress',
-        contacts: [
-            {
-                name: 'Gerd',
-                lastName: 'Mayer',
-                color: 'red'
-            },
-            {
-                name: 'Maria',
-                lastName: 'Schulz',
-                color: 'sandybrown'
-            }
-        ],
-    },
-    {
-        id: 4,
-        title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build start page with recipe recommendation',
-        date: new Date(),
-        priority: 'Low',
-        subtasks: [
-            {
-                id: 1,
-                name: 'Start Page Layout',
-                done: false
-            }
-        ],
-        subtasksProgress: 0,
-        category: 'User Story',
-        colum: 'await-feedback',
-        contacts: [
-            {
-                name: 'Gerd',
-                lastName: 'Mayer',
-                color: 'red'
-            },
-            {
-                name: 'Maria',
-                lastName: 'Schulz',
-                color: 'sandybrown'
-            }
-        ],
-    }
-];
-let contacts = [
-    {
-        name: "Alice Smith",
-        email: "alice@example.com",
-        phone: "+49 123 456789",
-        color: "#3498db",
-    },
-    {
-        name: "Bob Johnson",
-        email: "bob@example.com",
-        phone: "+49 234 567890",
-        color: "#2ecc71",
-    },
-    {
-        name: "Brad Williams",
-        email: "brad@example.com",
-        phone: "+49 345 678901",
-        color: "#e74c3c",
-    },
-    {
-        name: "Michael Davis",
-        email: "michael@example.com",
-        phone: "+49 456 789012",
-        color: "#f39c12",
-    },
-    {
-        name: "David Clark",
-        email: "david@example.com",
-        phone: "+49 567 890123",
-        color: "#9b59b6",
-    },
-    {
-        name: "Diana Martinez",
-        email: "diana@example.com",
-        phone: "+49 678 901234",
-        color: "#1abc9c",
-    },
-    {
-        name: "Eva Miller",
-        email: "eva@example.com",
-        phone: "+49 789 012345",
-        color: "#3498db",
-    },
-    {
-        name: "Sam Taylor",
-        email: "sam@example.com",
-        phone: "+49 890 123456",
-        color: "#2ecc71",
-    },
-    {
-        name: "Sara Brown",
-        email: "sara@example.com",
-        phone: "+49 901 234567",
-        color: "#e74c3c",
-    },
-    {
-        name: "Ross Wilson",
-        email: "ross@example.com",
-        phone: "+49 012 345678",
-        color: "#f39c12",
-    },
-    {
-        name: "Kate Moore",
-        email: "kate@example.com",
-        phone: "+49 345 678901",
-        color: "#9b59b6",
-    },
-    {
-        name: "Karl Lee",
-        email: "karl@example.com",
-        phone: "+49 567 890123",
-        color: "#1abc9c",
-    },
-    {
-        name: "John Turner",
-        email: "john@example.com",
-        phone: "+49 789 012345",
-        color: "#3498db",
-    },
-];
-currPriority = '';
+currPriority = 0;
 let editSubtasks = [];
 let columns;
 let currentDraggedElement;
-
+let tasks;
 
 /**
  * Initializes certain functions once the body of the page has fully loaded.
@@ -249,7 +21,9 @@ async function initBoard() {
  */
 async function renderTasks(searchedTasks) {
 
-    // tasks = JSON.parse(await getItem('AllTasks'));
+    tasks = JSON.parse(await getItem('AllTasks'));
+    console.log(tasks);
+
 
     columns = document.getElementById('board-distribution').children;
 
@@ -326,14 +100,8 @@ function showEditTask(taskId) {
     taskPopUp.innerHTML = generateEditTaskHtml(taskToEdit);
 
     handleEditPriority(taskToEdit.priority);
-    // handleEditContacts(taskToEdit.contacts);
-    // generateContactsSelectHtml();
     showSubtasks(taskToEdit.id, taskToEdit.subtasks);
 }
-
-
-
-
 
 
 /**
@@ -341,14 +109,15 @@ function showEditTask(taskId) {
  *
  * @param {string} taskId - Die ID der zu bearbeitenden Aufgabe.
  */
-function editTask(taskId) {
+async function editTask(taskId) {
     const task = getTask(taskId);
     task.title = document.getElementById('edit-title').value;
     task.description = document.getElementById('edit-description').value;
     task.date = new Date(document.getElementById('edit-date').value);
     task.priority = currPriority ? currPriority : task.priority;
-
+    task.contacts = chosenContactsJson;
     task.subtasks = [...task.subtasks, ...editSubtasks];
+    await setItem('AllTasks', tasks);
 
     clearAllColumns();
     renderTasks();
@@ -441,13 +210,12 @@ function resetPriorityButtons() {
 /**
  * Changes the priority of a task and updates the UI.
  *
- * @param {string} btnId - ID of the priority button.
- * @param {string} taskId - ID of the task.
+ * @param {number} btnId - ID of the priority button.
  */
 function changePriority(btnId) {
     resetPriorityButtons();
-    handleEditPriority(capitalizeFirstLetter(btnId));
-    currPriority = capitalizeFirstLetter(btnId);
+    handleEditPriority(btnId);
+    currPriority = btnId;
 }
 
 
@@ -457,18 +225,19 @@ function changePriority(btnId) {
  * @param {string} priority - Priority level.
  */
 function handleEditPriority(priority) {
+
     const priorityMappings = {
-        'Low': ['low', 'edit-low-img'],
-        'Medium': ['medium', 'edit-medium-img'],
-        'Urgent': ['urgent', 'edit-urgent-img']
+        3: ['low', 'edit-low-img'],
+        2: ['medium', 'edit-medium-img'],
+        1: ['urgent', 'edit-urgent-img']
     };
 
     const [idButton, idImg] = priorityMappings[priority];
+
     const button = document.getElementById(idButton);
     const img = document.getElementById(idImg);
 
     const background = setEditButtonBackground(idButton);
-
     button.style.color = 'white';
     button.style.background = background;
     img.src = `../assets/img/board/prio-${idButton}-white.svg`;
@@ -503,23 +272,33 @@ function setEditButtonBackground(idButton) {
  * @param {number} subtaskId - The unique identifier of the subtask.
  * @param {number} taskId - The unique identifier of the task containing the subtask.
  */
-function changeSubtaskStatus(status, subtaskId, taskId) {
+async function changeSubtaskStatus(status, subtaskId, taskId) {
     let task = getTask(taskId);
     let subtaskIndex = task.subtasks.findIndex(sb => sb.id === subtaskId);
 
     if (status.checked) {
+        console.log(status.checked);
+
         task.subtasks[subtaskIndex].done = true;
         task.subtasksProgress++;
-        //await setItem('AllTasks', tasks);
+        await setItem('AllTasks', tasks);
 
-    } else {
+        clearAllColumns();
+        renderTasks();
+
+    } else if (!status.checked) {
         task.subtasks[subtaskIndex].done = false;
         task.subtasksProgress--;
-        //await setItem('AllTasks', tasks);
-    }
 
-    clearAllColumns();
-    renderTasks();
+        if (task.subtasksProgress < 0) {
+            task.subtasksProgress = 0;
+        }
+
+        await setItem('AllTasks', tasks);
+
+        clearAllColumns();
+        renderTasks();
+    }
 }
 
 
@@ -605,8 +384,9 @@ function startDragging(id) {
  *
  * @param {string} columnId - The unique identifier of the target column.
  */
-function moveTo(columnId) {
+async function moveTo(columnId) {
     tasks[currentDraggedElement]['colum'] = columnId;
+    await setItem('AllTasks', tasks);
     clearAllColumns();
     renderTasks();
 }
@@ -614,7 +394,7 @@ function moveTo(columnId) {
 
 /**
  * Highlights the column if task is dragged over
- * 
+ *
  * @param {string} id - Id of highlightet column
  */
 function highlight(id) {
@@ -624,7 +404,7 @@ function highlight(id) {
 
 /**
  * Removes the highlight when task is not longer dragged over the column
- * 
+ *
  * @param {string} id - Id of highlightet column
  */
 function removeHighlight(id) {
@@ -703,7 +483,7 @@ function setProgressSubtasks(task) {
  * @returns {Array} - An array of strings representing the first letters.
  */
 function takeFirstLetters(contacts) {
-    return contacts.map(c => c.name[0] + c.lastName[0]);
+    return contacts.map(c => c.firstname[0] + c.lastname[0]);
 }
 
 

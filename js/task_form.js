@@ -167,7 +167,7 @@ function getAllInputs(e) {
         'description': description,
         'date': date,
         'priority': prio,
-        'subtask': subtasks,
+        'subtasks': subtasks,
         'subtasksProgress': 0,
         'category': category,
         'colum': 'todo',

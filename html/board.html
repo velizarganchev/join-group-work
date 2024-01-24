@@ -76,8 +76,7 @@
             <div class="board-distribution-colum" id="todo" ondrop="moveTo('todo')"
                 ondragleave="removeHighlight('todo')" ondragover="allowDrop(event)"></div>
             <div class="board-distribution-colum" id="in-progress" ondrop="moveTo('in-progress')"
-                ondragleave="removeHighlight('in-progress')" ondragover="allowDrop(event)">
-            </div>
+                ondragleave="removeHighlight('in-progress')" ondragover="allowDrop(event)"></div>
             <div class="board-distribution-colum" id="await-feedback" ondrop="moveTo('await-feedback');"
                 ondragleave="removeHighlight('await-feedback')" ondragover="allowDrop(event)"></div>
             <div class="board-distribution-colum" id="done" ondrop="moveTo('done')"
@@ -85,6 +84,8 @@
         </div>
     </section>
 
+    <script src="/js/contacts_array_storage.js"></script>
+    <script src="/js/contacts.js"></script>
     <script src="/js/task_form.js"></script>
     <script src="/js/task_form_assignedTo.js"></script>
     <script src="/js/board_generate_templates.js"></script>
