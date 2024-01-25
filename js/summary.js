@@ -90,7 +90,7 @@ function chooseMessage(welcomeMessage, usernameWrapper, username, time) {
  */
 function renderTasksInBoard() {
     let tasksInBoard = document.getElementById('tasks-amount');
-    let tasksAmount = tasks.length; //tasks --> allTasks
+    let tasksAmount = allTasks.length; //tasks --> allTasks
     tasksInBoard.innerHTML = tasksAmount;
 }
 
@@ -99,7 +99,7 @@ function renderTasksInBoard() {
  * Sorts the tasks beginning with the latest task.
  */
 function sortTasks() {
-    tasks.sort(function (a, b) { //tasks --> allTasks
+    allTasks.sort(function (a, b) { //tasks --> allTasks
         return new Date(a.date) - new Date(b.date);
     });
 }
@@ -110,9 +110,9 @@ function sortTasks() {
  */
 function renderUpcomingPrio() {
     let upcomingPrio = document.getElementById('upcoming-prio');
-    let prio = tasks[0]['priority']; //tasks --> allTasks
-    let upcomingDate = tasks[0]['date']; //tasks --> allTasks
-    let upcomingTasksAmount = tasks.filter(t => t['date'] == upcomingDate).length; //tasks --> allTasks
+    let prio = convertPrio(allTasks[0]['priority']); //tasks --> allTasks
+    let upcomingDate = allTasks[0]['date']; //tasks --> allTasks
+    let upcomingTasksAmount = allTasks.filter(t => t['date'] == upcomingDate).length; //tasks --> allTasks
     let upcomingTasks = document.getElementById('upcoming-tasks-amount');
     upcomingPrio.innerHTML = prio;
     changeImageSource('upcoming-prio-image', `/assets/img/Prio${prio}White.png`);
@@ -125,7 +125,7 @@ function renderUpcomingPrio() {
  * Renders the due date of the upcoming task.
  */
 function renderUpcomingDate() {
-    let date = new Date(tasks[0]['date']); //tasks --> allTasks
+    let date = new Date(allTasks[0]['date']); //tasks --> allTasks
     let formattedMonth = date.toLocaleString('default', { month: 'long' });
     let year = date.getFullYear();
     let day = date.getDate();
@@ -141,7 +141,7 @@ function renderUpcomingDate() {
  */
 function renderTasksInProgress() {
     let tasksInProgress = document.getElementById('in-progress-amount');
-    let tasksAmount = tasks.filter(t => t['colum'] == 'in-progress').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t['colum'] == 'in-progress').length; //tasks --> allTasks
     tasksInProgress.innerHTML = tasksAmount;
 }
 
@@ -151,7 +151,7 @@ function renderTasksInProgress() {
  */
 function renderTasksAwaitingFeedback() {
     let tasksAwaitingFeedback = document.getElementById('awaiting-feedback-amount');
-    let tasksAmount = tasks.filter(t => t['colum'] == 'awaiting-feedback').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t['colum'] == 'await-feedback').length; //tasks --> allTasks
     tasksAwaitingFeedback.innerHTML = tasksAmount;
 }
 
@@ -161,7 +161,7 @@ function renderTasksAwaitingFeedback() {
  */
 function renderTasksInToDo() {
     let tasksToDo = document.getElementById('to-do-amount');
-    let tasksAmount = tasks.filter(t => t['colum'] == 'todo').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t['colum'] == 'todo').length; //tasks --> allTasks
     tasksToDo.innerHTML = tasksAmount;
 }
 
@@ -171,6 +171,22 @@ function renderTasksInToDo() {
  */
 function renderTasksDone() {
     let tasksDone = document.getElementById('done-amount');
-    let tasksAmount = tasks.filter(t => t['status'] == 'done').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t['colum'] == 'done').length; //tasks --> allTasks
     tasksDone.innerHTML = tasksAmount;
+}
+
+
+/**
+ * Converts the priority from a number to a string.
+ * @param {number} number - Priority as a number. Number one represents ther priority "urgent" for example.
+ * @returns Priority as string.
+ */
+function convertPrio(number) {
+    if (number === 1) {
+        return 'urgent'
+    } else if (number === 2) {
+        return 'medium'
+    } else if (number === 3) {
+        return 'low'
+    }
 }
