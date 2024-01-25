@@ -203,7 +203,7 @@ function filterContacts() {
     ContactList.innerHTML = '';
     for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
-        let name = contacts[i]['name'];
+        let name = contacts[i]['name']; // hier Daten vom Server abgreifen
         if (name.toLowerCase().includes(search)) {
             ContactList.innerHTML += `
             <div id="contact${i}" class="contactbox contact">

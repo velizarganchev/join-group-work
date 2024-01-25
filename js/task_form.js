@@ -8,6 +8,7 @@ async function initAddTask() {
     await init('add-task');
     minDate();
     choosePrio(2);
+    await loadContactsFromServer();
 }
 
 /** changes the HTML back to standard (=no Prio chosen)
