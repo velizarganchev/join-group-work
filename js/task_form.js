@@ -110,7 +110,7 @@ function addSubtask() {
         'name': task,
         'done': false
     }
-    if(subtasks.length >= 4){
+    if(subtasks.length >= 2){
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
     }
     document.getElementById('buttons').setAttribute('style', "margin-top:0");
@@ -143,7 +143,7 @@ function showSubtasksafterAddingATask() {
  */
 function deleteSubtask(i){
     subtasks.splice(i,1);
-    if(subtasks.length <= 4){
+    if(subtasks.length <= 2){
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");
     }
     showSubtasks();
