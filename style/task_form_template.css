@@ -365,7 +365,7 @@
 
   .categories{
     position:absolute;
-    top:600px;
+    top:603px;
     width:440px;
     z-index:999;
     background-color: rgb(255, 255, 255);
@@ -426,6 +426,10 @@ body{
         display:none;
     }
 
+    .categories{
+        top:985px;
+    }
+
     .CompleteContent{
         flex-direction: column;
         align-items:center;
@@ -450,6 +454,14 @@ body{
 
     .buttonsAndInfotext{
         margin-bottom:150px;
+    }
+
+    .categories{
+        top:925px;
+    }
+
+    .ContainerForAllPossibleContacts{
+        top:575px;
     }
 }
 
@@ -491,6 +503,19 @@ body{
 
     .requiredText{
         font-size:12px;
+    }
+
+    .categories{
+        top:940px;
+    }
+
+    .ContainerForAllPossibleContacts{
+        top:590px;
+        width:300px;
+    }
+
+    .contactName{
+        margin-left:0;
     }
 }
 
