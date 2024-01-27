@@ -70,7 +70,6 @@ function generateTaskHtml(task) {
  * @returns {string} - HTML markup for the task editing popup.
  */
 function generateEditTaskHtml(taskToEdit) {
-    console.log(new Date(taskToEdit.date).toISOString().split('T')[0]);
     return /*html*/`
         <div class="pop-up-task-container" onclick="stopPropagation(event)">
             <div class="edit-close-button-container">
@@ -117,7 +116,7 @@ function generateEditTaskHtml(taskToEdit) {
                 </div>
             </div>
             <div class="edit-subtasks-container">
-                <form onsubmit="addSubtask(event, ${taskToEdit.id})">
+                <form onsubmit="addSubtaskInEdit(event, ${taskToEdit.id})">
                     <input id="subtask-text" type="text" minlength="3" required placeholder="add new subtask">
                     <button type="submit" class="add-subtask-btn">
                         <img src="../assets/img/board/subtask-plus.svg" alt="">
@@ -189,22 +188,25 @@ function generateCardHtml(cardId, task) {
     if (task) {
         return /*html*/ `
         <div class="card-container" onclick="openTask(${task.id})" draggable="true" ondragstart="startDragging(${getTaskIndex(task.id)})" id="${cardId}">
+        <div class="card">
             <button class="card-label">${task.category}</button>
-            <h3 class="card-title">${task.title}</h3>
-            <p class="card-content">${task.description}</p>
-            <div class="progress-bar-container">
-                <div class="progress-bar">
-                    <div class="progress-done" id="progress${task.id}"></div>
+                <h3 class="card-title">${task.title}</h3>
+                <p class="card-content">${task.description}</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-done" id="progress${task.id}"></div>
+                    </div>
+                    <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>
                 </div>
-                <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>
-            </div>
-            <div class="card-footer">
-                <div class="profiles" id="tasksProfiles${task.id}"></div>
-                <div class="priority-container">
-                    ${priorityIcon}
+                <div class="card-footer">
+                    <div class="profiles" id="tasksProfiles${task.id}"></div>
+                    <div class="priority-container">
+                        ${priorityIcon}
+                    </div>
                 </div>
             </div>
         </div>
+            
     `;
     }
 }

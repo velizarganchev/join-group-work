@@ -1,8 +1,8 @@
 currPriority = 0;
 let editSubtasks = [];
-let columns;
+let columns = [];
+let columnIds = ['todo', 'in-progress', 'await-feedback', 'done'];
 let currentDraggedElement;
-let tasks;
 
 /**
  * Initializes certain functions once the body of the page has fully loaded.
@@ -10,9 +10,9 @@ let tasks;
 async function initBoard() {
     checkLogInStatus();
     await init('board', 'task_from');
+    await loadTasks();
     renderTasks();
 }
-
 
 /**
  * Renders tasks in the 'todo' column.
@@ -20,30 +20,43 @@ async function initBoard() {
  * @param {Array} searchedTasks - An optional array of task objects to render (filtered tasks based on search).
  */
 async function renderTasks(searchedTasks) {
+    try {
+        await loadTasks();
+        takeAllColumns();
 
-    tasks = JSON.parse(await getItem('AllTasks'));
-    console.log(tasks);
+        let getColumnById = (columnId) => document.getElementById(columnId);
+        let getColumnByTask = (task) => getColumnById(task.colum);
+
+        let renderCardAndSubtasks = (task) => {
+            let column = getColumnByTask(task);
+
+            renderCard(task, column);
+            if (task.subtasks.length > 0) {
+                setProgressSubtasks(task);
+            }
+            generateContactsHtml(task.contacts, task.id);
+        };
+
+        let tasksToRender = searchedTasks || allTasks;
+        tasksToRender.forEach(renderCardAndSubtasks);
+
+        iterateByEachColumn(columns);
+    } catch (error) {
+        console.error('Error rendering tasks:', error);
+    }
 
 
-    columns = document.getElementById('board-distribution').children;
+}
 
-    let getColumnById = (columnId) => document.getElementById(columnId);
-    let getColumnByTask = (task) => getColumnById(task.colum);
-
-    let renderCardAndSubtasks = (task) => {
-        let column = getColumnByTask(task);
-
-        renderCard(task, column);
-        if (task.subtasks.length > 0) {
-            setProgressSubtasks(task);
-        }
-        generateContactsHtml(task.contacts, task.id);
-    };
-
-    let tasksToRender = searchedTasks || tasks;
-    tasksToRender.forEach(renderCardAndSubtasks);
-
-    iterateByEachColumn(columns);
+/**
+ * Takes all columns based on their IDs and stores them in the 'columns' array.
+ */
+function takeAllColumns() {
+    columns = columnIds.map((id) => {
+        const currColumn = document.getElementById(id);
+        console.log(currColumn);
+        return currColumn;
+    });
 }
 
 
@@ -66,7 +79,7 @@ function search(e) {
     let searchTermInput = document.getElementById('search-text');
 
     let searchTerm = searchTermInput.value.toLowerCase();
-    let searchedTasks = tasks.filter(task => task.title.toLowerCase().includes(searchTerm));
+    let searchedTasks = allTasks.filter(task => task.title.toLowerCase().includes(searchTerm));
 
     clearAllColumns();
     renderTasks(searchedTasks);
@@ -78,7 +91,7 @@ function search(e) {
  * Opens the task pop-up by setting its display style to "flex" and populates it with HTML content.
  */
 function openTask(taskId) {
-    let task = tasks.find(t => t.id === taskId);
+    let task = allTasks.find(t => t.id === taskId);
     let taskPopUp = document.getElementById('pop-up');
     taskPopUp.style.display = "flex";
 
@@ -100,29 +113,33 @@ function showEditTask(taskId) {
     taskPopUp.innerHTML = generateEditTaskHtml(taskToEdit);
 
     handleEditPriority(taskToEdit.priority);
-    showSubtasks(taskToEdit.id, taskToEdit.subtasks);
+    showSubtasksInEdit(taskToEdit.id, taskToEdit.subtasks);
 }
 
 
 /**
- * Bearbeitet eine Aufgabe, indem die eingegebenen Werte aus den Bearbeitungsfeldern genommen und in die Aufgabe aktualisiert werden.
+ * Edits an existing task based on the provided taskId.
  *
- * @param {string} taskId - Die ID der zu bearbeitenden Aufgabe.
+ * @param {string} taskId - The unique identifier of the task to be edited.
  */
 async function editTask(taskId) {
     const task = getTask(taskId);
+
     task.title = document.getElementById('edit-title').value;
     task.description = document.getElementById('edit-description').value;
     task.date = new Date(document.getElementById('edit-date').value);
     task.priority = currPriority ? currPriority : task.priority;
     task.contacts = chosenContactsJson;
     task.subtasks = [...task.subtasks, ...editSubtasks];
-    await setItem('AllTasks', tasks);
+
+    await setItem('AllTasks', allTasks);
+    await loadTasks();
 
     clearAllColumns();
     renderTasks();
     closeTask("pop-up");
 }
+
 
 
 /**
@@ -134,7 +151,7 @@ async function editTask(taskId) {
 function deleteSubtask(taskId, subtaskId) {
     const task = getTask(taskId);
     task.subtasks = task.subtasks.filter(subtask => subtask.id !== subtaskId);
-    showSubtasks(taskId, task.subtasks);
+    showSubtasksInEdit(taskId, task.subtasks);
 }
 
 
@@ -143,7 +160,7 @@ function deleteSubtask(taskId, subtaskId) {
  *
  * @param {Array} subtasks - An array of subtask objects.
  */
-function showSubtasks(taskId, subtasks) {
+function showSubtasksInEdit(taskId, subtasks) {
     let subtasksList = document.querySelector('.edit-subtask-list');
     subtasksList.innerHTML = '';
 
@@ -173,7 +190,7 @@ function showSubtasks(taskId, subtasks) {
  * @param {Event} e - The event object.
  * @param {string} taskId - The ID of the task to which the subtask will be added.
  */
-function addSubtask(e, taskId) {
+function addSubtaskInEdit(e, taskId) {
     e.preventDefault();
 
     const task = getTask(taskId);
@@ -186,7 +203,7 @@ function addSubtask(e, taskId) {
     };
     task.subtasks.push(subtaskToAdd);
     subtaskInput.value = '';
-    showSubtasks(taskId, task.subtasks);
+    showSubtasksInEdit(taskId, task.subtasks);
 }
 
 
@@ -277,11 +294,11 @@ async function changeSubtaskStatus(status, subtaskId, taskId) {
     let subtaskIndex = task.subtasks.findIndex(sb => sb.id === subtaskId);
 
     if (status.checked) {
-        console.log(status.checked);
 
         task.subtasks[subtaskIndex].done = true;
         task.subtasksProgress++;
-        await setItem('AllTasks', tasks);
+        await setItem('AllTasks', allTasks);
+        await loadTasks();
 
         clearAllColumns();
         renderTasks();
@@ -294,7 +311,8 @@ async function changeSubtaskStatus(status, subtaskId, taskId) {
             task.subtasksProgress = 0;
         }
 
-        await setItem('AllTasks', tasks);
+        await setItem('AllTasks', allTasks);
+        await loadTasks();
 
         clearAllColumns();
         renderTasks();
@@ -309,7 +327,7 @@ async function changeSubtaskStatus(status, subtaskId, taskId) {
  * @returns {Object} - The task object.
  */
 function getTask(id) {
-    return tasks.find(t => t.id === id);
+    return allTasks.find(t => t.id === id);
 }
 
 
@@ -320,12 +338,16 @@ function getTask(id) {
  */
 async function deleteTask(id) {
     let taskToDelete = getTaskIndex(id);
-    tasks.splice(taskToDelete, 1);
+    allTasks.splice(taskToDelete, 1);
+
+    await setItem('AllTasks', allTasks);
+    await loadTasks();
 
     clearAllColumns();
     renderTasks();
     closeTask("pop-up");
-    await setItem('AllTasks', tasks);
+
+
 }
 
 
@@ -336,7 +358,7 @@ async function deleteTask(id) {
  * @returns {number} - The index of the task in the tasks array.
  */
 function getTaskIndex(taskId) {
-    return tasks.findIndex(t => t.id === taskId);
+    return allTasks.findIndex(t => t.id === taskId);
 }
 
 
@@ -385,8 +407,10 @@ function startDragging(id) {
  * @param {string} columnId - The unique identifier of the target column.
  */
 async function moveTo(columnId) {
-    tasks[currentDraggedElement]['colum'] = columnId;
-    await setItem('AllTasks', tasks);
+    allTasks[currentDraggedElement]['colum'] = columnId;
+    await setItem('AllTasks', allTasks);
+    await loadTasks();
+
     clearAllColumns();
     renderTasks();
 }

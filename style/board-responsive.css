@@ -1,0 +1,63 @@
+@media (max-width: 1200px) {
+    .board-header-container {
+        flex-direction: column;
+    }
+
+    .board-title {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .add-task-rsponsive-btn {
+        display: flex;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .add-task-button,
+    .board-nav-bar-container {
+        display: none;
+    }
+
+    .action-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1.5rem;
+
+        form {
+            width: 50%;
+        }
+    }
+
+    .board-distribution-container {
+        margin-top: 7.5rem;
+        margin-bottom: 7.5rem;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+
+    }
+
+    .responsive-board-nav-item-container {
+        align-items: center;
+    }
+
+    .responsive-board-nav-item {
+        display: flex;
+    }
+
+    .board-distribution-colum {
+        width: 70%;
+        min-height: 300px;
+    }
+
+}

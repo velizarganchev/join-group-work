@@ -1,13 +1,13 @@
-body {
-    overflow: hidden;
-}
-
 .board-header-container {
     width: 1056px;
     height: 73px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.add-task-rsponsive-btn {
+    display: none;
 }
 
 .action-container {
@@ -122,6 +122,15 @@ body {
     gap: 20px;
 }
 
+.Content {
+    gap: 30px;
+}
+
+.categories {
+    top: 480px;
+}
+
+
 /* BOARD NAV */
 
 .board-nav-bar-container {
@@ -131,7 +140,7 @@ body {
     display: flex;
     align-items: baseline;
     justify-content: flex-start;
-    gap: 30px;
+    gap: 60px;
 }
 
 .board-nav-item {
@@ -152,39 +161,69 @@ body {
     cursor: pointer;
 }
 
+.responsive-board-nav-item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.responsive-board-nav-item {
+    width: 80%;
+    margin: 1.1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 32.4px;
+    color: #42526E;
+    display: none;
+
+}
+
+.responsive-board-nav-item button {
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+
 /* BOARD DISTRIBUTION */
 
 .board-distribution-container {
     width: 1208px;
     height: 688px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    gap: 26px;
+    margin-top: 1.25rem;
+    margin-bottom: 7.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* display: flex;
+    align-items: center; */
+    /* gap: 16px; */
 }
 
 .board-distribution-colum {
-    width: 246px;
-    height: 688px;
+    width: auto;
+    height: 38rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 0 64px;
+    /* padding: 0 64px; */
     /* border: 1px solid black; */
 }
 
 .dragAreaHighlight {
-    background-color: rgb(232, 232, 232);
-    border: none;
-    border-radius: 24px;
+
+    border: 1px dotted #2A3647;
+    border-radius: 1.5rem;
 }
 
 /* CARDS */
 
 .card-container {
-    width: 252px;
-    /* height: 262px; */
+    width: 100%;
+    height: 262px;
     padding: 16px;
     background-color: white;
     border: none;
@@ -297,7 +336,7 @@ body {
     color: #A8A8A8;
     background-color: #E7E7E7;
     border: 1px dotted #A8A8A8;
-    border-radius: 10px;
+    border-radius: 24px;
 }
 
 .no-task-card-container h3 {
