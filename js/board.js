@@ -54,7 +54,6 @@ async function renderTasks(searchedTasks) {
 function takeAllColumns() {
     columns = columnIds.map((id) => {
         const currColumn = document.getElementById(id);
-        console.log(currColumn);
         return currColumn;
     });
 }
