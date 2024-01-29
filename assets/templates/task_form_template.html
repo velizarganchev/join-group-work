@@ -1,5 +1,5 @@
-<section id="Content">  
-    <form  onsubmit="getAllInputs(event); return false;">
+<section id="Content">
+    <form onsubmit="getAllInputs(event); return false;">
         <div class="CompleteContent">
             <div class="Content">
                 <div id="TitleContent">
@@ -22,7 +22,8 @@
                         </div>
                     </div>
                     <div class="Subcontent">
-                        <textarea id="description" class="Inputfield textarea" placeholder="Enter a description"></textarea>
+                        <textarea id="description" class="Inputfield textarea"
+                            placeholder="Enter a description"></textarea>
                     </div>
                 </div>
                 <div id="AssignedToContent">
@@ -32,18 +33,20 @@
                         </div>
                     </div>
                     <div id="SubcontentContacts" class="Subcontent">
-                            <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
-                        <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts d-none">  
+                        <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off"
+                            placeholder="Select contacts to assign" onkeyup="filterContacts()"
+                            onclick="getAllContacts('assignedToSelect')">
+                        <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts d-none">
                         </div>
                         <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none">
-                            
+
                         </div>
                         <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
                     </div>
                 </div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="2" height="426" viewBox="0 0 2 426" fill="none">
-                <path d="M1.24805 1L1.24854 425" stroke="#D1D1D1" stroke-linecap="round"/>
+                <path d="M1.24805 1L1.24854 425" stroke="#D1D1D1" stroke-linecap="round" />
             </svg>
             <div class="Content">
                 <div id="DueDateContent">
@@ -56,7 +59,7 @@
                         </div>
                     </div>
                     <div class="Subcontent">
-                        <input required id="date" type="date" class="Inputfield" min ="todaydate" pattern="">
+                        <input required id="date" type="date" class="Inputfield" min="todaydate" pattern="">
                     </div>
                 </div>
                 <div id="PrioContent">
@@ -91,7 +94,8 @@
                     </div>
                     <div class="Subcontent">
                         <div class="CategoryInputContainer hover" onclick="getAllCategories(id)">
-                            <div id="Category" class="simulateSelectElement">Select task category</div><div id="+"><img src="/assets/img/+.png"></div>
+                            <div id="Category" class="simulateSelectElement">Select task category</div>
+                            <div id="+"><img src="/assets/img/+.png"></div>
                         </div>
                         <div id="categories" class="categories d-none">
                             <div class="category hover" onclick="setCategory('Technical Task')">Technical Task</div>
@@ -106,17 +110,20 @@
                     </div>
                     <div class="Subcontent">
                         <div id="subtaskInput" class="subtaskInput">
-                            <input id="subtask" class="Inputfield subtasks" autocomplete="off" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
+                            <input id="subtask" class="Inputfield subtasks" autocomplete="off"
+                                placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
                             <div class="subtasksImgagesContainer">
                                 <img id="plus" class="subtaskImg hover" src="/assets/img/+.png">
-                                <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
+                                <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png"
+                                    onclick="cancelSubtask()">
                                 <div class="d-none verticalLine" id="verticalLine"></div>
-                                <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
+                                <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px"
+                                    src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
                             </div>
                         </div>
                         <div id="overlay" class="overlay d-none" onclick="activateAndDeactivateSubtaskInput()">
                         </div>
-                        <div >
+                        <div>
                             <ul class="subTaskList" id="subTaskList" style="overflow:hidden">
 
                             </ul>
@@ -130,8 +137,10 @@
                 <div class="star">*</div>This field is required
             </div>
             <div id="buttons" class="buttons">
-                <button type ="reset" class="cancelButton hover" onclick="resetPrio()">Clear <img src="/assets/img/cancel_dark.png"></button>
-                <button id="addTastButton" class="createTaskButton hover">Create Task <img src="/assets/img/confirm.png"></button>
+                <button type="reset" class="cancelButton hover" onclick="resetPrio()">Clear <img
+                        src="/assets/img/cancel_dark.png"></button>
+                <button id="addTastButton" class="createTaskButton hover">Create Task <img
+                        src="/assets/img/confirm.png"></button>
             </div>
         </div>
     </form>

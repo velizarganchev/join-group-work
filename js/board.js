@@ -22,6 +22,7 @@ async function initBoard() {
 async function renderTasks(searchedTasks) {
     try {
         await loadTasks();
+
         takeAllColumns();
 
         let getColumnById = (columnId) => document.getElementById(columnId);
@@ -48,6 +49,7 @@ async function renderTasks(searchedTasks) {
 
 }
 
+
 /**
  * Takes all columns based on their IDs and stores them in the 'columns' array.
  */
@@ -66,6 +68,8 @@ function openAddTask() {
     const addTaskDiv = document.getElementById('pop-up-add-task');
     addTaskDiv.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    minDate();
+    choosePrio(2);
 }
 
 
@@ -85,6 +89,7 @@ function search(e) {
     renderTasks(searchedTasks);
     searchTermInput.value = '';
 }
+
 
 
 /**
