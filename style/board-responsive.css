@@ -1,4 +1,13 @@
-@media(max-width:1400px) {
+@media(max-width:1585px) {
+
+    .board-nav-bar-container,
+    .board-distribution-container {
+        width: 1000px;
+    }
+}
+
+
+@media(max-width:1430px) {
     .CompleteContent svg {
         display: flex;
     }
@@ -21,9 +30,14 @@
         gap: 0px;
         margin: 0;
     }
+
+    .board-distribution-container {
+        gap: 8px;
+    }
+
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
     .board-header-container {
         flex-direction: column;
     }

@@ -65,6 +65,7 @@ function takeAllColumns() {
 function openAddTask() {
     const addTaskDiv = document.getElementById('pop-up-add-task');
     addTaskDiv.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
 
@@ -95,6 +96,7 @@ function openTask(taskId) {
     taskPopUp.style.display = "flex";
 
     taskPopUp.innerHTML = generateTaskHtml(task);
+    document.body.style.overflow = 'hidden';
 }
 
 
@@ -140,7 +142,6 @@ async function editTask(taskId) {
 }
 
 
-
 /**
  * Löscht eine Teilaufgabe aus einer bestimmten Aufgabe und aktualisiert die Anzeige der Teilaufgaben.
  *
@@ -166,10 +167,10 @@ function showSubtasksInEdit(taskId, subtasks) {
     for (let i = 0; i < subtasks.length; i++) {
         const element = subtasks[i];
         subtasksList.innerHTML += /*html*/ `
-            <li class="edit-subtask-item">
+            <li class="edit-subtask-item" id="edit-subtask-item${element.id}">
                 <span>${element.name}</span>
-                <div class="edit-subtask-icons">
-                    <button>
+                <div class="edit-subtask-icons" id="edit-subtask-icons${element.id}">
+                    <button onclick="showEditSubtaskField(${taskId}, ${element.id})">
                         <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
                     </button>
                     <img src="../assets/img/board/vector3.svg" alt="">
@@ -179,6 +180,54 @@ function showSubtasksInEdit(taskId, subtasks) {
                 </div>
             </li>
         `;
+    }
+}
+
+
+/**
+ * Displays the edit subtask field with the current subtask text.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @param {string} subtaskId - The ID of the subtask.
+ */
+function showEditSubtaskField(taskId, subtaskId) {
+    let listItem = document.getElementById(`edit-subtask-item${subtaskId}`);
+    listItem.classList.remove('edit-subtask-item');
+    listItem.classList.add('edit-subtask-item-text');
+
+    if (listItem) {
+        listItem.innerHTML = '';
+        let task = getTask(taskId);
+        let subtaskIndex = task.subtasks.findIndex(sb => sb.id === subtaskId);
+
+        if (subtaskIndex !== -1) {
+            let text = task.subtasks[subtaskIndex].name;
+            listItem.innerHTML = generateEditSubtaskTextHtml(taskId, subtaskId, text);
+        } else {
+            console.error('Subtask not found for editing.');
+        }
+    } else {
+        console.error('List item not found for editing subtask.');
+    }
+}
+
+
+/**
+ * Edits the text of a subtask and updates the display.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @param {string} subtaskId - The ID of the subtask.
+ */
+function editSubtaskText(taskId, subtaskId) {
+    let input = document.getElementById('edit-subtask-text-input');
+    let task = getTask(Number(taskId));
+    let subtaskIndex = task.subtasks.findIndex(sb => sb.id === Number(subtaskId));
+
+    if (subtaskIndex !== -1) {
+        task.subtasks[subtaskIndex].name = input.value;
+        showSubtasksInEdit(taskId, task.subtasks);
+    } else {
+        console.error('Subtask not found for editing.');
     }
 }
 
@@ -367,6 +416,7 @@ function getTaskIndex(taskId) {
 function closeTask(id) {
     let taskPopUp = document.getElementById(id);
     taskPopUp.style.display = "none";
+    document.body.style.overflow = '';
 }
 
 /**

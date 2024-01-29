@@ -37,7 +37,7 @@ function generateTaskHtml(task) {
             </div>
             <div class="pop-up-task-contacts-container">
                 <p>Assigned to:</p>
-                <div class="pop-up-task-contacts${task.id}">
+                <div class="pop-up-task-contacts${task.id} pop-up-task-contacts">
                     ${contactsHtml}
                 </div>
             </div>          
@@ -156,7 +156,7 @@ function generateContactHtml(contact) {
     return  /*html*/ `
         <div class="pop-up-task-contact">
             <div class="contact-label" style="background:${contact.color};">${contact.firstname[0] + contact.lastname[0]}</div>
-            <div class="contact-name">${contact.firstname} ${contact.lastName}</div>
+            <div class="contact-name">${contact.firstname} ${contact.lastname}</div>
         </div>`;
 }
 
@@ -248,6 +248,29 @@ function generatePriorityIcon(priority) {
         case 1:
             return /*html*/`<img src="../assets/img/board/prio-urgent.svg" alt="Priority Icon">`;
     }
+}
+
+
+/**
+ * Generates HTML for editing the text of a subtask.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @param {string} subtaskId - The ID of the subtask.
+ * @param {string} text - The current text of the subtask.
+ * @returns {string} - HTML for editing the subtask text.
+ */
+function generateEditSubtaskTextHtml(taskId, subtaskId, text) {
+    return /*html*/ `
+        <input type="text" id="edit-subtask-text-input" value="${text}">
+        <div class="edit-subtask-text-icons">
+            <button onclick="deleteSubtask('${taskId}', '${subtaskId}')">
+                <img src="../assets/img/board/delete-subtask-icon.svg" alt="Delete Icon">
+            </button>
+            <button onclick="editSubtaskText('${taskId}', '${subtaskId}')">
+                <img src="../assets/img/board/check-edit-subtask.svg" alt="Check Icon">
+            </button>
+        </div>
+    `;
 }
 
 
