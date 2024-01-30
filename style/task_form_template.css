@@ -51,15 +51,37 @@
     margin:8px 0px 16px 0px;
 }
 
+.DateContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgb(209, 209, 209);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    color: rgb(209, 209, 209);
+    height: 56px;
+    max-width: 442px;
+    background-color: white;
+}
+
+.DateContainer:hover{
+    cursor:pointer;
+}
+
+
 .Inputfield{
     max-width:442px;
     padding: 12px 21px;
     align-items: center;
-    gap: 10px;
-    border-radius: 10px;
-    border: 1px solid var(--Style, #D1D1D1);
+    border:none;
     font-family: 'Inter',sans-serif;
     font-size: 20px;
+    background-color: white;
+    width:100%;
+    outline: none;
 }
 
 .textarea{ 
@@ -80,15 +102,19 @@
 }
 
 .selection{
-    display: flex;
+    /* display: flex;
     width: 440px;
     padding: 12px 16px;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     font-size:20px;
     border-radius: 10px;
-    border: 1px solid var(--Style, #D1D1D1);
-    background: var(--white, #FFF);
+    /* border: 1px solid var(--Style, #D1D1D1);
+    background: var(--white, #FFF); */
+    border:none;
+    background-color: white;
+    width:100%;
+    outline: none;
 }
 
 .selectionOption{
@@ -115,6 +141,7 @@
     flex: 1 0 0;
     border-radius: 10px;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    background-color: white;
 }
 
 .Highchosen{
@@ -203,6 +230,7 @@
     justify-content: space-between;
     align-items:center;
     max-width:442px;
+    background-color: white;
 }
 
 .subtaskImg{
@@ -213,7 +241,7 @@
 }
 
 .subtaskImg:hover{
-    box-shadow: 1px 1px 10px black;
+    cursor:pointer;
 }
 
 .subtasksImgagesContainer{
@@ -233,7 +261,13 @@
   justify-content: space-between;
 }
 
+.subtaskContainerEdit{
+    display:flex;
+    gap:10px;
+}
+
 .subtasks{
+    border-radius:10px;
     border:none !important;
     padding: 12px 21px;
     align-items: center;
@@ -241,6 +275,7 @@
     font-family: 'Inter',sans-serif;
     font-size: 20px;
     outline:unset;
+    background-color: white;
 }
 
 .overlay{
@@ -254,27 +289,53 @@
     width:100vw;
 }
 
-.arrowdown{ 
-    /* for Firefox */ 
+/* .arrowdown{ 
+    for Firefox
     -moz-appearance: none; 
-    /* for Safari, Chrome, Opera */ 
+    for Safari, Chrome, Opera
     -webkit-appearance: none; 
     background: url('/assets/img/arrow_down.png') no-repeat scroll 96% 50%;
   } 
 
   .arrowup{
-    /* for Firefox */ 
+    for Firefox
     -moz-appearance: none; 
-    /* for Safari, Chrome, Opera */ 
+    for Safari, Chrome, Opera
     -webkit-appearance: none; 
     background: url('/assets/img/arrow_up.png') no-repeat scroll 96% 50%;
-} 
+}  */
+
+.arrow{
+    width:25px;
+}
+
+.assignedToContainerInput{
+    display: flex;
+    width: 440px;
+    padding: 12px 16px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--Style, #D1D1D1);
+    background: var(--white, #FFF);
+    background-color: white;
+}
+
+.assignedToContainerInput:hover{
+    cursor:pointer;
+}
 
 /* Ersetzt den Kalender in dem Input */
   input[type="date"]::-webkit-inner-spin-button,
   input[type="date"]::-webkit-calendar-picker-indicator {
-    background: url('/assets/img/event.png') no-repeat scroll 96% 50%;
+    /* background: url('/assets/img/event.png') no-repeat scroll 96% 50%; */
       -webkit-appearance: none;
+      display:none;
+  }
+
+  .dateImg{
+    width:25px;
   }
 
   .date{
@@ -397,6 +458,7 @@
     color:rgb(209, 209, 209);
     height:56px;
     max-width:442px;
+    background-color:white;
   }
 
   .subTaskList{

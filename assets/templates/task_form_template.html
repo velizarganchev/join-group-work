@@ -32,7 +32,9 @@
                         </div>
                     </div>
                     <div id="SubcontentContacts" class="Subcontent">
-                            <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
+                        <div class="assignedToContainerInput" onclick="getAllContacts('assignedToSelect')">
+                            <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()"><img id="assignedToImg" class="arrow" src="/assets/img/arrow_up.png">
+                        </div>
                         <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts d-none">  
                         </div>
                         <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none">
@@ -56,7 +58,10 @@
                         </div>
                     </div>
                     <div class="Subcontent">
-                        <input required id="date" type="date" class="Inputfield" min ="todaydate" pattern="">
+                        <div id="DateContainer" class="DateContainer">
+                            <input required id="date" type="date" class="Inputfield hover" min ="todaydate" pattern="">
+                            <img class="dateImg hover" src="/assets/img/event.png">
+                        </div>
                     </div>
                 </div>
                 <div id="PrioContent">
@@ -91,7 +96,7 @@
                     </div>
                     <div class="Subcontent">
                         <div class="CategoryInputContainer hover" onclick="getAllCategories(id)">
-                            <div id="Category" class="simulateSelectElement">Select task category</div><div id="+"><img src="/assets/img/+.png"></div>
+                            <div id="Category" class="simulateSelectElement">Select task category</div>
                         </div>
                         <div id="categories" class="categories d-none">
                             <div class="category hover" onclick="setCategory('Technical Task')">Technical Task</div>
@@ -108,10 +113,10 @@
                         <div id="subtaskInput" class="subtaskInput">
                             <input id="subtask" class="Inputfield subtasks" autocomplete="off" placeholder="Add new subtask" onclick="activateAndDeactivateSubtaskInput()">
                             <div class="subtasksImgagesContainer">
-                                <img id="plus" class="subtaskImg hover" src="/assets/img/+.png">
-                                <img id="cancel" class="subtaskImg hover d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
+                                <img id="plus" class="subtaskImg" src="/assets/img/+.png">
+                                <img id="cancel" class="subtaskImg d-none" src="/assets/img/cancel_dark.png" onclick="cancelSubtask()">
                                 <div class="d-none verticalLine" id="verticalLine"></div>
-                                <img id="hook" class="subtaskImg hover d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
+                                <img id="hook" class="subtaskImg d-none" style="width:15px; height:15px" src="/assets/img/hook-icon-black.png" onclick="addSubtask()">
                             </div>
                         </div>
                         <div id="overlay" class="overlay d-none" onclick="activateAndDeactivateSubtaskInput()">

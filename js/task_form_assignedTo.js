@@ -5,12 +5,16 @@ let chosenContactsJson = [];
  * This function opens a dropdown-menu so that the user can select a contact, which should work at the task in the future
  * @param {string} id - id of the Element which should be flipped around 
  */
-function getAllContacts(id) {
-    flipTheImage(id);
+function getAllContacts() {
+    flipTheImage();
     displayContacts();
     generateContactsContainer();
     putAssignedToInForeground();
     checkIfCheckboxesWereChecked();
+}
+
+function flipTheImage(){
+    document.getElementById('assignedToImg').src="/assets/img/arrow_down.png";
 }
 
 /**
@@ -34,11 +38,11 @@ function putAssignedToInForeground() {
 function closecontacts() {
     document.getElementById('assignedToSelect').value = '';
     document.getElementById('overlayContacts').classList.toggle('d-none');
+    document.getElementById('assignedToImg').src="/assets/img/arrow_up.png"
     document.getElementById('ContainerForAllPossibleContacts').innerHTML = '';
     document.getElementById('ContainerForAllPossibleContacts').classList.add('d-none');
     if (chosenContacts.length == 0) {
         document.getElementById('ContainerForAllChosenContacts').classList.add('d-none');
-        // document.getElementById('requiredText').setAttribute('style', 'margin-top:200px');
     }
     document.getElementById('assignedToSelect').setAttribute('z-index', '0');
     document.getElementById('ContainerForAllPossibleContacts').setAttribute('z-index', '0');
@@ -60,7 +64,7 @@ function generatingHTMLForContactsContainer() {
     for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
         contactsContainer.innerHTML += `
-        <div id="contact${i}" class="contactbox contact">
+        <div id="contact${i}" class="contactbox contact" onclick="checkCheckbox(${i})">
             <div id="contactCircle${i}">
 
             </div>
@@ -75,6 +79,20 @@ function generatingHTMLForContactsContainer() {
         </div>`;
         creatingCircle(i, adress);
         gettingNames(i);
+    }
+}
+
+/**
+ * This function check / uncheck the checkbox of the chosen contact
+ * @param {int} i - number of the checkbox
+ */
+function checkCheckbox(i){
+    document.getElementById(`checkbox${i}`).checked = !document.getElementById(`checkbox${i}`).checked;
+    let checkbox = document.getElementById(`checkbox${i}`).checked;
+    if (checkbox) {
+        addChosenContact(i);
+    } else {
+        deleteChosenContact(i);
     }
 }
 
@@ -98,6 +116,7 @@ function addContactToArray(i) {
     } else {
         deleteChosenContact(i);
     }
+    event.stopPropagation();
 }
 
 /**
@@ -203,7 +222,7 @@ function filterContacts() {
     ContactList.innerHTML = '';
     for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
-        let name = contacts[i]['name']; // hier Daten vom Server abgreifen
+        let name = contacts[i]['name'];
         if (name.toLowerCase().includes(search)) {
             ContactList.innerHTML += `
             <div id="contact${i}" class="contactbox contact">

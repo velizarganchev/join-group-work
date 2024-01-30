@@ -86,19 +86,25 @@ function changeColorOfPrio(Prio, i) {
  * This function toggles the Images from the Subtask Input
  */
 function activateAndDeactivateSubtaskInput() {
+    toggleSubtaskImg();
+}
+
+/**
+ * This function toggles all Images of the Subtask-Input
+ */
+function toggleSubtaskImg(){
     toggleClass('plus', 'd-none');
     toggleClass('cancel', 'd-none');
     toggleClass('verticalLine', 'd-none');
     toggleClass('hook', 'd-none');
     toggleClass('overlay', 'd-none');
-    cancelSubtask();
 }
 
 /**
  * This function clears the Subtasks Input
  */
 function cancelSubtask() {
-    document.getElementById('subtask').value = '';
+    document.getElementById('subtask').value = '';   
 }
 
 /**
@@ -106,17 +112,21 @@ function cancelSubtask() {
  */
 function addSubtask() {
     let task = document.getElementById('subtask').value;
-    let taskJSON = {
-        'id': Math.round(Math.random() * 100), // Velizar - ich denke, es wäre so besser id zu generieren.
-        'name': task,
-        'done': false
+    if(task.length == 0){
+
+    }else{
+        let taskJSON = {
+            'id': Math.round(Math.random() * 100),
+            'name': task,
+            'done': false
+        }
+        if(subtasks.length >= 2){
+            document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
+        }
+        document.getElementById('buttons').setAttribute('style', "margin-top:0");
+        subtasks.push(taskJSON);
+        showSubtasksafterAddingATask();
     }
-    if(subtasks.length >= 2){
-        document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
-    }
-    document.getElementById('buttons').setAttribute('style', "margin-top:0");
-    subtasks.push(taskJSON);
-    showSubtasksafterAddingATask();
 }
 
 /**
@@ -126,9 +136,15 @@ function showSubtasks() {
     let subtasksList = document.getElementById('subTaskList');
     subtasksList.innerHTML = '';
     for (let i = 0; i < subtasks.length; i++) {
-        subtasksList.innerHTML += `<li>${subtasks[i]['name']} <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"> </li>`;
+        subtasksList.innerHTML += `<li>${subtasks[i]['name']} <div class="subtaskContainerEdit"><img class="hover" src="/assets/img/edit-contact.png" onclick="editsubtask(${i})"></img> <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"></div> </li>`;
     }
 }
+
+function editsubtask(i){
+    document.getElementById('subtask').value = subtasks[i]['name'];
+    deleteSubtask(i);
+}
+
 /**
  * This functions starts the Subtask adding process
  */
@@ -222,7 +238,7 @@ function confirmTheCreationOfATask() {
         </div>
         <button type="button" class="createTaskButton hover" onclick="addAnotherTask()">add another task</button>
         <br>
-        <button type="button" class="createTaskButton hover" onclick="backToBoard()">back to board</button>
+        <button type="button" class="createTaskButton hover" onclick="backToBoard()">go to board</button>
     </div>
     `;
 }
@@ -278,3 +294,7 @@ function closeOverlayCategories() {
     document.getElementById('overlayCategories').classList.toggle('d-none');
     document.getElementById('categories').classList.toggle('d-none');
 }
+
+// function openDate(){
+//     document.getElementById('date').datepicker();
+// }
