@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/style/mobile_template.css">
     <link rel="stylesheet" href="/style/task_form_template.css">
     <link rel="stylesheet" href="/style/board.css">
+    <link rel="stylesheet" href="/style/board-responsive.css">
     <link rel="stylesheet" href="/style/desktop-template-responsive.css">
 
 </head>
@@ -35,6 +36,9 @@
             <div class="board-header-container">
                 <div class="board-title">
                     <h1>Board</h1>
+                    <button onclick="openAddTask()" class="add-task-rsponsive-btn">
+                        <img src="../assets/img/board/plus-add-task-mobile.svg" alt="Plus">
+                    </button>
                 </div>
                 <div class="action-container">
                     <form onsubmit="search(event)">
@@ -73,21 +77,57 @@
             </div>
         </div>
         <div class="board-distribution-container" id="board-distribution">
-            <div class="board-distribution-colum" id="todo" ondrop="moveTo('todo')"
-                ondragleave="removeHighlight('todo')" ondragover="allowDrop(event)"></div>
-            <div class="board-distribution-colum" id="in-progress" ondrop="moveTo('in-progress')"
-                ondragleave="removeHighlight('in-progress')" ondragover="allowDrop(event)"></div>
-            <div class="board-distribution-colum" id="await-feedback" ondrop="moveTo('await-feedback');"
-                ondragleave="removeHighlight('await-feedback')" ondragover="allowDrop(event)"></div>
-            <div class="board-distribution-colum" id="done" ondrop="moveTo('done')"
-                ondragleave="removeHighlight('done')" ondragover="allowDrop(event)"></div>
+            <div class="responsive-board-nav-item-container">
+                <div class="responsive-board-nav-item">
+                    <span>To do</span>
+                    <button onclick="openAddTask()">
+                        <img src="../assets/img/board/plus-button.svg" alt="Plus">
+                    </button>
+                </div>
+                <div class="board-distribution-colum" id="todo" onmouseleave="removeHighlight('todo')"
+                    ondrop="moveTo('todo')" ondragleave="removeHighlight('todo')"
+                    ondragover="allowDrop(event); highlight('todo')"></div>
+            </div>
+            <div class="responsive-board-nav-item-container">
+                <div class="responsive-board-nav-item">
+                    <span>In progress</span>
+                    <button onclick="openAddTask()">
+                        <img src="../assets/img/board/plus-button.svg" alt="Plus">
+                    </button>
+                </div>
+                <div class="board-distribution-colum" id="in-progress" onmouseleave="removeHighlight('in-progress')"
+                    ondrop="moveTo('in-progress')" ondragleave="removeHighlight('in-progress')"
+                    ondragover="allowDrop(event); highlight('in-progress') ">
+                </div>
+            </div>
+            <div class="responsive-board-nav-item-container">
+                <div class="responsive-board-nav-item">
+                    <span>Await feedback</span>
+                    <button onclick="openAddTask()">
+                        <img src="../assets/img/board/plus-button.svg" alt="Plus">
+                    </button>
+                </div>
+                <div class="board-distribution-colum" id="await-feedback"
+                    onmouseleave="removeHighlight('await-feedback')" ondrop="moveTo('await-feedback');"
+                    ondragleave="removeHighlight('await-feedback')"
+                    ondragover="allowDrop(event); highlight('await-feedback')"></div>
+            </div>
+            <div class="responsive-board-nav-item-container">
+                <div class="responsive-board-nav-item ">
+                    <span>Done</span>
+                </div>
+                <div class="board-distribution-colum" id="done" onmouseleave="removeHighlight('done')"
+                    ondrop="moveTo('done')" ondragleave="removeHighlight('done')"
+                    ondragover="allowDrop(event); highlight('done')"></div>
+            </div>
+
         </div>
     </section>
 
     <script src="/js/contacts_array_storage.js"></script>
     <script src="/js/contacts.js"></script>
-    <script src="/js/task_form.js"></script>
     <script src="/js/task_form_assignedTo.js"></script>
+    <script src="/js/task_form.js"></script>
     <script src="/js/board_generate_templates.js"></script>
     <script src="/js/board.js"></script>
     <script src="/js/script.js"></script>

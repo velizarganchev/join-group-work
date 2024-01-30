@@ -158,9 +158,9 @@ function showSubtasksafterAddingATask() {
  * This function deletes a Subtasks from Array "subtasks" and displays the Array afterwards
  * @param {int} i - id of the Subtasks
  */
-function deleteSubtask(i){
-    subtasks.splice(i,1);
-    if(subtasks.length <= 2){
+function deleteSubtask(i) {
+    subtasks.splice(i, 1);
+    if (subtasks.length <= 2) {
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");
     }
     showSubtasks();

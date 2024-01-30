@@ -115,7 +115,7 @@ function renderUpcomingPrio() {
     let upcomingTasksAmount = allTasks.filter(t => t['date'] == upcomingDate).length; //tasks --> allTasks
     let upcomingTasks = document.getElementById('upcoming-tasks-amount');
     upcomingPrio.innerHTML = prio;
-    changeImageSource('upcoming-prio-image', `/assets/img/Prio${prio}White.png`);
+    changeImageSource('upcoming-prio-image', `/assets/img/board/prio-${prio}-white.svg`);
     toggleClass('upcoming-prio-image-wrapper', `prio-${prio}`);
     upcomingTasks.innerHTML = upcomingTasksAmount;
 }

@@ -268,7 +268,7 @@ function createContact() {
   
       let newIndex = findContactIndex(newContact);
       let contactItemId = `contactItem_${newIndex}`;
-      showContactDetails(contactItemId);
+      await showContactDetails(contactItemId);
     }, 1000);
   }
 
@@ -281,7 +281,7 @@ function createContact() {
 async function addContactAndRender(newContact) {
     contacts.push(newContact);
     await setItemContacts("contacts", JSON.stringify(contacts));
-    renderContactBook();
+    await renderContactBook();
 }
 
 
@@ -351,21 +351,26 @@ function editContact() {
  * Saves the edited contact information, updates the contact book, and shows the edited contact details.
  */
 async function saveEditedContact() {
-    let editedName = document.getElementById("editName").value;
-    let editedEmail = document.getElementById("editEmail").value;
-    let editedPhone = document.getElementById("editPhone").value;
+  let editedName = document.getElementById("editName").value;
+  let editedEmail = document.getElementById("editEmail").value;
+  let editedPhone = document.getElementById("editPhone").value;
 
-    let selectedContactItem = document.querySelector(".selectedContact");
-    let index = parseInt(selectedContactItem.id.split('_')[1]);
+  let selectedContactItem = document.querySelector(".selectedContact");
+  let index = parseInt(selectedContactItem.id.split('_')[1]);
 
-    contacts[index].name = editedName;
-    contacts[index].email = editedEmail;
-    contacts[index].phone = editedPhone;
+  let saveEditButton = document.getElementById("saveEditButton");
+  createLoadingAnimation(saveEditButton);
 
-    await setItemContacts("contacts", JSON.stringify(contacts));
-    closePopUp();
-    renderContactBook();
-    showContactDetails(selectedContactItem.id);
+  contacts[index].name = editedName;
+  contacts[index].email = editedEmail;
+  contacts[index].phone = editedPhone;
+
+  await setItemContacts("contacts", JSON.stringify(contacts));
+  closePopUp();
+  renderContactBook();
+  showContactDetails(selectedContactItem.id);
+
+  resetSaveButton(saveEditButton);
 }
 
 

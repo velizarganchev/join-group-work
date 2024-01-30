@@ -37,7 +37,7 @@ function generateTaskHtml(task) {
             </div>
             <div class="pop-up-task-contacts-container">
                 <p>Assigned to:</p>
-                <div class="pop-up-task-contacts${task.id}">
+                <div class="pop-up-task-contacts${task.id} pop-up-task-contacts">
                     ${contactsHtml}
                 </div>
             </div>          
@@ -70,7 +70,6 @@ function generateTaskHtml(task) {
  * @returns {string} - HTML markup for the task editing popup.
  */
 function generateEditTaskHtml(taskToEdit) {
-    console.log(new Date(taskToEdit.date).toISOString().split('T')[0]);
     return /*html*/`
         <div class="pop-up-task-container" onclick="stopPropagation(event)">
             <div class="edit-close-button-container">
@@ -117,7 +116,7 @@ function generateEditTaskHtml(taskToEdit) {
                 </div>
             </div>
             <div class="edit-subtasks-container">
-                <form onsubmit="addSubtask(event, ${taskToEdit.id})">
+                <form onsubmit="addSubtaskInEdit(event, ${taskToEdit.id})">
                     <input id="subtask-text" type="text" minlength="3" required placeholder="add new subtask">
                     <button type="submit" class="add-subtask-btn">
                         <img src="../assets/img/board/subtask-plus.svg" alt="">
@@ -157,7 +156,7 @@ function generateContactHtml(contact) {
     return  /*html*/ `
         <div class="pop-up-task-contact">
             <div class="contact-label" style="background:${contact.color};">${contact.firstname[0] + contact.lastname[0]}</div>
-            <div class="contact-name">${contact.firstname} ${contact.lastName}</div>
+            <div class="contact-name">${contact.firstname} ${contact.lastname}</div>
         </div>`;
 }
 
@@ -189,22 +188,25 @@ function generateCardHtml(cardId, task) {
     if (task) {
         return /*html*/ `
         <div class="card-container" onclick="openTask(${task.id})" draggable="true" ondragstart="startDragging(${getTaskIndex(task.id)})" id="${cardId}">
+        <div class="card">
             <button class="card-label">${task.category}</button>
-            <h3 class="card-title">${task.title}</h3>
-            <p class="card-content">${task.description}</p>
-            <div class="progress-bar-container">
-                <div class="progress-bar">
-                    <div class="progress-done" id="progress${task.id}"></div>
+                <h3 class="card-title">${task.title}</h3>
+                <p class="card-content">${task.description}</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-done" id="progress${task.id}"></div>
+                    </div>
+                    <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>
                 </div>
-                <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>
-            </div>
-            <div class="card-footer">
-                <div class="profiles" id="tasksProfiles${task.id}"></div>
-                <div class="priority-container">
-                    ${priorityIcon}
+                <div class="card-footer">
+                    <div class="profiles" id="tasksProfiles${task.id}"></div>
+                    <div class="priority-container">
+                        ${priorityIcon}
+                    </div>
                 </div>
             </div>
         </div>
+            
     `;
     }
 }
@@ -246,6 +248,29 @@ function generatePriorityIcon(priority) {
         case 1:
             return /*html*/`<img src="../assets/img/board/prio-urgent.svg" alt="Priority Icon">`;
     }
+}
+
+
+/**
+ * Generates HTML for editing the text of a subtask.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @param {string} subtaskId - The ID of the subtask.
+ * @param {string} text - The current text of the subtask.
+ * @returns {string} - HTML for editing the subtask text.
+ */
+function generateEditSubtaskTextHtml(taskId, subtaskId, text) {
+    return /*html*/ `
+        <input type="text" id="edit-subtask-text-input" value="${text}">
+        <div class="edit-subtask-text-icons">
+            <button onclick="deleteSubtask('${taskId}', '${subtaskId}')">
+                <img src="../assets/img/board/delete-subtask-icon.svg" alt="Delete Icon">
+            </button>
+            <button onclick="editSubtaskText('${taskId}', '${subtaskId}')">
+                <img src="../assets/img/board/check-edit-subtask.svg" alt="Check Icon">
+            </button>
+        </div>
+    `;
 }
 
 
