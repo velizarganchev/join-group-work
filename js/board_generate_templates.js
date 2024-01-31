@@ -192,8 +192,8 @@ function generateCardHtml(cardId, task) {
             <button class="card-label">${task.category}</button>
                 <h3 class="card-title">${task.title}</h3>
                 <p class="card-content">${task.description}</p>
-                <div class="progress-bar-container">
-                    <div class="progress-bar">
+                <div id="progress" class="progress-bar-container">
+                    <div class="progress-bar ${task.subtasks?.length <= 0 ? 'hide' : ''}">
                         <div class="progress-done" id="progress${task.id}"></div>
                     </div>
                     <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>

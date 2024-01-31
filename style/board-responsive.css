@@ -110,12 +110,14 @@
 
 @media(max-width:1020px) {
 
-    .pop-up-add-task-container {
+    .pop-up-add-task-container,
+    .pop-up-task-container {
         height: 90%;
         overflow-y: scroll;
     }
 
-    .pop-up-add-task-container::-webkit-scrollbar {
+    .pop-up-add-task-container::-webkit-scrollbar,
+    .pop-up-task-container::-webkit-scrollbar {
         width: 0px;
     }
 

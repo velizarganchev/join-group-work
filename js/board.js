@@ -558,6 +558,7 @@ function checkColumnForTasks(column) {
  */
 function renderCard(task, column) {
     column.innerHTML += generateCardHtml(`card${task.id}`, task);
+
 }
 
 
