@@ -326,12 +326,8 @@
     cursor:pointer;
 }
 
-/* Ersetzt den Kalender in dem Input */
-  input[type="date"]::-webkit-inner-spin-button,
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    /* background: url('/assets/img/event.png') no-repeat scroll 96% 50%; */
-      -webkit-appearance: none;
-      display:none;
+input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
   }
 
   .dateImg{
