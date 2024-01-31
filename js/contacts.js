@@ -246,31 +246,32 @@ function closePopUp() {
 /**
  * Function for adding new contact
  */
-function createContact() {
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
-    let saveButton = document.getElementById("saveButton");
-  
-    createLoadingAnimation(saveButton);
-  
-    setTimeout(async function () {
+async function createContact() {
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+  let saveButton = document.getElementById("saveButton");
+
+  createLoadingAnimation(saveButton);
+
+  setTimeout(async function () {
       let newContact = {
           name: name,
           email: email,
           phone: phone,
           color: generateRandomColor(),
       };
-  
+
       await addContactAndRender(newContact);
       closePopUpWithConfirmation();
       resetSaveButton(saveButton);
-  
+
       let newIndex = findContactIndex(newContact);
       let contactItemId = `contactItem_${newIndex}`;
       await showContactDetails(contactItemId);
-    }, 1000);
-  }
+      renderEditFields(newContact);
+  }, 1000);
+}
 
 
 /**
@@ -279,7 +280,7 @@ function createContact() {
  * @param {Object} newContact - The new contact to be added.
  */
 async function addContactAndRender(newContact) {
-    contacts.push(newContact);
+    await contacts.push(newContact);
     await setItemContacts("contacts", JSON.stringify(contacts));
     await renderContactBook();
 }
