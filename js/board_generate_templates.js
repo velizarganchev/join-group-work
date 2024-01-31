@@ -87,7 +87,7 @@ function generateEditTaskHtml(taskToEdit) {
             </div>
             <div class="edit-date-container">
                 <span>Due date</span>
-                <input value="${new Date(taskToEdit.date).toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}" max="2024-01-31" type="date" id="edit-date" name="date">
+                <input value="${new Date(taskToEdit.date).toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}" type="date" id="edit-date" name="date">
             </div>
             <div class="edit-priority-container">
                 <span>Priority</span>

@@ -11,6 +11,7 @@ async function initBoard() {
     checkLogInStatus();
     await init('board', 'task_from');
     await loadTasks();
+    searchOnTyping();
     renderTasks();
 }
 
@@ -22,7 +23,6 @@ async function initBoard() {
 async function renderTasks(searchedTasks) {
     try {
         await loadTasks();
-
         takeAllColumns();
 
         let getColumnById = (columnId) => document.getElementById(columnId);
@@ -45,10 +45,34 @@ async function renderTasks(searchedTasks) {
     } catch (error) {
         console.error('Error rendering tasks:', error);
     }
-
-
 }
 
+
+/**
+ * Handles the search functionality as the user types, filtering tasks based on the entered search term.
+ *
+ * @param {Event} e - The input event object.
+ */
+function searchByLetter(e) {
+    const searchInput = document.getElementById('search-text');
+    const search_term = e.target.value.toLowerCase();
+
+    const searchedTasks = allTasks.filter(task =>
+        task.title.toLowerCase().includes(search_term)
+    );
+
+    clearAllColumns();
+    renderTasks(searchedTasks);
+}
+
+
+/**
+ * Adds an input event listener to trigger the search while typing.
+ */
+function searchOnTyping() {
+    const searchInput = document.getElementById('search-text');
+    searchInput.addEventListener('input', searchByLetter);
+}
 
 /**
  * Takes all columns based on their IDs and stores them in the 'columns' array.
