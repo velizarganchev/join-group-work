@@ -22,7 +22,6 @@
     overflow-x: hidden;
     height: 100%;
     padding: 32px 34px 32px 34px;
-    margin-bottom: 80px;
 }
 
 .groupHeader {
@@ -401,7 +400,7 @@
     background-color: transparent;
 }
 
-.closeContactButton:hover {
+.closeContactButton:hover{
     cursor: pointer;
     filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
 }
@@ -644,6 +643,7 @@
     height: 592px;
     width: 80%;
     max-width: 1212px;
+    position: relative;
     animation: slideIn 0.5s ease-in-out;
 }
 

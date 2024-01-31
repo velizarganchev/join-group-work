@@ -21,6 +21,7 @@
     #contactOverviewContent {
         padding: 0;
         padding-top: 10px;
+        margin-bottom: 70px;
     }
 
     #addContactButton {
@@ -242,6 +243,12 @@
     .closeContactButton {
         right: 25px;
         top: 50px;
+        filter: invert(98%) sepia(25%) saturate(0%) hue-rotate(285deg) brightness(101%) contrast(103%);
+    }
+
+    .closeEditContactButton{
+        right: 30%;
+        top: 5%;
         filter: invert(98%) sepia(25%) saturate(0%) hue-rotate(285deg) brightness(101%) contrast(103%);
     }
 
