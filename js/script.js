@@ -3,10 +3,6 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 let allTasks = [];
 let column = '';
 let allSubtasks = [];
-let logInCnodition = getCurrentUsername() === '' && window.location.pathname === '/html/legal_notice.html' ||
-    getCurrentUsername() === '' && window.location.pathname === '/html/privacy_policy.html' ||
-    getCurrentUsername() === undefined && window.location.pathname === '/html/legal_notice.html' ||
-    getCurrentUsername() === undefined && window.location.pathname === '/html/privacy_policy.html';
 
 
 /**
@@ -142,7 +138,7 @@ function logOut() {
  * Redirects user to log in page to prevent unauthorized users to see protected information such as board.html for example.
  */
 function checkLogInStatus() {
-    if (logInCnodition) {
+    if (logInCnodition()) {
         toggleClass('summary', 'hide');
         toggleClass('add-task', 'hide');
         toggleClass('board', 'hide');
@@ -187,4 +183,13 @@ function lockScreenOrientation() {
     if (window.innerWidth <= 700) {
         screen.orientation.lock('portrait');
     }
+}
+
+
+
+function logInCnodition() {
+    return getCurrentUsername() === '' && window.location.pathname === '/html/legal_notice.html' || 
+    getCurrentUsername() === '' && window.location.pathname === '/html/privacy_policy.html' ||
+    getCurrentUsername() === undefined && window.location.pathname === '/html/legal_notice.html' ||
+    getCurrentUsername() === undefined && window.location.pathname === '/html/privacy_policy.html';
 }
