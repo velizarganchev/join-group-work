@@ -36,7 +36,7 @@
             <div class="board-header-container">
                 <div class="board-title">
                     <h1>Board</h1>
-                    <button onclick="openAddTask()" class="add-task-rsponsive-btn">
+                    <button onclick="openAddTask('')" class="add-task-rsponsive-btn">
                         <img src="../assets/img/board/plus-add-task-mobile.svg" alt="Plus">
                     </button>
                 </div>
@@ -48,26 +48,26 @@
                             <img src="../assets/img/board/search.svg" alt="Search">
                         </button>
                     </form>
-                    <button href="/html/add_task.html" class="add-task-button" onclick="openAddTask()">Add task <img
+                    <button href="/html/add_task.html" class="add-task-button" onclick="openAddTask('')">Add task <img
                             src="../assets/img/board/add.svg" alt=""></button>
                 </div>
             </div>
             <div class="board-nav-bar-container">
                 <div class="board-nav-item">
                     To do
-                    <button onclick="openAddTask()">
+                    <button onclick="openAddTask('todo')">
                         <img src="../assets/img/board/plus-button.svg" alt="Plus">
                     </button>
                 </div>
                 <div class="board-nav-item">
                     In progress
-                    <button onclick="openAddTask()">
+                    <button onclick="openAddTask('in-progress')">
                         <img src="../assets/img/board/plus-button.svg" alt="">
                     </button>
                 </div>
                 <div class="board-nav-item">
                     Await feedback
-                    <button onclick="openAddTask()">
+                    <button onclick="openAddTask('await-feedback')">
                         <img src="../assets/img/board/plus-button.svg" alt="">
                     </button>
                 </div>
@@ -80,7 +80,7 @@
             <div class="responsive-board-nav-item-container">
                 <div class="responsive-board-nav-item">
                     <span>To do</span>
-                    <button onclick="openAddTask()">
+                    <button onclick="openAddTask('todo')">
                         <img src="../assets/img/board/plus-button.svg" alt="Plus">
                     </button>
                 </div>
@@ -91,7 +91,7 @@
             <div class="responsive-board-nav-item-container">
                 <div class="responsive-board-nav-item">
                     <span>In progress</span>
-                    <button onclick="openAddTask()">
+                    <button onclick="openAddTask('in-progress')">
                         <img src="../assets/img/board/plus-button.svg" alt="Plus">
                     </button>
                 </div>
@@ -103,7 +103,7 @@
             <div class="responsive-board-nav-item-container">
                 <div class="responsive-board-nav-item">
                     <span>Await feedback</span>
-                    <button onclick="openAddTask()">
+                    <button onclick="openAddTask('await-feedback')">
                         <img src="../assets/img/board/plus-button.svg" alt="Plus">
                     </button>
                 </div>
@@ -124,13 +124,14 @@
         </div>
     </section>
 
+    <script src="/js/script.js"></script>
+    <script src="/js/task_form.js"></script>
     <script src="/js/contacts_array_storage.js"></script>
     <script src="/js/contacts.js"></script>
     <script src="/js/task_form_assignedTo.js"></script>
-    <script src="/js/task_form.js"></script>
     <script src="/js/board_generate_templates.js"></script>
     <script src="/js/board.js"></script>
-    <script src="/js/script.js"></script>
+
 </body>
 
 </html>

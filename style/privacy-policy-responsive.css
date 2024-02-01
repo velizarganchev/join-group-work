@@ -1,17 +1,14 @@
-@media (max-width: 1200px){
-    .content-margin{
+@media (max-width: 1200px) {
+    .content-margin {
         margin-left: 40px;
-        margin-top: 70px;
+        margin-top: 70px !important;
         margin-right: 40px;
-    }
-
-    .side-bar{
-        display: flex;
+        padding-bottom: 100px;
     }
 }
 
 @media (max-width: 530px){
-    .legalNoticeHeader h1{
+    #headline h1{
         font-size: 47px;
     }
 
@@ -22,11 +19,11 @@
 }
 
 @media (max-width: 390px){
-    .legalNoticeHeader h1{
+    #headline h1{
         font-size: 35px;
     }
 
-    .legalNoticeText h2{
-        font-size: 20px;
+    h3 {
+        font-size: 20px !important;
     }
 }

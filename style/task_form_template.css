@@ -76,12 +76,13 @@
     max-width:442px;
     padding: 12px 21px;
     align-items: center;
-    border:none;
     font-family: 'Inter',sans-serif;
     font-size: 20px;
     background-color: white;
     width:100%;
     outline: none;
+    border: 1px solid var(--Style, #D1D1D1);
+    border-radius: 10px;
 }
 
 .textarea{ 
@@ -340,6 +341,10 @@ input::-webkit-calendar-picker-indicator {
 
   .date{
     color:black;
+  }
+
+  #date {
+    border:none;
   }
 
   .confirmationContent{

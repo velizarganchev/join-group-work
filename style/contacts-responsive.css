@@ -246,12 +246,6 @@
         filter: invert(98%) sepia(25%) saturate(0%) hue-rotate(285deg) brightness(101%) contrast(103%);
     }
 
-    .closeEditContactButton{
-        right: 30%;
-        top: 5%;
-        filter: invert(98%) sepia(25%) saturate(0%) hue-rotate(285deg) brightness(101%) contrast(103%);
-    }
-
     #deleteButtonInForm {
         width: 82px;
     }
@@ -325,7 +319,7 @@
     }
 
     #contactDetailsView {
-        display: none;
+        display: none !important;
         left: 40%;
         transform: translateX(-31%);
     }
