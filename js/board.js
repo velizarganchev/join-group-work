@@ -88,10 +88,11 @@ function takeAllColumns() {
 /**
  * Opens the pop-up window for adding a new task.
  */
-function openAddTask() {
+async function openAddTask() {
     const addTaskDiv = document.getElementById('pop-up-add-task');
     addTaskDiv.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    await loadContactsFromServer();
     minDate();
     choosePrio(2);
 }
