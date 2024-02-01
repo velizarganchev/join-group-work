@@ -538,7 +538,14 @@ body {
         width: 100%;
     }
 
-    #TitleContent, #DescriptionContent, #AssignedToContent, .selection, #DueDateContent, #SubtasksContent, .subtaskInput, .SubcontentPrio {
+    #TitleContent,
+    #DescriptionContent,
+    #AssignedToContent,
+    .selection,
+    #DueDateContent,
+    #SubtasksContent,
+    .subtaskInput,
+    .SubcontentPrio {
         width: 300px;
     }
 
