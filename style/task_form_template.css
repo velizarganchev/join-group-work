@@ -107,24 +107,10 @@
     flex: 1 0 0;
 }
 
-<<<<<<< HEAD
 .selection{
     font-size:20px;
     border-radius: 10px;
     border:none;
-=======
-.selection {
-    /* display: flex;
-    width: 440px;
-    padding: 12px 16px;
-    justify-content: space-between;
-    align-items: center; */
-    font-size: 20px;
-    border-radius: 10px;
-    /* border: 1px solid var(--Style, #D1D1D1);
-    background: var(--white, #FFF); */
-    border: none;
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
     background-color: white;
     width: 100%;
     outline: none;
@@ -181,14 +167,8 @@
     color: white;
 }
 
-<<<<<<< HEAD
 .requiredText{
     display:flex;
-=======
-.requiredText {
-    /* margin-top:200px; */
-    display: flex;
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
     color: #000;
     font-family: 'Inter', sans-serif;
     font-size: 16px;
@@ -200,12 +180,7 @@
 .buttons {
     display: flex;
     justify-content: flex-end;
-<<<<<<< HEAD
     gap:16px;
-=======
-    gap: 16px;
-    /* margin-top:232px; */
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
 }
 
 .cancelButton {
@@ -311,29 +286,8 @@
     width: 100vw;
 }
 
-<<<<<<< HEAD
 .arrow{
     width:25px;
-=======
-/* .arrowdown{ 
-    for Firefox
-    -moz-appearance: none; 
-    for Safari, Chrome, Opera
-    -webkit-appearance: none; 
-    background: url('/assets/img/arrow_down.png') no-repeat scroll 96% 50%;
-  } 
-
-  .arrowup{
-    for Firefox
-    -moz-appearance: none; 
-    for Safari, Chrome, Opera
-    -webkit-appearance: none; 
-    background: url('/assets/img/arrow_up.png') no-repeat scroll 96% 50%;
-}  */
-
-.arrow {
-    width: 25px;
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
 }
 
 .assignedToContainerInput {
@@ -393,19 +347,11 @@ input::-webkit-calendar-picker-indicator {
     flex-wrap: wrap;
 }
 
-<<<<<<< HEAD
   .ContainerForAllPossibleContacts{
     position:absolute;
     top:637px;
     width:440px;
     height:200px;
-=======
-.ContainerForAllPossibleContacts {
-    position: absolute;
-    top: 635px;
-    width: 440px;
-    height: 200px;
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
     overflow-y: scroll;
     background-color: white;
 }
@@ -473,7 +419,6 @@ input::-webkit-calendar-picker-indicator {
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-style: normal;
-<<<<<<< HEAD
     color:rgb(209, 209, 209);
     height:56px;
     max-width:442px;
@@ -493,11 +438,6 @@ input::-webkit-calendar-picker-indicator {
     body{
         height:auto !important;
     }
-=======
-    border-radius: 10px;
-    padding-top: 8px;
-}
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
 
 .category:hover {
     background-color: rgb(240, 240, 240);
@@ -580,21 +520,12 @@ body {
         margin-bottom: 150px;
     }
 
-<<<<<<< HEAD
     .categories{
         top:931px;
     }
 
     .ContainerForAllPossibleContacts{
         top:577px;
-=======
-    .categories {
-        top: 925px;
-    }
-
-    .ContainerForAllPossibleContacts {
-        top: 575px;
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
     }
 }
 
@@ -603,10 +534,6 @@ body {
         width: 100%;
     }
 
-<<<<<<< HEAD
-    #TitleContent, #DescriptionContent, #AssignedToContent, .selection, .categories, #DueDateContent, #SubtasksContent, .subtaskInput, .SubcontentPrio{
-        width:300px;
-=======
     #TitleContent,
     #DescriptionContent,
     #AssignedToContent,
@@ -616,7 +543,6 @@ body {
     .subtaskInput,
     .SubcontentPrio {
         width: 300px;
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
     }
 
     #subtask {
@@ -646,7 +572,6 @@ body {
         padding: 8px;
     }
 
-<<<<<<< HEAD
     .categories{
         top:946px;
     }
@@ -654,14 +579,6 @@ body {
     .ContainerForAllPossibleContacts{
         top:592px;
         width:300px;
-=======
-    .requiredText {
-        font-size: 12px;
-    }
-
-    .categories {
-        top: 940px;
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
     }
 
     .ContainerForAllPossibleContacts {
@@ -679,14 +596,4 @@ body {
         width: 150px;
         font-size: 14px;
     }
-<<<<<<< HEAD
 }
-=======
-}
-
-/* @media(max-height:1220px){   // Velizar !!!! 
-    .buttonsAndInfotext{
-        margin-bottom: 80px;
-    }
-} */
->>>>>>> 82eff51443e9fde89d5b58b2103f6c36c864e6f8
