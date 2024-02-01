@@ -293,7 +293,7 @@ function getAllCategories() {
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('overlayCategories').classList.toggle('d-none');
     if (window.innerWidth < 1400){
-        document.getElementById("CategoryInputContainer").style.marginBottom = "44px";
+        document.getElementById("CategoryInputContainer").style.marginBottom = "90px";
     }
 }
 

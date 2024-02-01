@@ -6,7 +6,6 @@ let chosenContactsJson = [];
  * @param {string} id - id of the Element which should be flipped around 
  */
 function getAllContacts() {
-    document.getElementById("assignedToContainerInput").style.marginBottom = "200px";
     flipTheImage();
     displayContacts();
     generateContactsContainer();
