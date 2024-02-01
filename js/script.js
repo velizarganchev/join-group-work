@@ -2,6 +2,10 @@ const STORAGE_TOKEN = 'DR6FZK1MTGPR11C93C73PUGXTKY05AJ4CNFZMV8P';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 let allTasks = [];
 let allSubtasks = [];
+let logInCnodition = getCurrentUsername() === '' && window.location.pathname === '/html/legal_notice.html' || 
+getCurrentUsername() === '' && window.location.pathname === '/html/privacy_policy.html' ||
+getCurrentUsername() === undefined && window.location.pathname === '/html/legal_notice.html' ||
+getCurrentUsername() === undefined && window.location.pathname === '/html/privacy_policy.html';
 
 
 /**
@@ -11,6 +15,7 @@ let allSubtasks = [];
 async function init(id) {
     await loadTasks();
     await includeHTML();
+    checkLogInStatus();
     changeNavigationHighlight(id);
     lockScreenOrientation();
 }
@@ -136,7 +141,12 @@ function logOut() {
  * Redirects user to log in page to prevent unauthorized users to see protected information such as board.html for example.
  */
 function checkLogInStatus() {
-    if (getCurrentUsername() === '' || getCurrentUsername() === undefined) {
+    if (logInCnodition) {
+        toggleClass('summary', 'hide');
+        toggleClass('add-task', 'hide');
+        toggleClass('board', 'hide');
+        toggleClass('contacts', 'hide');
+    } else if (getCurrentUsername() === '' || getCurrentUsername() === undefined) {
         window.location.replace('index.html');
     }
 }
