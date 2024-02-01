@@ -1,4 +1,8 @@
-.content-margin h3{
+.content-margin {
+    padding-bottom: 50px;
+}
+
+.content-margin h3 {
     color: #000;
     font-size: 27px;
     font-style: normal;
