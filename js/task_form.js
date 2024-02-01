@@ -274,7 +274,7 @@ function flipTheImage(id) {
 function setCategory(category) {
     let chosenCategory = document.getElementById('Category');
     chosenCategory.innerHTML = `${category}`;
-    document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
+    // document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('Category').setAttribute('style', 'color:black')
     document.getElementById('overlayCategories').classList.toggle('d-none');
