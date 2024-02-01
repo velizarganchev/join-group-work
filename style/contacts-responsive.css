@@ -319,7 +319,7 @@
     }
 
     #contactDetailsView {
-        display: none;
+        display: none !important;
         left: 40%;
         transform: translateX(-31%);
     }

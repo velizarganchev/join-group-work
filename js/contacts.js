@@ -106,8 +106,8 @@ function showContactDetails(contactItemId, toEdit) {
     if (window.innerWidth <= 665){
       document.getElementById("contactOverview").style.display = "none";
       document.getElementById("contactPageRightHeader").style.display = "none";
-      document.getElementById("contactPageRightHeaderResponsive").style.display = "flex";
-      document.getElementById("contactDetailsView").style.display = "flex !important";
+      document.getElementById("contactPageRightHeaderResponsive").setAttribute('style', 'display:flex');
+      document.getElementById("contactDetailsView").setAttribute('style', 'display:flex !important');
       document.getElementById("responsiveAddContactButton").setAttribute('style', 'display:none !important');
       document.getElementById("responsiveEditContactButton").setAttribute('style', 'display:flex !important');
       document.querySelector(".contactEditButton").setAttribute('style', 'display:none !important');
