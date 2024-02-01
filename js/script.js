@@ -1,11 +1,12 @@
 const STORAGE_TOKEN = 'DR6FZK1MTGPR11C93C73PUGXTKY05AJ4CNFZMV8P';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 let allTasks = [];
+let column = '';
 let allSubtasks = [];
-let logInCnodition = getCurrentUsername() === '' && window.location.pathname === '/html/legal_notice.html' || 
-getCurrentUsername() === '' && window.location.pathname === '/html/privacy_policy.html' ||
-getCurrentUsername() === undefined && window.location.pathname === '/html/legal_notice.html' ||
-getCurrentUsername() === undefined && window.location.pathname === '/html/privacy_policy.html';
+let logInCnodition = getCurrentUsername() === '' && window.location.pathname === '/html/legal_notice.html' ||
+    getCurrentUsername() === '' && window.location.pathname === '/html/privacy_policy.html' ||
+    getCurrentUsername() === undefined && window.location.pathname === '/html/legal_notice.html' ||
+    getCurrentUsername() === undefined && window.location.pathname === '/html/privacy_policy.html';
 
 
 /**
