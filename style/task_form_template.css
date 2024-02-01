@@ -419,7 +419,6 @@ input::-webkit-calendar-picker-indicator {
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-style: normal;
-    color:rgb(209, 209, 209);
     height:56px;
     max-width:442px;
     background-color:white;
