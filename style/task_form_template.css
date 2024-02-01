@@ -92,8 +92,12 @@
     min-height: 107px;
 }
 
+.simulateSelectElement{
+    color:black;
+}
+
 ::placeholder{
-    color:  #D1D1D1;
+    color:  black; /* D1D1D1 */
     font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-style: normal;

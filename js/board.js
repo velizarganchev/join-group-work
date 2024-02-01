@@ -74,6 +74,7 @@ function searchOnTyping() {
     searchInput.addEventListener('input', searchByLetter);
 }
 
+
 /**
  * Takes all columns based on their IDs and stores them in the 'columns' array.
  */
@@ -86,15 +87,16 @@ function takeAllColumns() {
 
 
 /**
- * Opens the pop-up window for adding a new task.
+ * Öffnet das Pop-up für die Aufgabenerstellung, setzt die Spalten-ID, verhindert das Scrollen des Hauptinhalts und lädt Kontakte vom Server.
+ * @param {string} id - Die ID der Spalte.
  */
-async function openAddTask() {
+async function openAddTask(id) {
+    column = id;
     const addTaskDiv = document.getElementById('pop-up-add-task');
     addTaskDiv.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     await loadContactsFromServer();
-    minDate();
-    choosePrio(2);
+    await Promise.all([minDate(), choosePrio(2)]);
 }
 
 

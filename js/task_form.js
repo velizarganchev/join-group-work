@@ -1,5 +1,6 @@
 let currentchosenPrio; // needed in function "changeItoPrioInString" to see which Prio was chosen
 let subtasks = [];
+
 /**
  * Initializes certain functions once the body of the page has fully loaded.
  */
@@ -92,7 +93,7 @@ function activateAndDeactivateSubtaskInput() {
 /**
  * This function toggles all Images of the Subtask-Input
  */
-function toggleSubtaskImg(){
+function toggleSubtaskImg() {
     toggleClass('plus', 'd-none');
     toggleClass('cancel', 'd-none');
     toggleClass('verticalLine', 'd-none');
@@ -104,7 +105,7 @@ function toggleSubtaskImg(){
  * This function clears the Subtasks Input
  */
 function cancelSubtask() {
-    document.getElementById('subtask').value = '';   
+    document.getElementById('subtask').value = '';
 }
 
 /**
@@ -112,15 +113,15 @@ function cancelSubtask() {
  */
 function addSubtask() {
     let task = document.getElementById('subtask').value;
-    if(task.length == 0){
+    if (task.length == 0) {
 
-    }else{
+    } else {
         let taskJSON = {
             'id': Math.round(Math.random() * 100),
             'name': task,
             'done': false
         }
-        if(subtasks.length >= 2){
+        if (subtasks.length >= 2) {
             document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
         }
         document.getElementById('buttons').setAttribute('style', "margin-top:0");
@@ -140,7 +141,7 @@ function showSubtasks() {
     }
 }
 
-function editsubtask(i){
+function editsubtask(i) {
     document.getElementById('subtask').value = subtasks[i]['name'];
     deleteSubtask(i);
 }
@@ -187,7 +188,7 @@ function getAllInputs(e) {
         'subtasks': subtasks,
         'subtasksProgress': 0,
         'category': category,
-        'colum': 'todo',
+        'colum': column ? column : 'todo',
         'contacts': assignedTo,
         token: STORAGE_TOKEN
     }
@@ -273,7 +274,7 @@ function flipTheImage(id) {
 function setCategory(category) {
     let chosenCategory = document.getElementById('Category');
     chosenCategory.innerHTML = `${category}`;
-    document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
+    // document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('Category').setAttribute('style', 'color:black')
     document.getElementById('overlayCategories').classList.toggle('d-none');
