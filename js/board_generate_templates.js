@@ -108,12 +108,25 @@ function generateEditTaskHtml(taskToEdit) {
             </div>
             <div class="edit-assign-container">
                 <label for="edit-contacts">Assignet to:</label> 
-                <div id="SubcontentContacts" class="Subcontent SubcontentEdit">
+                <!-- <div id="SubcontentContacts" class="Subcontent SubcontentEdit">
                         <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off" placeholder="Select contacts to assign" onkeyup="filterContacts()" onclick="getAllContacts('assignedToSelect')">
                         <div id="ContainerForAllChosenContacts"class="ContainerForAllChosenContacts d-none"></div>
                         <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none"></div>
                         <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
-                </div>
+                </div> -->
+                    <div id="SubcontentContacts" class="Subcontent">
+                        <div class="assignedToContainerInput assignedToContainerInputEdit" onclick="getAllContacts('assignedToSelect')">
+                            <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off"
+                                placeholder="Select contacts to assign" onkeyup="filterContacts()"><img
+                                id="assignedToImg" class="arrow" src="/assets/img/arrow_up.png">
+                        </div>
+                        <div id="ContainerForAllChosenContacts" class="ContainerForAllChosenContacts d-none">
+                        </div>
+                        <div id="ContainerForAllPossibleContacts" class="ContainerForAllPossibleContacts hover d-none">
+
+                        </div>
+                        <div id="overlayContacts" class="overlay d-none" onclick="closecontacts()"></div>
+                    </div>
             </div>
             <div class="edit-subtasks-container">
                 <form onsubmit="addSubtaskInEdit(event, ${taskToEdit.id})">
