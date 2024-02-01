@@ -6,6 +6,7 @@ let chosenContactsJson = [];
  * @param {string} id - id of the Element which should be flipped around 
  */
 function getAllContacts() {
+    document.getElementById("assignedToContainerInput").style.marginBottom = "200px";
     flipTheImage();
     displayContacts();
     generateContactsContainer();
@@ -22,6 +23,7 @@ function flipTheImage(){
  */
 function displayContacts() {
     document.getElementById('ContainerForAllPossibleContacts').classList.remove('d-none');
+
 }
 
 /**
@@ -36,6 +38,7 @@ function putAssignedToInForeground() {
  * This function closes / hides all Containers which belong to the "Assigned To" Area
  */
 function closecontacts() {
+    document.getElementById("assignedToContainerInput").style.marginBottom = "0px";
     document.getElementById('assignedToSelect').value = '';
     document.getElementById('overlayContacts').classList.toggle('d-none');
     document.getElementById('assignedToImg').src="/assets/img/arrow_up.png"
@@ -158,15 +161,18 @@ function createCirclesToChosenContactContainer() {
         let id = chosenContacts[j];
         creatingCircle(id, adress);
     }
-    document.getElementById('ContainerForAllChosenContacts').classList.remove('d-none');
-    // repositionRequiredTextContainer();
+    displaydiv();
 }
 
 /**
- * This function changes the margin attribute to avoid a moving container (=requiredText) by creating a chosenContact list under the Assigned To input 
+ * This Function displays the chosenContacts div, if min. one Contact is currently chosen
  */
-function repositionRequiredTextContainer() {
-    document.getElementById('requiredText').setAttribute('style', 'margin-top:0');
+function displaydiv(){
+    if (chosenContacts.length == 0){
+        document.getElementById('ContainerForAllChosenContacts').classList.add('d-none'); 
+    }else{
+        document.getElementById('ContainerForAllChosenContacts').classList.remove('d-none');
+    }
 }
 
 /**

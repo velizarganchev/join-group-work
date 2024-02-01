@@ -107,15 +107,8 @@
 }
 
 .selection{
-    /* display: flex;
-    width: 440px;
-    padding: 12px 16px;
-    justify-content: space-between;
-    align-items: center; */
     font-size:20px;
     border-radius: 10px;
-    /* border: 1px solid var(--Style, #D1D1D1);
-    background: var(--white, #FFF); */
     border:none;
     background-color: white;
     width:100%;
@@ -174,7 +167,6 @@
 }
 
 .requiredText{
-    /* margin-top:200px; */
     display:flex;
     color: #000;
     font-family: 'Inter', sans-serif;
@@ -188,7 +180,6 @@
     display:flex;
     justify-content: flex-end;
     gap:16px;
-    /* margin-top:232px; */
 }
 
 .cancelButton{
@@ -294,29 +285,13 @@
     width:100vw;
 }
 
-/* .arrowdown{ 
-    for Firefox
-    -moz-appearance: none; 
-    for Safari, Chrome, Opera
-    -webkit-appearance: none; 
-    background: url('/assets/img/arrow_down.png') no-repeat scroll 96% 50%;
-  } 
-
-  .arrowup{
-    for Firefox
-    -moz-appearance: none; 
-    for Safari, Chrome, Opera
-    -webkit-appearance: none; 
-    background: url('/assets/img/arrow_up.png') no-repeat scroll 96% 50%;
-}  */
-
 .arrow{
     width:25px;
 }
 
 .assignedToContainerInput{
     display: flex;
-    width: 440px;
+    width: 100%;
     padding: 12px 16px;
     justify-content: space-between;
     align-items: center;
@@ -325,6 +300,7 @@
     border: 1px solid var(--Style, #D1D1D1);
     background: var(--white, #FFF);
     background-color: white;
+    transition: margin-bottom 0.3s ease; 
 }
 
 .assignedToContainerInput:hover{
@@ -372,7 +348,7 @@ input::-webkit-calendar-picker-indicator {
 
   .ContainerForAllPossibleContacts{
     position:absolute;
-    top:635px;
+    top:637px;
     width:440px;
     height:200px;
     overflow-y: scroll;
@@ -476,9 +452,9 @@ input::-webkit-calendar-picker-indicator {
     margin-bottom:16px;
   }
 
-body{
-    height:auto !important;
-}
+    body{
+        height:auto !important;
+    }
 
   .buttonsAndInfotext{
     margin: 0 auto;
@@ -511,6 +487,10 @@ body{
         gap:100px;
         margin-bottom:70px;
     }
+
+    .CategoryInputContainer{
+        transition: margin-bottom 0.3s ease; 
+    }
 }
 
 @media(max-width:1200px){
@@ -524,11 +504,11 @@ body{
     }
 
     .categories{
-        top:925px;
+        top:931px;
     }
 
     .ContainerForAllPossibleContacts{
-        top:575px;
+        top:577px;
     }
 }
 
@@ -537,7 +517,7 @@ body{
         width:100%;
     }
 
-    #TitleContent, #DescriptionContent, #AssignedToContent, .selection, #DueDateContent, #SubtasksContent, .subtaskInput, .SubcontentPrio{
+    #TitleContent, #DescriptionContent, #AssignedToContent, .selection, .categories, #DueDateContent, #SubtasksContent, .subtaskInput, .SubcontentPrio{
         width:300px;
     }
 
@@ -573,11 +553,11 @@ body{
     }
 
     .categories{
-        top:940px;
+        top:946px;
     }
 
     .ContainerForAllPossibleContacts{
-        top:590px;
+        top:592px;
         width:300px;
     }
 
@@ -592,9 +572,3 @@ body{
         font-size:14px;
     }
 }
-
-/* @media(max-height:1220px){   // Velizar !!!! 
-    .buttonsAndInfotext{
-        margin-bottom: 80px;
-    }
-} */   

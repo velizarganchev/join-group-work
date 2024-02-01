@@ -274,7 +274,6 @@ function flipTheImage(id) {
 function setCategory(category) {
     let chosenCategory = document.getElementById('Category');
     chosenCategory.innerHTML = `${category}`;
-    // document.getElementById('+').innerHTML = `<img src="/assets/img/+.png">`;
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('Category').setAttribute('style', 'color:black')
     document.getElementById('overlayCategories').classList.toggle('d-none');
@@ -286,6 +285,9 @@ function setCategory(category) {
 function getAllCategories() {
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('overlayCategories').classList.toggle('d-none');
+    if (window.innerWidth < 1400){
+        document.getElementById("CategoryInputContainer").style.marginBottom = "44px";
+    }
 }
 
 /**
@@ -294,6 +296,7 @@ function getAllCategories() {
 function closeOverlayCategories() {
     document.getElementById('overlayCategories').classList.toggle('d-none');
     document.getElementById('categories').classList.toggle('d-none');
+    document.getElementById("CategoryInputContainer").style.marginBottom = "0px";
 }
 
 // function openDate(){

@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div id="SubcontentContacts" class="Subcontent">
-                        <div class="assignedToContainerInput" onclick="getAllContacts('assignedToSelect')">
+                        <div id="assignedToContainerInput" class="assignedToContainerInput" onclick="getAllContacts('assignedToSelect')">
                             <input id="assignedToSelect" class="selection hover arrowdown" autocomplete="off"
                                 placeholder="Select contacts to assign" onkeyup="filterContacts()"><img
                                 id="assignedToImg" class="arrow" src="/assets/img/arrow_up.png">
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="Subcontent">
-                        <div class="CategoryInputContainer hover" onclick="getAllCategories(id)">
+                        <div id="CategoryInputContainer" class="CategoryInputContainer hover" onclick="getAllCategories(id)">
                             <div id="Category" class="simulateSelectElement">Select task category</div>
                         </div>
                         <div id="categories" class="categories d-none">
