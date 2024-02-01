@@ -96,7 +96,7 @@ function renderContactDetails(contact, toEdit) {
         renderEditFields(contact);
     }
 
-    document.getElementById("responsiveContactDetailBack").style.display = "flex";
+    document.getElementById("responsiveContactDetailBack").setAttribute('style', 'display:none !important');
 }
 
 

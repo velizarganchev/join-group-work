@@ -112,6 +112,7 @@ function showContactDetails(contactItemId, toEdit) {
       document.getElementById("responsiveEditContactButton").setAttribute('style', 'display:flex !important');
       document.querySelector(".contactEditButton").setAttribute('style', 'display:none !important');
       document.querySelector(".contactDeleteButton").setAttribute('style', 'display:none !important');
+      document.getElementById("responsiveContactDetailBack").setAttribute('style', 'display:flex !important');
     }
   }
 
