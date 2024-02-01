@@ -408,7 +408,7 @@ input::-webkit-calendar-picker-indicator {
 
 .categories {
     position: absolute;
-    top: 603px;
+    top: 607px;
     width: 440px;
     z-index: 999;
     background-color: rgb(255, 255, 255);
