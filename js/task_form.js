@@ -137,14 +137,21 @@ function showSubtasks() {
     let subtasksList = document.getElementById('subTaskList');
     subtasksList.innerHTML = '';
     for (let i = 0; i < subtasks.length; i++) {
-        subtasksList.innerHTML += `<li>${subtasks[i]['name']} <div class="subtaskContainerEdit"><img class="hover" src="/assets/img/edit-contact.png" onclick="editsubtask(${i})"></img> <img class="hover" onclick="deleteSubtask(${i})" src="/assets/img/delete-contact.png"></div> </li>`;
+        subtasksList.innerHTML += `<li>${subtasks[i]['name']} <div class="subtaskContainerEdit"><img class="hover" src="/assets/img/edit-contact.png" onclick="editSubtask(${i})"></img> <img class="hover" onclick="deleteSubtaskInEdit(${i})" src="/assets/img/delete-contact.png"></div> </li>`;
     }
 }
 
-function editsubtask(i) {
+
+/**
+ * Befüllt das Subtask-Formular mit den Informationen des ausgewählten Subtasks und löscht ihn anschließend aus der Bearbeitungsliste.
+ *
+ * @param {number} i - Der Index des ausgewählten Subtasks.
+ */
+function editSubtask(i) {
     document.getElementById('subtask').value = subtasks[i]['name'];
-    deleteSubtask(i);
+    deleteSubtaskInEdit(i);
 }
+
 
 /**
  * This functions starts the Subtask adding process
@@ -159,7 +166,7 @@ function showSubtasksafterAddingATask() {
  * This function deletes a Subtasks from Array "subtasks" and displays the Array afterwards
  * @param {int} i - id of the Subtasks
  */
-function deleteSubtask(i) {
+function deleteSubtaskInEdit(i) {
     subtasks.splice(i, 1);
     if (subtasks.length <= 2) {
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");

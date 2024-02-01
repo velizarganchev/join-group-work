@@ -12,9 +12,6 @@
         display: flex;
     }
 
-    .categories {
-        top: 485px;
-    }
 
     .CompleteContent {
         flex-direction: row;
@@ -112,7 +109,7 @@
 
     .pop-up-add-task-container,
     .pop-up-task-container {
-        height: 90%;
+        height: 80%;
         overflow-y: scroll;
     }
 
@@ -126,7 +123,7 @@
     }
 
     .categories {
-        top: 550px;
+        top: 635px;
     }
 
     .CompleteContent {
@@ -247,7 +244,11 @@
     }
 
     .categories {
-        top: 580px;
+        top: 445px;
+    }
+
+    .assignedToContainerInput {
+        width: auto;
     }
 
 }

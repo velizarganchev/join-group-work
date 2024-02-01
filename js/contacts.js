@@ -104,15 +104,15 @@ function showContactDetails(contactItemId, toEdit) {
     renderContactDetails(selectedContact, toEdit);
 
     if (window.innerWidth <= 665){
-      document.getElementById("contactOverview").setAttribute('style', 'display:none');
+      document.getElementById("contactOverview").setAttribute('style', 'display:none !important');
       document.getElementById("contactPageRightHeader").setAttribute('style', 'display:none');
-      document.getElementById("contactPageRightHeaderResponsive").setAttribute('style', 'display:flex');
+      document.getElementById("contactPageRightHeaderResponsive").setAttribute('style', 'display:flex !important');
       document.getElementById("contactDetailsView").setAttribute('style', 'display:flex !important');
       document.getElementById("responsiveAddContactButton").setAttribute('style', 'display:none !important');
       document.getElementById("responsiveEditContactButton").setAttribute('style', 'display:flex !important');
       document.querySelector(".contactEditButton").setAttribute('style', 'display:none !important');
       document.querySelector(".contactDeleteButton").setAttribute('style', 'display:none !important');
-      document.getElementById("responsiveContactDetailBack").setAttribute('style', 'display:flex !important');
+      document.getElementById("responsiveContactDetailBack").setAttribute('style', 'display:flex');
     }
   }
 
@@ -188,8 +188,8 @@ function returnToContactBook() {
   let responsiveEditContactButton = document.getElementById("responsiveEditContactButton");
   let editDeleteButton = document.getElementById("editDeleteButtonPopUp");
 
-  contactOverview.style.display = "flex";
-  contactPageRightHeaderResponsive.style.display = "none";
+  contactOverview.setAttribute('style', 'display:flex !important');
+  contactPageRightHeaderResponsive.setAttribute('style', 'display:none');
   contactDetailsView.style.display = "none";
   responsiveContactDetailBack.style.display = "none";
   responsiveAddContactButton.style.display = "flex";
