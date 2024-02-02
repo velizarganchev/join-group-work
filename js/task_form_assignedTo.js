@@ -11,6 +11,13 @@ function getAllContacts() {
     generateContactsContainer();
     putAssignedToInForeground();
     checkIfCheckboxesWereChecked();
+    if (document.body.clientWidth <= 1400){
+        if(chosenContacts.length != 0){
+            document.getElementById('Content2').style.marginTop = "290px";
+        }else{
+            document.getElementById('Content2').style.marginTop = "200px";
+        }
+    }
 }
 
 function flipTheImage(){
@@ -37,7 +44,14 @@ function putAssignedToInForeground() {
  * This function closes / hides all Containers which belong to the "Assigned To" Area
  */
 function closecontacts() {
-    document.getElementById("assignedToContainerInput").style.marginBottom = "0px";
+    if (document.body.clientWidth <= 1400){
+        if (chosenContacts.length != 0){
+            document.getElementById('Content2').style.marginTop = "90px";
+        }else{
+            document.getElementById('Content2').style.marginTop = "0px";
+        }
+    }
+    
     document.getElementById('assignedToSelect').value = '';
     document.getElementById('overlayContacts').classList.toggle('d-none');
     document.getElementById('assignedToImg').src="/assets/img/arrow_up.png"
@@ -93,6 +107,11 @@ function checkCheckbox(i){
     let checkbox = document.getElementById(`checkbox${i}`).checked;
     if (checkbox) {
         addChosenContact(i);
+        if (document.body.clientWidth <= 1400){
+            if (chosenContacts.length != 0){
+                document.getElementById('Content2').style.marginTop = "290px";
+            }
+        }
     } else {
         deleteChosenContact(i);
     }

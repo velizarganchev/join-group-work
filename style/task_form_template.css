@@ -1,3 +1,7 @@
+html{
+    padding-right: calc(17px - (100vw - 100%));
+}
+
 .addTaskHeadline {
     color: #000;
     font-family: 'Inter', sans-serif;
@@ -481,6 +485,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: margin 200ms ease-in-out;
 }
 
 @media(max-width:1400px) {
@@ -510,6 +515,28 @@ body {
     .CategoryInputContainer{
         transition: margin-bottom 0.3s ease; 
     }
+
+    .buttonsAndInfotext{
+        margin-top:20px;    
+    }
+
+
+    .ContainerForAllPossibleContacts {
+        position:relative;
+        top:0 !important;
+    }
+
+    #AssignedToContent{
+        position:absolute;
+        top:550px;
+        width:440px;
+    }
+
+    .Content2{
+        position:relative;
+        top:140px; 
+        transition: margin 200ms ease-in-out; 
+    }
 }
 
 @media(max-width:1200px) {
@@ -528,6 +555,14 @@ body {
 
     .ContainerForAllPossibleContacts{
         top:577px;
+    }
+
+
+
+
+
+    #AssignedToContent{
+        top:500px;
     }
 }
 

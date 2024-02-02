@@ -127,6 +127,9 @@ function addSubtask() {
         document.getElementById('buttons').setAttribute('style', "margin-top:0");
         subtasks.push(taskJSON);
         showSubtasksafterAddingATask();
+        if (subtasks.length != 0){
+            document.getElementById('buttonsAndInfotext').style.marginTop = "150px";
+        }
     }
 }
 
@@ -172,6 +175,9 @@ function deleteSubtaskInEdit(i) {
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");
     }
     showSubtasks();
+    if (subtasks.length == 0){
+        document.getElementById('buttonsAndInfotext').style.marginTop = "20px";
+    }
 }
 
 /**
