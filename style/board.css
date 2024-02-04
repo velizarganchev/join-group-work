@@ -131,8 +131,20 @@
     gap: 30px;
 }
 
+.Content2 {
+    top: 0px;
+    margin-top: 0px !important;
+}
+
 .categories {
     width: 450px;
+    top: 524px;
+}
+
+
+.ContainerForAllPossibleContacts {
+    position: relative;
+    top: 0 !important;
 }
 
 .assignedToContainerInputEdit {

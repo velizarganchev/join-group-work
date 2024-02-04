@@ -36,11 +36,6 @@
 
 @media (max-width: 1400px) {
 
-    .Content2 {
-        top: 0px;
-        margin-top: 0px !important;
-    }
-
     .categories {
         top: 370px;
     }
