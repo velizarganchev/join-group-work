@@ -35,6 +35,20 @@
 }
 
 @media (max-width: 1400px) {
+
+    .Content2 {
+        top: 0px;
+        margin-top: 0px !important;
+    }
+
+    .categories {
+        top: 370px;
+    }
+
+    #AssignedToContent {
+        position: static;
+    }
+
     .board-header-container {
         flex-direction: column;
     }
@@ -123,7 +137,7 @@
     }
 
     .categories {
-        top: 635px;
+        top: 370px;
     }
 
     .CompleteContent {
@@ -163,6 +177,11 @@
 }
 
 @media (max-width: 500px) {
+
+    .pop-up-add-task-container,
+    .pop-up-task-container {
+        height: 65%;
+    }
 
     .pop-up-task-container {
         padding: 20px;
@@ -241,10 +260,6 @@
 
     .selection {
         width: 100%;
-    }
-
-    .categories {
-        top: 445px;
     }
 
     .assignedToContainerInput {
