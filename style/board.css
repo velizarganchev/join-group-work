@@ -120,6 +120,7 @@
 .buttonsAndInfotext {
     position: relative;
     width: auto;
+    margin-top: 25px !important;
 }
 
 .CompleteContent {
@@ -130,6 +131,9 @@
     gap: 30px;
 }
 
+.categories{
+    width: 450px;
+}
 
 .assignedToContainerInputEdit {
     width: 100%;
