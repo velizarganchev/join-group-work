@@ -494,7 +494,7 @@ body {
     }
 
     .categories {
-        top: 985px;
+        top: 338px;
     }
 
     .CompleteContent {
@@ -549,17 +549,9 @@ body {
         margin-bottom: 150px;
     }
 
-    .categories{
-        top:931px;
-    }
-
     .ContainerForAllPossibleContacts{
         top:577px;
     }
-
-
-
-
 
     #AssignedToContent{
         top:500px;
@@ -578,7 +570,8 @@ body {
     #DueDateContent,
     #SubtasksContent,
     .subtaskInput,
-    .SubcontentPrio {
+    .SubcontentPrio,
+    #categories {
         width: 300px;
     }
 
@@ -610,7 +603,7 @@ body {
     }
 
     .categories{
-        top:946px;
+        top:338px;
     }
 
     .ContainerForAllPossibleContacts{
