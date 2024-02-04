@@ -4,6 +4,7 @@ let columns = [];
 let columnIds = ['todo', 'in-progress', 'await-feedback', 'done'];
 let currentDraggedElement;
 
+
 /**
  * Initializes certain functions once the body of the page has fully loaded.
  */
@@ -14,6 +15,7 @@ async function initBoard() {
     searchOnTyping();
     renderTasks();
 }
+
 
 /**
  * Renders tasks in the 'todo' column.
@@ -459,7 +461,6 @@ function closeTask(id) {
 function stopPropagation(event) {
     event.stopPropagation();
 }
-
 
 
 /**

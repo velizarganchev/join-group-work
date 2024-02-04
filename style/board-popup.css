@@ -16,6 +16,7 @@
 .pop-up-task-container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 12px;
     width: 525px;
     padding: 25px 20px;
