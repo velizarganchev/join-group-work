@@ -428,10 +428,25 @@ async function deleteTask(id) {
     clearAllColumns();
     renderTasks();
     closeTask("pop-up");
-
-
 }
 
+function confirmDeleteTask(id) {
+    return document.getElementById('pop-up').innerHTML = /*html*/ `
+        <div class="pop-up-delete-task-container">
+            <div class="delete-close-button-container">
+                <button class="pop-up-close-button" onclick="closeTask('pop-up')">
+                    <img src="../assets/img/board/close-task.svg" alt="Close">
+                </button>
+            </div>
+            <div class="delete-question">
+                <p>Are you sure you want to delete this task?</p>
+            </div>
+            <div class="popup-delete-task-buttons">
+            <button class="yes-btn" onclick="deleteTask(${id})">YES</button>
+                <button class="no-btn" onclick="closeTask('pop-up')">NO</button>
+            </div>
+        </div>`;
+}
 
 /**
  * Retrieves the index of a task in the tasks array based on its ID.

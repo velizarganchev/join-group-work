@@ -48,7 +48,7 @@ function generateTaskHtml(task) {
                 </div>
             </div>  
             <div class="pop-up-task-footer">
-                <button onclick="deleteTask(${task.id})">
+                <button onclick="confirmDeleteTask(${task.id})">
                     <img src="../assets/img/board/pop-up-footer-delete.svg" alt="">
                     <span>Delete</span>
                 </button>
