@@ -339,7 +339,7 @@ input::-webkit-calendar-picker-indicator {
     align-items: center;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.9);
-    z-index: 999;
+    z-index: 901;
 }
 
 .ContainerForAllChosenContacts {
@@ -348,6 +348,7 @@ input::-webkit-calendar-picker-indicator {
     margin-top: 4px;
     margin-left: 4px;
     flex-wrap: wrap;
+    z-index:990;
 }
 
   .ContainerForAllPossibleContacts{
@@ -357,6 +358,7 @@ input::-webkit-calendar-picker-indicator {
     height:200px;
     overflow-y: scroll;
     background-color: white;
+    z-index:901 !important;
 }
 
 .d-none {
@@ -413,7 +415,7 @@ input::-webkit-calendar-picker-indicator {
     position: absolute;
     top: 607px;
     width: 440px;
-    z-index: 999;
+    z-index: 901;
     background-color: rgb(255, 255, 255);
     margin-top: -10px;
 }
@@ -428,7 +430,7 @@ input::-webkit-calendar-picker-indicator {
     display: flex;
     align-items: center;
     color: black;
-    z-index:999;
+    z-index:901;
   }
 
   .subTaskList{
