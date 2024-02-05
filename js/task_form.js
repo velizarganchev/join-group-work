@@ -311,7 +311,3 @@ function closeOverlayCategories() {
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById("CategoryInputContainer").style.marginBottom = "0px";
 }
-
-// function openDate(){
-//     document.getElementById('date').datepicker();
-// }
