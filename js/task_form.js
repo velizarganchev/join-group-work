@@ -39,9 +39,6 @@ function resetPrio() {
  * @param {int} currentchosenPrio - safe the current chosen Priority in int (like above)
  */
 function changeItoPrioInString(Prio, i) {
-    if (currentchosenPrio == i) {
-        currentchosenPrio = '';
-    } else {
         if (i == 1) {
             Prio = 'High';
         } else if (i == 2) {
@@ -52,7 +49,6 @@ function changeItoPrioInString(Prio, i) {
         currentchosenPrio = i;
         changeColorOfPrio(Prio, i);
     }
-}
 
 /** Reset the HTML and changes the color and the image for the chosen Prio
  * 
