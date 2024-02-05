@@ -39,9 +39,6 @@ function resetPrio() {
  * @param {int} currentchosenPrio - safe the current chosen Priority in int (like above)
  */
 function changeItoPrioInString(Prio, i) {
-    if (currentchosenPrio == i) {
-        currentchosenPrio = '';
-    } else {
         if (i == 1) {
             Prio = 'High';
         } else if (i == 2) {
@@ -52,7 +49,6 @@ function changeItoPrioInString(Prio, i) {
         currentchosenPrio = i;
         changeColorOfPrio(Prio, i);
     }
-}
 
 /** Reset the HTML and changes the color and the image for the chosen Prio
  * 
@@ -114,7 +110,6 @@ function cancelSubtask() {
 function addSubtask() {
     let task = document.getElementById('subtask').value;
     if (task.length == 0) {
-
     } else {
         let taskJSON = {
             'id': Math.round(Math.random() * 100),
@@ -185,7 +180,7 @@ function deleteSubtaskInEdit(i) {
  */
 function getAllInputs(e) {
     e.preventDefault();
-    let id = Math.round(Math.random() * 100); // Velizar - ich denke, es wäre so besser id zu generieren.
+    let id = Math.round(Math.random() * 100);
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = chosenContactsJson;
@@ -205,7 +200,6 @@ function getAllInputs(e) {
         'contacts': assignedTo,
         token: STORAGE_TOKEN
     }
-    console.log(task);
     creatingJson(task);
     clearForm();
     confirmTheCreationOfATask();
@@ -225,7 +219,7 @@ function minDate() {
  */
 function creatingJson(task) {
     allTasks.push(task);
-    setItem('AllTasks', allTasks); // Velizar - ich habe die function getauscht.
+    setItem('AllTasks', allTasks);
 }
 
 /**
@@ -311,7 +305,3 @@ function closeOverlayCategories() {
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById("CategoryInputContainer").style.marginBottom = "0px";
 }
-
-// function openDate(){
-//     document.getElementById('date').datepicker();
-// }

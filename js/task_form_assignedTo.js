@@ -11,15 +11,27 @@ function getAllContacts() {
     generateContactsContainer();
     putAssignedToInForeground();
     checkIfCheckboxesWereChecked();
+    checkScreenWidth();
+}
+
+/**
+ * This function checks the screenwidth and adds margin to the Top of Content2 (right Content Container) if necessary
+ */
+function checkScreenWidth(){
     if (document.body.clientWidth <= 1400){
         if(chosenContacts.length != 0){
             document.getElementById('Content2').style.marginTop = "290px";
         }else{
             document.getElementById('Content2').style.marginTop = "200px";
         }
+    }else{
+        document.getElementById('Content2').style.marginTop = "0px";
     }
 }
 
+/**
+ * This function turns the arrow-image of the assignedTo-Section upside down
+ */
 function flipTheImage(){
     document.getElementById('assignedToImg').src="/assets/img/arrow_down.png";
 }
@@ -29,7 +41,6 @@ function flipTheImage(){
  */
 function displayContacts() {
     document.getElementById('ContainerForAllPossibleContacts').classList.remove('d-none');
-
 }
 
 /**
@@ -44,14 +55,7 @@ function putAssignedToInForeground() {
  * This function closes / hides all Containers which belong to the "Assigned To" Area
  */
 function closecontacts() {
-    if (document.body.clientWidth <= 1400){
-        if (chosenContacts.length != 0){
-            document.getElementById('Content2').style.marginTop = "90px";
-        }else{
-            document.getElementById('Content2').style.marginTop = "0px";
-        }
-    }
-    
+    checkScreenWidth();
     document.getElementById('assignedToSelect').value = '';
     document.getElementById('overlayContacts').classList.toggle('d-none');
     document.getElementById('assignedToImg').src="/assets/img/arrow_up.png"
@@ -244,12 +248,21 @@ function filterContacts() {
     search = search.toLowerCase();
     let ContactList = document.getElementById('ContainerForAllPossibleContacts');
     ContactList.innerHTML = '';
+    HtmlForFilter(search, ContactList);
+}
+
+/**
+ * This function generates the HTML for the filter-function
+ * @param {string} search - The name the user wants to search for
+ * @param {HTML} ContactList - List of names that contain the searched character string
+ */
+function HtmlForFilter(search, ContactList){
     for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
         let name = contacts[i]['name'];
         if (name.toLowerCase().includes(search)) {
             ContactList.innerHTML += `
-            <div id="contact${i}" class="contactbox contact">
+            <div id="contact${i}" class="contactbox contact" onclick="checkCheckbox(${i})">
                 <div id="contactCircle${i}">
                 </div>
                 <div>

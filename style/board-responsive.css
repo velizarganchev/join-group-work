@@ -132,7 +132,7 @@
     }
 
     .categories {
-        top: 370px;
+        top: 370px !important;
     }
 
     .CompleteContent {
