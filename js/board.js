@@ -97,8 +97,9 @@ async function openAddTask(id) {
     const addTaskDiv = document.getElementById('pop-up-add-task');
     addTaskDiv.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    minDate();
+    choosePrio(2);
     await loadContactsFromServer();
-    await Promise.all([minDate(), choosePrio(2)]);
 }
 
 
