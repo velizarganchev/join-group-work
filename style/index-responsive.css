@@ -20,11 +20,21 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        gap: 21px;
+        gap: 15px;
+    }
+
+    .entry-buttons button {
+        font-size: 16px !important;
     }
 
     .log-in-button-mobile {
-        width: 178px;
+        width: 180px;
+        height: 51px;
+    }
+
+    .light-button {
+        width: 180px;
+        height: 51px;
     }
 
     #start-logo {
@@ -78,9 +88,9 @@
     }
 
     .log-in-box {
-        min-height: 536px;
+        height: unset;
         width: 90%;
-        padding: 32px;
+        padding: 15px;
     }
     
     .log-in-box h1 {
@@ -89,6 +99,7 @@
 
     .log-in-box form {
         width: 100%;
+        gap: 15px;
     }
 
     .remember-me-box {

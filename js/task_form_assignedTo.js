@@ -19,10 +19,14 @@ function getAllContacts() {
  */
 function checkScreenWidth(){
     if (document.body.clientWidth <= 1400){
-        if(chosenContacts.length != 0){
-            document.getElementById('Content2').style.marginTop = "290px";
-        }else{
-            document.getElementById('Content2').style.marginTop = "200px";
+        if(chosenContacts.length != 0 && !document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')){
+            document.getElementById('Content2').style.marginTop = "230px";
+        }else if (chosenContacts.length === 0 && !document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')) {
+            document.getElementById('Content2').style.marginTop = "230px";
+        } else if (chosenContacts.length != 0 && document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')) {
+            document.getElementById('Content2').style.marginTop = "20px";
+        } else {
+            document.getElementById('Content2').style.marginTop = "0px";
         }
     }else{
         document.getElementById('Content2').style.marginTop = "0px";
@@ -55,7 +59,6 @@ function putAssignedToInForeground() {
  * This function closes / hides all Containers which belong to the "Assigned To" Area
  */
 function closecontacts() {
-    checkScreenWidth();
     document.getElementById('assignedToSelect').value = '';
     document.getElementById('overlayContacts').classList.toggle('d-none');
     document.getElementById('assignedToImg').src="/assets/img/arrow_up.png"
@@ -66,6 +69,7 @@ function closecontacts() {
     }
     document.getElementById('assignedToSelect').setAttribute('z-index', '0');
     document.getElementById('ContainerForAllPossibleContacts').setAttribute('z-index', '0');
+    checkScreenWidth();
 }
 
 /**
@@ -111,11 +115,6 @@ function checkCheckbox(i){
     let checkbox = document.getElementById(`checkbox${i}`).checked;
     if (checkbox) {
         addChosenContact(i);
-        if (document.body.clientWidth <= 1400){
-            if (chosenContacts.length != 0){
-                document.getElementById('Content2').style.marginTop = "290px";
-            }
-        }
     } else {
         deleteChosenContact(i);
     }
