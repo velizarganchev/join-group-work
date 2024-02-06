@@ -103,7 +103,7 @@ function showContactDetails(contactItemId, toEdit) {
   
     renderContactDetails(selectedContact, toEdit);
 
-    if (window.innerWidth <= 665){
+    if (window.innerWidth <= 695){
       document.getElementById("contactOverview").setAttribute('style', 'display:none !important');
       document.getElementById("contactPageRightHeader").setAttribute('style', 'display:none');
       document.getElementById("contactPageRightHeaderResponsive").setAttribute('style', 'display:flex');
