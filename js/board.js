@@ -449,6 +449,7 @@ function confirmDeleteTask(id) {
         </div>`;
 }
 
+
 /**
  * Retrieves the index of a task in the tasks array based on its ID.
  *
