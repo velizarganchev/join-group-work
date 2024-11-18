@@ -247,11 +247,11 @@ function generatePriorityText(priority) {
  */
 function generatePriorityIcon(priority) {
     switch (priority) {
-        case 3:
+        case 'low':
             return /*html*/`<img src="../assets/img/board/prio-low.svg" alt="Priority Icon">`;
-        case 2:
+        case 'medium':
             return /*html*/`<img src="../assets/img/board/prio-medium.svg" alt="Priority Icon">`;
-        case 1:
+        case 'high':
             return /*html*/`<img src="../assets/img/board/prio-urgent.svg" alt="Priority Icon">`;
     }
 }

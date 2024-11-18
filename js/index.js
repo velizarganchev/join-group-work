@@ -8,7 +8,7 @@ async function initEntry() {
     await loadUsers();
     animateStartLogo();
     renderLogIn();
-    setCurrentUsername('');
+    setCurrentUser('');
 }
 
 
@@ -29,19 +29,30 @@ async function loadUsers() {
  * @param {string} password - Value of the password's input field.
  */
 async function signUp(password) {
-    let name = document.getElementById('name').value;
+    let username = document.getElementById('name').value;
     let email = document.getElementById('email').value;
-    users.push({
-        'name': name,
+    let data = {
+        'username': username,
         'email': email,
         'password': password
-    })
-    await setItem('users', JSON.stringify(users));
-    toggleClass('sign-up-confirmation', 'fly-in');
-    toggleClass('confirmation-wrapper', 'dark-background');
-    setTimeout(function() {
-        renderLogIn();
-    }, 800);
+    }
+    console.log(data);
+    
+    let user = await loginRegisterUser('register', data);
+    console.log(user);
+
+    if (user) {
+        users.push({
+            'name': username,
+            'email': email,
+            'password': password
+        });
+        toggleClass('sign-up-confirmation', 'fly-in');
+        toggleClass('confirmation-wrapper', 'dark-background');
+        setTimeout(function () {
+            renderLogIn();
+        }, 800);
+    }
 }
 
 
@@ -49,10 +60,10 @@ async function signUp(password) {
 /**
  * Logs the user in.
  */
-function logIn() {
+async function logIn() {
     let emailInput = document.getElementById('email');
     let passwordInput = document.getElementById('password');
-    findUser(emailInput, passwordInput);
+    await findUser(emailInput, passwordInput);
 }
 
 
@@ -61,10 +72,11 @@ function logIn() {
  * @param {} emailInput - Input field for email when loggin in.
  * @param {} passwordInput - Input field for password when loggin in.
  */
-function findUser(emailInput, passwordInput) {
-    let user = users.find(u => u.email === emailInput.value && u.password === passwordInput.value);
+async function findUser(emailInput, passwordInput) {
+    data = { email: emailInput.value, password: passwordInput.value }
+    let user = await loginRegisterUser('login', data)
     if (user) {
-        setCurrentUsername(user.name);
+        setCurrentUser(user);
         window.location.href = 'summary.html';
     } else {
         toggleClass('error-message', 'hide');
@@ -102,7 +114,7 @@ function animateStartLogo() {
  * Begins the animation of the starting logo when index.html has loaded on desktop devices.
  */
 function desktopStartAnimation() {
-    setTimeout(function(){
+    setTimeout(function () {
         toggleClass('start-logo', 'animated-start-logo');
         toggleClass('form-wrapper', 'fade-in-content');
     }, 600);
@@ -216,7 +228,7 @@ function logInAsGuest() {
     let passwordInput = document.getElementById('password');
     emailInput.removeAttribute('required');
     passwordInput.removeAttribute('required');
-    setCurrentUsername('Guest');
+    setCurrentUser('Guest');
     window.location.href = 'summary.html';
 }
 

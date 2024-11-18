@@ -1,7 +1,7 @@
 currPriority = 0;
 let editSubtasks = [];
 let columns = [];
-let columnIds = ['todo', 'in-progress', 'await-feedback', 'done'];
+let columnIds = ['todo', 'in_progress', 'await_feedback', 'done'];
 let currentDraggedElement;
 
 
@@ -28,20 +28,22 @@ async function renderTasks(searchedTasks) {
         takeAllColumns();
 
         let getColumnById = (columnId) => document.getElementById(columnId);
-        let getColumnByTask = (task) => getColumnById(task.colum);
+        let getColumnByTask = (task) => getColumnById(task.status);
 
         let renderCardAndSubtasks = (task) => {
             let column = getColumnByTask(task);
 
             renderCard(task, column);
-            if (task.subtasks.length > 0) {
+            if (task && task.subtasks && task.subtasks.length > 0) {
                 setProgressSubtasks(task);
             }
-            generateContactsHtml(task.contacts, task.id);
+            generateContactsHtml(task.members, task.id);
         };
 
         let tasksToRender = searchedTasks || allTasks;
+
         tasksToRender.forEach(renderCardAndSubtasks);
+        console.log(tasksToRender);
 
         iterateByEachColumn(columns);
     } catch (error) {
@@ -593,7 +595,7 @@ function renderCard(task, column) {
  */
 function setProgressSubtasks(task) {
     let progressDone = document.getElementById(`progress${task.id}`);
-    let finalValue = task.subtasksProgress * 10;
+    let finalValue = 1;
     let max = task.subtasks.length * 10;
     let progressInPercent = (finalValue / max) * 100;
     progressDone.style.width = `${progressInPercent.toString()}%`;
@@ -607,7 +609,7 @@ function setProgressSubtasks(task) {
  * @returns {Array} - An array of strings representing the first letters.
  */
 function takeFirstLetters(contacts) {
-    return contacts.map(c => c.firstname[0] + c.lastname[0]);
+    return contacts.map(c => c.user.first_name[0] + c.user.last_name[0]);
 }
 
 

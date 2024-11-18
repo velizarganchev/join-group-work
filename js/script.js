@@ -1,5 +1,9 @@
 const STORAGE_TOKEN = 'DR6FZK1MTGPR11C93C73PUGXTKY05AJ4CNFZMV8P';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
+
+const ADMIN_TOKEN = '392dddec14f9168a141a593a1066ca4b2a27559e';
+const BASE_URL = 'http://127.0.0.1:8000/api/';
+
 let allTasks = [];
 let column = '';
 let allSubtasks = [];
@@ -55,6 +59,56 @@ async function setItem(key, value) {
 async function getItem(key) {
     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
     return fetch(url).then(response => response.json()).then(response => response.data.value);
+}
+
+async function getData(key) {
+    const myHeaders = new Headers();
+
+    myHeaders.append("Authorization", `Token ${ADMIN_TOKEN}`);
+
+    const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+    };
+
+    const url = `${BASE_URL}${key}/`;
+    try {
+        const response = await fetch(url, requestOptions);
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+
+async function loginRegisterUser(endpoint, data) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(data),
+    };
+
+    const url = `${BASE_URL}${endpoint}/`;
+    try {
+        const response = await fetch(url, requestOptions);
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
 }
 
 
@@ -129,7 +183,7 @@ function changeImageSource(id, url) {
  */
 function logOut() {
     toggleClass('profile-nav-wrapper', 'hide');
-    setCurrentUsername('');
+    setCurrentUser('');
     window.location.replace = 'index.html'
 }
 
@@ -143,28 +197,28 @@ function checkLogInStatus() {
         toggleClass('add-task', 'hide');
         toggleClass('board', 'hide');
         toggleClass('contacts', 'hide');
-    } else if (getCurrentUsername() === '' || getCurrentUsername() === undefined) {
+    } else if (getCurrentUser() === '' || getCurrentUser() === undefined) {
         window.location.replace('index.html');
     }
 }
 
 
 /**
- * Sets the current username in the session storage.
- * @param {string} username - The currently loggin in user's username.
+ * Sets the current user in the session storage.
+ * @param {string} user - The currently loggin in user's username.
  */
-function setCurrentUsername(username) {
-    sessionStorage.setItem('current-username', username);
+function setCurrentUser(user) {
+    sessionStorage.setItem('user', JSON.stringify(user));
 }
 
 
 /**
- * Gets the current username from session storage.
- * @returns Item with the key "current-username" from session storage.
+ * Gets the current user from session storage.
+ * @returns Item with the key "user" from session storage.
  */
-function getCurrentUsername() {
-    let currentUsername = sessionStorage.getItem('current-username');
-    return currentUsername;
+function getCurrentUser() {
+    let currentUser = sessionStorage.getItem('user');
+    return JSON.parse(currentUser);
 }
 
 
@@ -172,7 +226,8 @@ function getCurrentUsername() {
  * Loads the saved tasks from the backend.
  */
 async function loadTasks() {
-    allTasks = JSON.parse(await getItem('AllTasks'));
+    allTasks = await getData('tasks');
+    console.log(allTasks);
 }
 
 
@@ -188,8 +243,8 @@ function lockScreenOrientation() {
 
 
 function logInCnodition() {
-    return getCurrentUsername() === '' && window.location.pathname === '/html/legal_notice.html' || 
-    getCurrentUsername() === '' && window.location.pathname === '/html/privacy_policy.html' ||
-    getCurrentUsername() === undefined && window.location.pathname === '/html/legal_notice.html' ||
-    getCurrentUsername() === undefined && window.location.pathname === '/html/privacy_policy.html';
+    return getCurrentUser() === '' && window.location.pathname === '/html/legal_notice.html' ||
+        getCurrentUser() === '' && window.location.pathname === '/html/privacy_policy.html' ||
+        getCurrentUser() === undefined && window.location.pathname === '/html/legal_notice.html' ||
+        getCurrentUser() === undefined && window.location.pathname === '/html/privacy_policy.html';
 }
