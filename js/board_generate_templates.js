@@ -5,7 +5,7 @@
  */
 function generateTaskHtml(task) {
 
-    let contactsHtml = task.contacts.map(generateContactHtml).join('');
+    let contactsHtml = task.members.map(generateContactHtml).join('');
     let subtasksHtml = task.subtasks.map(subtask => generateSubtaskHtml(subtask, task.id)).join('');
     let priorityText = generatePriorityText(task.priority);
     let priorityIcon = generatePriorityIcon(task.priority);
@@ -26,7 +26,7 @@ function generateTaskHtml(task) {
             </div>
             <div class="pop-up-task-date">
                 <span>Due date:</span>
-                <span>${new Date(task.date).toISOString().split('T')[0]}</span>
+                <span>${new Date(task.due_date).toISOString().split('T')[0]}</span>
             </div>
             <div class="pop-up-task-priority">
                 <span>Priority:</span>
@@ -87,20 +87,20 @@ function generateEditTaskHtml(taskToEdit) {
             </div>
             <div class="edit-date-container">
                 <span>Due date</span>
-                <input value="${new Date(taskToEdit.date).toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}" type="date" id="edit-date" name="date">
+                <input value="${new Date(taskToEdit.due_date).toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}" type="date" id="edit-date" name="date">
             </div>
             <div class="edit-priority-container">
                 <span>Priority</span>
                 <div class="edit-priority-buttons">
-                    <button id="urgent" onclick="changePriority(1)">
+                    <button id="high" onclick="changePriority('high')">
                         <span>Urgent</span>
-                        <img id="edit-urgent-img" src="../assets/img/board/prio-urgent.svg" alt="">
+                        <img id="edit-high-img" src="../assets/img/board/prio-high.svg" alt="">
                     </button>
-                    <button id="medium" onclick="changePriority(2)">
+                    <button id="medium" onclick="changePriority('medium')">
                         <span>Medium</span>
                         <img id="edit-medium-img" src="../assets/img/board/prio-medium.svg" alt="">
                     </button>
-                    <button id="low" onclick="changePriority(3)">
+                    <button id="low" onclick="changePriority('low')">
                         <span>Low</span>
                         <img id="edit-low-img" src="../assets/img/board/prio-low.svg" alt="">
                     </button>
@@ -159,10 +159,12 @@ function generateEditContactHtml(contact) {
  * @returns {string} - The HTML string representing the contact.
  */
 function generateContactHtml(contact) {
+    console.log(contact);
+
     return  /*html*/ `
         <div class="pop-up-task-contact">
-            <div class="contact-label" style="background:${contact.color};">${contact.firstname[0] + contact.lastname[0]}</div>
-            <div class="contact-name">${contact.firstname} ${contact.lastname}</div>
+            <div class="contact-label" style="background:${contact.color};">${contact.user.username[0] + contact.user.username[0]}</div>
+            <div class="contact-name">${contact.user.username} ${contact.username}</div>
         </div>`;
 }
 
@@ -173,11 +175,13 @@ function generateContactHtml(contact) {
  * @param {Object} subtask - The subtask object containing information.
  * @returns {string} - The HTML string representing the subtask.
  */
-function generateSubtaskHtml(subtask, taskId) {//!!!!!!!!!!!!!!
+function generateSubtaskHtml(subtask, taskId) {
+    console.log(subtask);
+
     return  /*html*/ `
         <div class="pop-up-task-subtask">
-            <input type="checkbox" onchange="changeSubtaskStatus(this, ${subtask.id}, ${taskId})" ${subtask.done ? 'checked' : ''} >
-            <span>${subtask.name}</span>
+            <input type="checkbox" onchange="changeSubtaskStatus(this, ${subtask.id}, ${taskId})" ${subtask.status === true ? 'checked' : ''} >
+            <span>${subtask.title}</span>
         </div>`;
 }
 
@@ -202,7 +206,7 @@ function generateCardHtml(cardId, task) {
                     <div class="progress-bar">
                         <div class="progress-done" id="progress${task.id}"></div>
                     </div>
-                    <p class="subtasks-container">${task.subtasksProgress}/${task.subtasks.length} Subtasks</p>
+                    <p class="subtasks-container">${task.subtasks_progress}/${task.subtasks.length} Subtasks</p>
                 </div>
                 <div class="card-footer">
                     <div class="profiles" id="tasksProfiles${task.id}"></div>
@@ -222,16 +226,16 @@ function generateCardHtml(cardId, task) {
  * Generates a textual representation of priority based on numerical values.
  *
  * @param {number} priority - The numerical priority value (1, 2, or 3).
- * @returns {string} - The corresponding priority text ('Urgent', 'Medium', or 'Low').
+ * @returns {string} - The corresponding priority text ('High', 'Medium', or 'Low').
  */
 function generatePriorityText(priority) {
     switch (priority) {
-        case 3:
+        case 'low':
             return 'Low';
-        case 2:
+        case 'medium':
             return 'Medium';
-        case 1:
-            return 'Urgent';
+        case 'high':
+            return 'High';
         // Handle unexpected cases, if any
         default:
             return 'Unknown Priority';
@@ -252,7 +256,7 @@ function generatePriorityIcon(priority) {
         case 'medium':
             return /*html*/`<img src="../assets/img/board/prio-medium.svg" alt="Priority Icon">`;
         case 'high':
-            return /*html*/`<img src="../assets/img/board/prio-urgent.svg" alt="Priority Icon">`;
+            return /*html*/`<img src="../assets/img/board/prio-heigh-white.png" alt="Priority Icon">`;
     }
 }
 
@@ -300,7 +304,7 @@ function generateNoTaskHtml() {
  * @param {Array} contacts - An array of contact objects.
  * @param {number} id - The task ID.
  */
-function generateContactsHtml(contacts, id) {
+function generateContactsHtml(contacts, id) {    
     let profiles = document.getElementById(`tasksProfiles${id}`);
     let onlyFirstLetter = takeFirstLetters(contacts);
     for (let i = 0; i < onlyFirstLetter.length; i++) {

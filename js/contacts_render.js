@@ -14,13 +14,13 @@ function renderContactItem(contactOverview, circleStyle, circleClass, contactIni
           <div id="${contactItemId}" class="contactItem" onclick="showContactDetails('${contactItemId}', true)">
               <div class="circle ${circleClass}" style="${circleStyle}">${contactInitials}</div>
               <div class="contactDetails">
-                  <div class="contactNameInOverview">${contact.name}</div>
-                  <div class="emailInOverview">${contact.email}</div>
+                  <div class="contactNameInOverview">${contact.user.first_name} ${contact.user.last_name}</div>
+                  <div class="emailInOverview">${contact.user.email}</div>
               </div>
           </div>
       `;
     contactOverview.innerHTML += contactItemHTML;
-  }
+}
 
 
 /**
@@ -33,17 +33,17 @@ function openLetterGroup(newLetter, contactOverview) {
     contactOverview.innerHTML += `<div class="contact-group">
                                       <div class="groupHeader">${newLetter}</div>
                                       <hr class="groupDivider">`;
-  }
-  
-  
+}
+
+
 /**
    * Closes the current contact group.
    *
    * @param {HTMLElement} contactOverview - The element where contacts are rendered.
    */
-  function closeLetterGroup(contactOverview) {
+function closeLetterGroup(contactOverview) {
     contactOverview.innerHTML += `</div>`;
-  }
+}
 
 
 /**
@@ -56,9 +56,9 @@ function renderAddContactButton() {
       </button>
     `;
     return addContactButtonHTML;
-  }
+}
 
-  
+
 /**
  * Renders the detailed view of a contact, including name, buttons, and contact information.
  *
@@ -72,10 +72,10 @@ function renderContactDetails(contact, toEdit) {
     let contactDetailsHTML = `
         <div class="contactDetailsName">
             <div class="circle circleInDetailView" style="background-color: ${contact.color};">
-                ${calculateContactInitials(contact.name.split(" "))}
+                ${calculateContactInitials(contact.user.username.split(" "))}
             </div>
             <div class="contactDetailsNameAndButtons">
-                <div class="contactDetailsNameFull">${contact.name}</div>
+                <div class="contactDetailsNameFull">${contact.user.first_name} ${contact.user.last_name}</div>
                 <div class="contactNameIcons">
                     ${renderEditDeleteButtons()}
                 </div>
@@ -84,9 +84,9 @@ function renderContactDetails(contact, toEdit) {
         <p class="contactInformation">Contact Information</p>
         <div class="emailAndPhoneDetails">
             <p id="emailDetails"><b>Email</b></p>
-            <div class="emailDetails"><a href="mailto:${contact.email}">${contact.email}</a></div>
+            <div class="emailDetails"><a href="mailto:${contact.user.email}">${contact.user.email}</a></div>
             <p><b>Phone</b></p>
-            <div class="phoneDetails"><a href="tel:${contact.phone}">${contact.phone}</a></div>
+            <div class="phoneDetails"><a href="tel:${contact.phone_number}">${contact.phone_number}</a></div>
         </div>
     `;
 
@@ -110,14 +110,14 @@ function renderEditFields(contact) {
     let editEmailField = document.getElementById("editEmail");
     let editPhoneField = document.getElementById("editPhone");
 
-    editNameField.value = contact.name;
-    editEmailField.value = contact.email;
-    editPhoneField.value = contact.phone;
+    editNameField.value = `${contact.user.first_name} ${contact.user.last_name}`;
+    editEmailField.value = contact.user.email;
+    editPhoneField.value = contact.phone_number;
 
     let initialIcon = document.getElementById("iconInEditContact");
     initialIcon.innerHTML = `
         <div class="circle circleInDetailView responsiveCircle" style="background-color: ${contact.color};">
-            ${calculateContactInitials(contact.name.split(" "))}
+            ${calculateContactInitials(contact.user.username.split(" "))}
         </div>
     `;
 }

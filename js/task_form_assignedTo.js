@@ -5,7 +5,8 @@ let chosenContactsJson = [];
  * This function opens a dropdown-menu so that the user can select a contact, which should work at the task in the future
  * @param {string} id - id of the Element which should be flipped around 
  */
-function getAllContacts() {
+async function getAllContacts() {
+    await loadContactsFromServer();
     flipTheImage();
     displayContacts();
     generateContactsContainer();
@@ -17,18 +18,18 @@ function getAllContacts() {
 /**
  * This function checks the screenwidth and adds margin to the Top of Content2 (right Content Container) if necessary
  */
-function checkScreenWidth(){
-    if (document.body.clientWidth <= 1400){
-        if(chosenContacts.length != 0 && !document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')){
+function checkScreenWidth() {
+    if (document.body.clientWidth <= 1400) {
+        if (chosenContacts.length != 0 && !document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')) {
             document.getElementById('Content2').style.marginTop = "230px";
-        }else if (chosenContacts.length === 0 && !document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')) {
+        } else if (chosenContacts.length === 0 && !document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')) {
             document.getElementById('Content2').style.marginTop = "230px";
         } else if (chosenContacts.length != 0 && document.getElementById('ContainerForAllPossibleContacts').classList.contains('d-none')) {
             document.getElementById('Content2').style.marginTop = "20px";
         } else {
             document.getElementById('Content2').style.marginTop = "0px";
         }
-    }else{
+    } else {
         document.getElementById('Content2').style.marginTop = "0px";
     }
 }
@@ -36,8 +37,8 @@ function checkScreenWidth(){
 /**
  * This function turns the arrow-image of the assignedTo-Section upside down
  */
-function flipTheImage(){
-    document.getElementById('assignedToImg').src="/assets/img/arrow_down.png";
+function flipTheImage() {
+    document.getElementById('assignedToImg').src = "/assets/img/arrow_down.png";
 }
 
 /**
@@ -61,7 +62,7 @@ function putAssignedToInForeground() {
 function closecontacts() {
     document.getElementById('assignedToSelect').value = '';
     document.getElementById('overlayContacts').classList.toggle('d-none');
-    document.getElementById('assignedToImg').src="/assets/img/arrow_up.png"
+    document.getElementById('assignedToImg').src = "/assets/img/arrow_up.png"
     document.getElementById('ContainerForAllPossibleContacts').innerHTML = '';
     document.getElementById('ContainerForAllPossibleContacts').classList.add('d-none');
     if (chosenContacts.length == 0) {
@@ -110,7 +111,7 @@ function generatingHTMLForContactsContainer() {
  * This function check / uncheck the checkbox of the chosen contact
  * @param {int} i - number of the checkbox
  */
-function checkCheckbox(i){
+function checkCheckbox(i) {
     document.getElementById(`checkbox${i}`).checked = !document.getElementById(`checkbox${i}`).checked;
     let checkbox = document.getElementById(`checkbox${i}`).checked;
     if (checkbox) {
@@ -148,16 +149,10 @@ function addContactToArray(i) {
  * @param {int} i - the position of the contact in the Json-Array
  */
 function addChosenContact(i) {
-    let name = contacts[i]['name'];
-    let firstname = name.slice(0, name.lastIndexOf(' '));
-    let lastname = name.slice(name.lastIndexOf(' ') + 1,);
-    let color = contacts[i]['color'];
-    let contactsJSON = {
-        'firstname': firstname,
-        'lastname': lastname,
-        'color': color
-    };
-    chosenContactsJson.push(contactsJSON);
+    let contact = contacts[i];
+    console.log('CONTACT: ', contact);
+
+    chosenContactsJson.push(contact.id);
     chosenContacts.push(i);
     createCirclesToChosenContactContainer();
 }
@@ -167,6 +162,12 @@ function addChosenContact(i) {
  * @param {int} i - the position of the contact in the Json-Array
  */
 function deleteChosenContact(i) {
+    console.log('CHC befor: ', chosenContactsJson);
+
+    chosenContactsJson.splice(chosenContactsJson.indexOf(i), 1);
+
+    console.log('CHC after: ', chosenContactsJson);
+
     chosenContacts.splice(chosenContacts.indexOf(i), 1);
     createCirclesToChosenContactContainer();
 }
@@ -188,10 +189,10 @@ function createCirclesToChosenContactContainer() {
 /**
  * This Function displays the chosenContacts div, if min. one Contact is currently chosen
  */
-function displaydiv(){
-    if (chosenContacts.length == 0){
-        document.getElementById('ContainerForAllChosenContacts').classList.add('d-none'); 
-    }else{
+function displaydiv() {
+    if (chosenContacts.length == 0) {
+        document.getElementById('ContainerForAllChosenContacts').classList.add('d-none');
+    } else {
         document.getElementById('ContainerForAllChosenContacts').classList.remove('d-none');
     }
 }
@@ -210,7 +211,7 @@ function generateContactsContainer() {
  * @returns the first letter of the first and the last name for the displayed circle
  */
 function gettingInitials(i) {
-    let name = contacts[i]['name'];
+    let name = contacts[i]['user'].username;
     firstLetterName = name.toUpperCase().slice(0, 1);
     firstLetterLastname = name.toUpperCase().slice(name.lastIndexOf(' ') + 1, name.lastIndexOf(' ') + 2);
     return { firstLetterName, firstLetterLastname };
@@ -235,7 +236,7 @@ function creatingCircle(i, adress) {
  * @param {int} i - the position of the contact in the Json-Array
  */
 function gettingNames(i) {
-    let name = contacts[i]['name'];
+    let name = contacts[i]['user'].username;
     document.getElementById(`ContactName${i}`).innerHTML += `${name}`;
 }
 
@@ -255,7 +256,7 @@ function filterContacts() {
  * @param {string} search - The name the user wants to search for
  * @param {HTML} ContactList - List of names that contain the searched character string
  */
-function HtmlForFilter(search, ContactList){
+function HtmlForFilter(search, ContactList) {
     for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
         let name = contacts[i]['name'];

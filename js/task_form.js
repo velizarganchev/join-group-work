@@ -39,16 +39,16 @@ function resetPrio() {
  * @param {int} currentchosenPrio - safe the current chosen Priority in int (like above)
  */
 function changeItoPrioInString(Prio, i) {
-        if (i == 1) {
-            Prio = 'High';
-        } else if (i == 2) {
-            Prio = 'Medium';
-        } else {
-            Prio = 'Low';
-        }
-        currentchosenPrio = i;
-        changeColorOfPrio(Prio, i);
+    if (i == 1) {
+        Prio = 'High';
+    } else if (i == 2) {
+        Prio = 'Medium';
+    } else {
+        Prio = 'Low';
     }
+    currentchosenPrio = i;
+    changeColorOfPrio(Prio, i);
+}
 
 /** Reset the HTML and changes the color and the image for the chosen Prio
  * 
@@ -122,7 +122,7 @@ function addSubtask() {
         document.getElementById('buttons').setAttribute('style', "margin-top:0");
         subtasks.push(taskJSON);
         showSubtasksafterAddingATask();
-        if (subtasks.length != 0){
+        if (subtasks.length != 0) {
             document.getElementById('buttonsAndInfotext').style.marginTop = "150px";
         }
     }
@@ -170,7 +170,7 @@ function deleteSubtaskInEdit(i) {
         document.getElementById('subTaskList').setAttribute('style', "overflow-y:hidden");
     }
     showSubtasks();
-    if (subtasks.length == 0){
+    if (subtasks.length == 0) {
         document.getElementById('buttonsAndInfotext').style.marginTop = "20px";
     }
 }
@@ -180,29 +180,32 @@ function deleteSubtaskInEdit(i) {
  */
 function getAllInputs(e) {
     e.preventDefault();
-    let id = Math.round(Math.random() * 100);
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let assignedTo = chosenContactsJson;
     let date = document.getElementById('date').value;
     let prio = currentchosenPrio;
     let category = document.getElementById('Category').innerHTML;
-    const task = {
-        'id': id,
+
+    const taskData = {
         'title': title,
         'description': description,
-        'date': date,
+        'due_date': date,
         'priority': prio,
         'subtasks': subtasks,
         'subtasksProgress': 0,
         'category': category,
-        'colum': column ? column : 'todo',
-        'contacts': assignedTo,
-        token: STORAGE_TOKEN
+        'status': column ? column : 'todo',
+        'members': assignedTo,
     }
-    creatingJson(task);
-    clearForm();
-    confirmTheCreationOfATask();
+
+    console.log('CR_TASK', taskData);
+
+    createdTask = creatingJson(taskData);
+    if (createdTask) {
+        clearForm();
+        confirmTheCreationOfATask();
+    }
 }
 
 /**
@@ -217,9 +220,9 @@ function minDate() {
  * safes the Json in an Array called "allTasks"
  * @param {Json} task - contains the safed Json
  */
-function creatingJson(task) {
+async function creatingJson(task) {
     allTasks.push(task);
-    setItem('AllTasks', allTasks);
+    subtaskToAdd = await createData('task', task);
 }
 
 /**
@@ -292,7 +295,7 @@ function setCategory(category) {
 function getAllCategories() {
     document.getElementById('categories').classList.toggle('d-none');
     document.getElementById('overlayCategories').classList.toggle('d-none');
-    if (window.innerWidth < 1400){
+    if (window.innerWidth < 1400) {
         document.getElementById("CategoryInputContainer").style.marginBottom = "90px";
     }
 }

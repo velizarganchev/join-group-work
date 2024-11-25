@@ -20,12 +20,14 @@ async function initSummary() {
  * Renders the welcome message on the summary page.
  */
 function renderWelcomeMessage() {
-    let username = getCurrentUsername();
+    let user = getCurrentUser();
+    console.log(user);
+
     let time = new Date().getHours();
     if (window.innerWidth <= 1250) {
-        renderMessageMobile(username, time);
+        renderMessageMobile(user.username, time);
     } else {
-        renderMessageDesktop(username, time);
+        renderMessageDesktop(user.username, time);
     }
 }
 
@@ -110,11 +112,12 @@ function sortTasks() {
  */
 function renderUpcomingPrio() {
     let upcomingPrio = document.getElementById('upcoming-prio');
-    let prio = convertPrio(allTasks[0]['priority']); //tasks --> allTasks
-    let upcomingDate = allTasks[0]['date']; //tasks --> allTasks
-    let upcomingTasksAmount = allTasks.filter(t => t['date'] == upcomingDate).length; //tasks --> allTasks
     let upcomingTasks = document.getElementById('upcoming-tasks-amount');
-    upcomingPrio.innerHTML = prio;
+
+    let prio = allTasks.filter(t => t.priority === 'medium')[0].priority;
+    let upcomingTasksAmount = allTasks.filter(t => t.priority === 'medium').length;
+
+    upcomingPrio.innerHTML = prio.toUpperCase();
     changeImageSource('upcoming-prio-image', `/assets/img/board/prio-${prio}-white.svg`);
     toggleClass('upcoming-prio-image-wrapper', `prio-${prio}`);
     upcomingTasks.innerHTML = upcomingTasksAmount;
@@ -125,7 +128,7 @@ function renderUpcomingPrio() {
  * Renders the due date of the upcoming task.
  */
 function renderUpcomingDate() {
-    let date = new Date(allTasks[0]['date']); //tasks --> allTasks
+    let date = new Date(allTasks[0]['due_date']);
     let formattedMonth = date.toLocaleString('default', { month: 'long' });
     let year = date.getFullYear();
     let day = date.getDate();
@@ -141,7 +144,7 @@ function renderUpcomingDate() {
  */
 function renderTasksInProgress() {
     let tasksInProgress = document.getElementById('in-progress-amount');
-    let tasksAmount = allTasks.filter(t => t['colum'] == 'in-progress').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t.status === 'in_progress').length; //tasks --> allTasks
     tasksInProgress.innerHTML = tasksAmount;
 }
 
@@ -151,7 +154,7 @@ function renderTasksInProgress() {
  */
 function renderTasksAwaitingFeedback() {
     let tasksAwaitingFeedback = document.getElementById('awaiting-feedback-amount');
-    let tasksAmount = allTasks.filter(t => t['colum'] == 'await-feedback').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t.status === 'await_feedback').length; //tasks --> allTasks
     tasksAwaitingFeedback.innerHTML = tasksAmount;
 }
 
@@ -161,7 +164,7 @@ function renderTasksAwaitingFeedback() {
  */
 function renderTasksInToDo() {
     let tasksToDo = document.getElementById('to-do-amount');
-    let tasksAmount = allTasks.filter(t => t['colum'] == 'todo').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t.status === 'todo').length;
     tasksToDo.innerHTML = tasksAmount;
 }
 
@@ -171,7 +174,7 @@ function renderTasksInToDo() {
  */
 function renderTasksDone() {
     let tasksDone = document.getElementById('done-amount');
-    let tasksAmount = allTasks.filter(t => t['colum'] == 'done').length; //tasks --> allTasks
+    let tasksAmount = allTasks.filter(t => t.status === 'done').length; //tasks --> allTasks
     tasksDone.innerHTML = tasksAmount;
 }
 

@@ -1,7 +1,7 @@
 const STORAGE_TOKEN = 'DR6FZK1MTGPR11C93C73PUGXTKY05AJ4CNFZMV8P';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
-const ADMIN_TOKEN = '392dddec14f9168a141a593a1066ca4b2a27559e';
+const ADMIN_TOKEN = 'c97c691099e2ec1ee9b67362c9ff4ba86c36c4c7';
 const BASE_URL = 'http://127.0.0.1:8000/api/';
 
 let allTasks = [];
@@ -62,9 +62,14 @@ async function getItem(key) {
 }
 
 async function getData(key) {
-    const myHeaders = new Headers();
+    let currUser = getCurrentUser();
 
-    myHeaders.append("Authorization", `Token ${ADMIN_TOKEN}`);
+    const myHeaders = new Headers();
+    if (currUser) {
+        myHeaders.append("Authorization", `Token ${currUser.token}`);
+    } else {
+        myHeaders.append("Authorization", `Token ${ADMIN_TOKEN}`);
+    }
 
     const requestOptions = {
         method: "GET",
@@ -81,6 +86,114 @@ async function getData(key) {
 
         const data = await response.json();
         return data;
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+
+async function createData(endpoint, data) {
+    let currUser = getCurrentUser();
+
+    const myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Token ${currUser.token}`);
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(data),
+    };
+
+    const url = `${BASE_URL}${endpoint}/`;
+    try {
+        const response = await fetch(url, requestOptions);
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+
+async function updateData(endpoint, id, data) {
+    const myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Token ${ADMIN_TOKEN}`);
+
+    const requestOptions = {
+        method: "PUT",
+        headers: myHeaders,
+        body: JSON.stringify(data),
+    };
+
+    const url = `${BASE_URL}${endpoint}/${id}/`;
+    try {
+        const response = await fetch(url, requestOptions);
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+
+async function deleteData(endpoint, id) {
+    let currUser = getCurrentUser();
+
+    const myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Token ${currUser.token}`);
+
+    const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+    };
+
+    const url = `${BASE_URL}${endpoint}/${id}/`;
+    try {
+        const response = await fetch(url, requestOptions);
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+
+async function deleteUserProfile(endpoint, token) {
+    const myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Token ${token}`);
+
+    const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+    };
+
+    const url = `${BASE_URL}${endpoint}/`;
+    try {
+        const response = await fetch(url, requestOptions);
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+
+        return response;
     } catch (error) {
         console.error("Fetch error:", error);
     }
@@ -229,7 +342,6 @@ async function loadTasks() {
     allTasks = await getData('tasks');
     console.log(allTasks);
 }
-
 
 /**
  * Locks the screen orientation depending on which device the user is using.

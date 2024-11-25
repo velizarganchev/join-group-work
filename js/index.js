@@ -1,6 +1,5 @@
 let users = [];
 
-
 /**
  * Starts the animation of the opening logo.
  */
@@ -9,6 +8,8 @@ async function initEntry() {
     animateStartLogo();
     renderLogIn();
     setCurrentUser('');
+    console.log(users);
+    
 }
 
 
@@ -17,7 +18,7 @@ async function initEntry() {
  */
 async function loadUsers() {
     try {
-        users = JSON.parse(await getItem('users'));
+        users = await getData('users')
     } catch {
         console.info('Unable to load users');
     }
@@ -37,7 +38,7 @@ async function signUp(password) {
         'password': password
     }
     console.log(data);
-    
+
     let user = await loginRegisterUser('register', data);
     console.log(user);
 
@@ -73,11 +74,16 @@ async function logIn() {
  * @param {} passwordInput - Input field for password when loggin in.
  */
 async function findUser(emailInput, passwordInput) {
-    data = { email: emailInput.value, password: passwordInput.value }
-    let user = await loginRegisterUser('login', data)
-    if (user) {
-        setCurrentUser(user);
-        window.location.href = 'summary.html';
+    let userExist = users.find(u => u.email === emailInput.value);
+    if (userExist) {
+        data = { username: userExist.username, password: passwordInput.value }
+        let user = await loginRegisterUser('login', data)
+        if (user) {
+            setCurrentUser(user);
+            window.location.href = 'summary.html';
+        } else {
+            toggleClass('error-message', 'hide');
+        }
     } else {
         toggleClass('error-message', 'hide');
     }

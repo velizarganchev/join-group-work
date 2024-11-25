@@ -129,6 +129,8 @@ function search(e) {
  */
 function openTask(taskId) {
     let task = allTasks.find(t => t.id === taskId);
+    console.log(task);
+
     let taskPopUp = document.getElementById('pop-up');
     taskPopUp.style.display = "flex";
 
@@ -170,12 +172,22 @@ async function editTask(taskId) {
     task.contacts = chosenContactsJson;
     task.subtasks = [...task.subtasks, ...editSubtasks];
 
-    await setItem('AllTasks', allTasks);
-    await loadTasks();
+    let data = {
+        'title': document.getElementById('edit-title').value,
+        'description': document.getElementById('edit-description').value,
+        'due_date': document.getElementById('edit-date').value,
+        'priority': currPriority ? currPriority : task.priority,
+        'members': chosenContactsJson,
+    }
 
-    clearAllColumns();
-    renderTasks();
-    closeTask("pop-up");
+    updatedTask = await updateData('tasks', taskId, data);
+    if (updatedTask) {
+        await loadTasks();
+
+        clearAllColumns();
+        renderTasks();
+        closeTask("pop-up");
+    }
 }
 
 
@@ -185,10 +197,14 @@ async function editTask(taskId) {
  * @param {string} taskId - Die ID der Aufgabe, zu der die Teilaufgabe gehört.
  * @param {string} subtaskId - Die ID der zu löschenden Teilaufgabe.
  */
-function deleteSubtask(taskId, subtaskId) {
-    const task = getTask(taskId);
-    task.subtasks = task.subtasks.filter(subtask => subtask.id !== subtaskId);
-    showSubtasksInEdit(taskId, task.subtasks);
+async function deleteSubtask(taskId, subtaskId) {
+    res = await deleteData('subtask', subtaskId);
+    if (res.ok) {
+        await loadTasks();
+        const task = getTask(taskId);
+        task.subtasks = task.subtasks.filter(subtask => subtask.id !== subtaskId);
+        showSubtasksInEdit(taskId, task.subtasks);
+    }
 }
 
 
@@ -205,7 +221,7 @@ function showSubtasksInEdit(taskId, subtasks) {
         const element = subtasks[i];
         subtasksList.innerHTML += /*html*/ `
             <li class="edit-subtask-item" id="edit-subtask-item${element.id}">
-                <span>${element.name}</span>
+                <span>${element.title}</span>
                 <div class="edit-subtask-icons" id="edit-subtask-icons${element.id}">
                     <button onclick="showEditSubtaskField(${taskId}, ${element.id})">
                         <img src="../assets/img/board/edit-subtask-icon.svg" alt="">
@@ -238,7 +254,7 @@ function showEditSubtaskField(taskId, subtaskId) {
         let subtaskIndex = task.subtasks.findIndex(sb => sb.id === subtaskId);
 
         if (subtaskIndex !== -1) {
-            let text = task.subtasks[subtaskIndex].name;
+            let text = task.subtasks[subtaskIndex].title;
             listItem.innerHTML = generateEditSubtaskTextHtml(taskId, subtaskId, text);
         } else {
             console.error('Subtask not found for editing.');
@@ -255,16 +271,24 @@ function showEditSubtaskField(taskId, subtaskId) {
  * @param {string} taskId - The ID of the task.
  * @param {string} subtaskId - The ID of the subtask.
  */
-function editSubtaskText(taskId, subtaskId) {
+async function editSubtaskText(taskId, subtaskId) {
     let input = document.getElementById('edit-subtask-text-input');
-    let task = getTask(Number(taskId));
-    let subtaskIndex = task.subtasks.findIndex(sb => sb.id === Number(subtaskId));
+    let data = {
+        'title': input.value,
+    }
+    updatedSubtask = await updateData('subtask', subtaskId, data);
 
-    if (subtaskIndex !== -1) {
-        task.subtasks[subtaskIndex].name = input.value;
-        showSubtasksInEdit(taskId, task.subtasks);
-    } else {
-        console.error('Subtask not found for editing.');
+    if (updatedSubtask) {
+        await loadTasks();
+
+        let task = getTask(Number(taskId));
+        let subtaskIndex = task.subtasks.findIndex(sb => sb.id === Number(subtaskId));
+
+        if (subtaskIndex !== -1) {
+            showSubtasksInEdit(taskId, task.subtasks);
+        } else {
+            console.error('Subtask not found for editing.');
+        }
     }
 }
 
@@ -275,20 +299,25 @@ function editSubtaskText(taskId, subtaskId) {
  * @param {Event} e - The event object.
  * @param {string} taskId - The ID of the task to which the subtask will be added.
  */
-function addSubtaskInEdit(e, taskId) {
+async function addSubtaskInEdit(e, taskId) {
     e.preventDefault();
 
     const task = getTask(taskId);
     const subtaskInput = document.getElementById('subtask-text');
 
-    const subtaskToAdd = {
-        id: Math.round(Math.random() * 100),
-        name: subtaskInput.value,
-        done: false
+    const data = {
+        title: subtaskInput.value,
+        task: taskId
     };
-    task.subtasks.push(subtaskToAdd);
-    subtaskInput.value = '';
-    showSubtasksInEdit(taskId, task.subtasks);
+
+    subtaskToAdd = await createData('subtask', data);
+
+    if (subtaskToAdd) {
+        await loadTasks();
+        task.subtasks.push(subtaskToAdd);
+        subtaskInput.value = '';
+        showSubtasksInEdit(taskId, task.subtasks);
+    }
 }
 
 
@@ -296,7 +325,7 @@ function addSubtaskInEdit(e, taskId) {
  * Resets the CSS for priority buttons.
  */
 function resetPriorityButtons() {
-    const priorities = ['low', 'medium', 'urgent'];
+    const priorities = ['low', 'medium', 'high'];
 
     priorities.forEach(priority => {
         const button = document.getElementById(priority);
@@ -329,12 +358,15 @@ function changePriority(btnId) {
 function handleEditPriority(priority) {
 
     const priorityMappings = {
-        3: ['low', 'edit-low-img'],
-        2: ['medium', 'edit-medium-img'],
-        1: ['urgent', 'edit-urgent-img']
+        'low': ['low', 'edit-low-img'],
+        'medium': ['medium', 'edit-medium-img'],
+        'high': ['high', 'edit-high-img']
     };
+    console.log(priorityMappings);
 
     const [idButton, idImg] = priorityMappings[priority];
+    console.log(idButton);
+    console.log(idImg);
 
     const button = document.getElementById(idButton);
     const img = document.getElementById(idImg);
@@ -359,7 +391,7 @@ function setEditButtonBackground(idButton) {
             return '#7AE229';
         case 'medium':
             return '#FFA800';
-        case 'urgent':
+        case 'high':
             return '#FF3D00';
         default:
             return '';
@@ -379,28 +411,48 @@ async function changeSubtaskStatus(status, subtaskId, taskId) {
     let subtaskIndex = task.subtasks.findIndex(sb => sb.id === subtaskId);
 
     if (status.checked) {
+        task.subtasks[subtaskIndex].status = true;
+        task.subtasks_progress++;
 
-        task.subtasks[subtaskIndex].done = true;
-        task.subtasksProgress++;
-        await setItem('AllTasks', allTasks);
-        await loadTasks();
-
-        clearAllColumns();
-        renderTasks();
-
-    } else if (!status.checked) {
-        task.subtasks[subtaskIndex].done = false;
-        task.subtasksProgress--;
-
-        if (task.subtasksProgress < 0) {
-            task.subtasksProgress = 0;
+        let subTaskData = {
+            'status': true,
         }
 
-        await setItem('AllTasks', allTasks);
-        await loadTasks();
+        let taskData = {
+            'subtasks_progress': task.subtasks_progress
+        }
+        updatedSubtask = await updateData('subtask', subtaskId, subTaskData);
+        updatedTask = await updateData('tasks', taskId, taskData);
+        if (updatedSubtask) {
+            await loadTasks();
+            clearAllColumns();
+            renderTasks();
+        }
 
-        clearAllColumns();
-        renderTasks();
+    } else if (!status.checked) {
+        task.subtasks[subtaskIndex].status = false;
+        task.subtasks_progress--;
+
+        if (task.subtasks_progress < 0) {
+            task.subtasks_progress = 0;
+        }
+
+        let subTaskData = {
+            'status': false,
+            'subtasks_progress': task.subtasks_progress
+        }
+
+        let taskData = {
+            'subtasks_progress': task.subtasks_progress
+        }
+        updatedSubtask = await updateData('subtask', subtaskId, subTaskData);
+        updatedTask = await updateData('tasks', taskId, taskData);
+
+        if (updatedSubtask) {
+            await loadTasks();
+            clearAllColumns();
+            renderTasks();
+        }
     }
 }
 
@@ -422,15 +474,13 @@ function getTask(id) {
  * @param {number} id - The ID of the task to be deleted.
  */
 async function deleteTask(id) {
-    let taskToDelete = getTaskIndex(id);
-    allTasks.splice(taskToDelete, 1);
-
-    await setItem('AllTasks', allTasks);
-    await loadTasks();
-
-    clearAllColumns();
-    renderTasks();
-    closeTask("pop-up");
+    res = await deleteData('tasks', id);
+    if (res.ok) {
+        await loadTasks();
+        clearAllColumns();
+        renderTasks();
+        closeTask("pop-up");
+    }
 }
 
 function confirmDeleteTask(id) {
@@ -508,12 +558,20 @@ function startDragging(id) {
  * @param {string} columnId - The unique identifier of the target column.
  */
 async function moveTo(columnId) {
-    allTasks[currentDraggedElement]['colum'] = columnId;
-    await setItem('AllTasks', allTasks);
-    await loadTasks();
+    taskToEdit = allTasks[currentDraggedElement];
 
-    clearAllColumns();
-    renderTasks();
+    if (taskToEdit) {
+        let data = {
+            'status': columnId
+        }
+
+        updatedTask = await updateData('tasks', taskToEdit.id, data);
+        if (updatedTask) {
+            await loadTasks();
+            clearAllColumns();
+            renderTasks();
+        }
+    }
 }
 
 
@@ -590,12 +648,12 @@ function renderCard(task, column) {
  *
  * @param {Object} task - The task object containing information about subtasks.
  * @param {string} task.id - The unique identifier of the task.
- * @param {number} task.subtasksProgress - The current progress of subtasks.
+ * @param {number} task.subtasks_progress - The current progress of subtasks.
  * @param {number} task.subtasks - The total number of subtasks.
  */
 function setProgressSubtasks(task) {
     let progressDone = document.getElementById(`progress${task.id}`);
-    let finalValue = 1;
+    let finalValue = task.subtasks_progress * 10;
     let max = task.subtasks.length * 10;
     let progressInPercent = (finalValue / max) * 100;
     progressDone.style.width = `${progressInPercent.toString()}%`;
@@ -609,7 +667,7 @@ function setProgressSubtasks(task) {
  * @returns {Array} - An array of strings representing the first letters.
  */
 function takeFirstLetters(contacts) {
-    return contacts.map(c => c.user.first_name[0] + c.user.last_name[0]);
+    return contacts.map(c => c.user.username[0] + c.user.username[0]);
 }
 
 
