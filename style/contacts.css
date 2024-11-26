@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
     overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
@@ -134,7 +135,7 @@
 }
 
 .emailInOverview {
-    height: 19px;
+    /* height: 19px; */
     font-size: 16px;
     font-weight: 400;
     line-height: 19.2px;
@@ -164,7 +165,7 @@
     gap: 30px;
 }
 
-#contactPageRightHeaderResponsive{
+#contactPageRightHeaderResponsive {
     display: none;
     flex-direction: column;
     align-items: flex-start;
@@ -177,13 +178,13 @@
     position: fixed;
 }
 
-#responsiveContactDetailBack{
+#responsiveContactDetailBack {
     display: none;
     background: none;
     border: none;
 }
 
-#responsiveContactDetailBack:hover{
+#responsiveContactDetailBack:hover {
     cursor: pointer;
 }
 
@@ -284,7 +285,7 @@
 #editPhone,
 #name,
 #email,
-#phone{
+#phone {
     width: 100%;
 }
 
@@ -382,6 +383,7 @@
     from {
         transform: translateX(200%);
     }
+
     to {
         transform: translateX(0);
     }
@@ -400,7 +402,7 @@
     background-color: transparent;
 }
 
-.closeContactButton:hover{
+.closeContactButton:hover {
     cursor: pointer;
     filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
 }
@@ -515,6 +517,12 @@
     height: 57px;
     gap: 24px;
     margin-top: 10%;
+}
+
+#err-m {
+    display: none;
+    color: red;
+    font-size: 1rem;
 }
 
 #cancelButton {
@@ -682,7 +690,7 @@
     border-radius: 10px;
 }
 
-#saveEditButton:hover{
+#saveEditButton:hover {
     cursor: pointer;
     background-color: #29ABE2;
 }

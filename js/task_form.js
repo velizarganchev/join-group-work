@@ -112,9 +112,8 @@ function addSubtask() {
     if (task.length == 0) {
     } else {
         let taskJSON = {
-            'id': Math.round(Math.random() * 100),
-            'name': task,
-            'done': false
+            'title': task,
+            'status': false
         }
         if (subtasks.length >= 2) {
             document.getElementById('subTaskList').setAttribute('style', "overflow-y:scroll");
@@ -175,6 +174,30 @@ function deleteSubtaskInEdit(i) {
     }
 }
 
+const getPriority = (chosenPrio) => {
+    const priorityMapping = {
+        1: 'high',
+        2: 'medium',
+        3: 'low'
+    };
+
+    return priorityMapping[chosenPrio] || 'low';
+};
+
+const getCategory = (category) => {
+    const categoryMapping = {
+        'Technical Task': 'technical_task',
+        'User Story': 'user_story',
+    };
+
+    return categoryMapping[category] || 'user_story';
+};
+
+function generateRandomColor() {
+    let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    return randomColor;
+}
+
 /**
  * collects the values of all inputs
  */
@@ -184,22 +207,21 @@ function getAllInputs(e) {
     let description = document.getElementById('description').value;
     let assignedTo = chosenContactsJson;
     let date = document.getElementById('date').value;
-    let prio = currentchosenPrio;
+    let prio = getPriority(currentchosenPrio);
     let category = document.getElementById('Category').innerHTML;
 
     const taskData = {
         'title': title,
+        'category': getCategory(category),
         'description': description,
+        'status': column ? column : 'todo',
+        'color': generateRandomColor(),
+        'members': assignedTo,
         'due_date': date,
         'priority': prio,
         'subtasks': subtasks,
         'subtasksProgress': 0,
-        'category': category,
-        'status': column ? column : 'todo',
-        'members': assignedTo,
     }
-
-    console.log('CR_TASK', taskData);
 
     createdTask = creatingJson(taskData);
     if (createdTask) {
@@ -221,8 +243,13 @@ function minDate() {
  * @param {Json} task - contains the safed Json
  */
 async function creatingJson(task) {
-    allTasks.push(task);
-    subtaskToAdd = await createData('task', task);
+    taskData = await createData('tasks', task);
+    if (taskData) {
+        allTasks.push(taskData);
+        return taskData
+    } else {
+        return undefined
+    }
 }
 
 /**

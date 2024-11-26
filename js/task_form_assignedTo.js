@@ -150,8 +150,6 @@ function addContactToArray(i) {
  */
 function addChosenContact(i) {
     let contact = contacts[i];
-    console.log('CONTACT: ', contact);
-
     chosenContactsJson.push(contact.id);
     chosenContacts.push(i);
     createCirclesToChosenContactContainer();
@@ -236,8 +234,8 @@ function creatingCircle(i, adress) {
  * @param {int} i - the position of the contact in the Json-Array
  */
 function gettingNames(i) {
-    let name = contacts[i]['user'].username;
-    document.getElementById(`ContactName${i}`).innerHTML += `${name}`;
+    let name = contacts[i]['user'];
+    document.getElementById(`ContactName${i}`).innerHTML += `${name.first_name} ${name.last_name}`;
 }
 
 /**
@@ -259,7 +257,7 @@ function filterContacts() {
 function HtmlForFilter(search, ContactList) {
     for (let i = 0; i < contacts.length; i++) {
         let adress = `contactCircle${i}`;
-        let name = contacts[i]['name'];
+        let name = contacts[i]['username'];
         if (name.toLowerCase().includes(search)) {
             ContactList.innerHTML += `
             <div id="contact${i}" class="contactbox contact" onclick="checkCheckbox(${i})">
@@ -267,7 +265,7 @@ function HtmlForFilter(search, ContactList) {
                 </div>
                 <div>
                     <div id="ContactName${i}" class="contactName">
-                        ${contacts[i]['name']}
+                        ${contacts[i]['username']}
                     </div>
                 </div>
                 <div id="checkboxContainer${i}" class="checkboxContainer">

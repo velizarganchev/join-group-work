@@ -39,18 +39,6 @@ async function includeHTML() {
     }
 }
 
-
-/**
- * Stores data in backend.
- * @param {string} key - The name which the data is saved with.
- * @param {string} value - The data which is supposed to be saved.
- */
-async function setItem(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN };
-    fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) }).then(res => res.json());
-}
-
-
 /**
  * Fetches data from backend.
  * @param {string} key - The name which the data is saved with.
@@ -340,7 +328,7 @@ function getCurrentUser() {
  */
 async function loadTasks() {
     allTasks = await getData('tasks');
-    console.log(allTasks);
+    console.log("ALL TASKS: ",allTasks);
 }
 
 /**

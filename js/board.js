@@ -25,6 +25,7 @@ async function initBoard() {
 async function renderTasks(searchedTasks) {
     try {
         await loadTasks();
+        clearAllColumns();
         takeAllColumns();
 
         let getColumnById = (columnId) => document.getElementById(columnId);
@@ -41,9 +42,7 @@ async function renderTasks(searchedTasks) {
         };
 
         let tasksToRender = searchedTasks || allTasks;
-
         tasksToRender.forEach(renderCardAndSubtasks);
-        console.log(tasksToRender);
 
         iterateByEachColumn(columns);
     } catch (error) {
@@ -129,7 +128,6 @@ function search(e) {
  */
 function openTask(taskId) {
     let task = allTasks.find(t => t.id === taskId);
-    console.log(task);
 
     let taskPopUp = document.getElementById('pop-up');
     taskPopUp.style.display = "flex";
@@ -181,13 +179,10 @@ async function editTask(taskId) {
     }
 
     updatedTask = await updateData('tasks', taskId, data);
-    if (updatedTask) {
-        await loadTasks();
-
-        clearAllColumns();
-        renderTasks();
-        closeTask("pop-up");
-    }
+    await loadTasks();
+    clearAllColumns();
+    renderTasks();
+    closeTask("pop-up");
 }
 
 
@@ -199,11 +194,28 @@ async function editTask(taskId) {
  */
 async function deleteSubtask(taskId, subtaskId) {
     res = await deleteData('subtask', subtaskId);
+    let task = getTask(taskId);
+    let subtask = task.subtasks.find(st => st.id === subtaskId);
+
     if (res.ok) {
-        await loadTasks();
-        const task = getTask(taskId);
-        task.subtasks = task.subtasks.filter(subtask => subtask.id !== subtaskId);
-        showSubtasksInEdit(taskId, task.subtasks);
+        if (subtask.status === true) {
+            task.subtasks_progress--;
+        }
+
+        if (task.subtasks_progress < 0) {
+            task.subtasks_progress = 0;
+        }
+
+        let taskData = {
+            'subtasks_progress': task.subtasks_progress
+        }
+        updatedTask = await updateData('tasks', taskId, taskData);
+        if (updatedTask) {
+            await loadTasks();
+            clearAllColumns();
+            renderTasks();
+            showSubtasksInEdit(taskId, updatedTask.subtasks);
+        }
     }
 }
 
@@ -362,11 +374,8 @@ function handleEditPriority(priority) {
         'medium': ['medium', 'edit-medium-img'],
         'high': ['high', 'edit-high-img']
     };
-    console.log(priorityMappings);
 
     const [idButton, idImg] = priorityMappings[priority];
-    console.log(idButton);
-    console.log(idImg);
 
     const button = document.getElementById(idButton);
     const img = document.getElementById(idImg);
@@ -439,7 +448,6 @@ async function changeSubtaskStatus(status, subtaskId, taskId) {
 
         let subTaskData = {
             'status': false,
-            'subtasks_progress': task.subtasks_progress
         }
 
         let taskData = {
@@ -516,7 +524,10 @@ function getTaskIndex(taskId) {
 /**
  * Closes the task pop-up by setting its display style to "none".
  */
-function closeTask(id) {
+async function closeTask(id) {
+    await loadTasks();
+    renderTasks();
+
     let taskPopUp = document.getElementById(id);
     taskPopUp.style.display = "none";
     document.body.style.overflow = '';

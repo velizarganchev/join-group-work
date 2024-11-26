@@ -24,7 +24,6 @@ async function renderContactBook() {
 
   for (let i = 0; i < contacts.length; i++) {
     let contact = contacts[i];
-    console.log(contact);
 
     let contactFirstLetter = contact.user.username.charAt(0).toUpperCase();
     handleLetterChange(currentAlphabetLetter, contactFirstLetter, contactOverview);
@@ -99,6 +98,7 @@ function handleLastLetter(currentAlphabetLetter, contactOverview) {
  * @param {boolean} toEdit - True, wenn der Bearbeitungsmodus aktiviert ist.
  */
 async function showContactDetails(contactItemId, toEdit) {
+
   await renderContactBook();
   toggleSelectedClass(contactItemId);
 
@@ -153,7 +153,6 @@ function showSelectedContactDetails(clickedItem) {
   renderContactDetails(selectedContact);
   document.getElementById("contactDetailsView").style.display = "flex";
 }
-
 
 /**
  * Hides the contact details view.
@@ -271,14 +270,17 @@ async function createContact() {
       "color": generateRandomColor()
     };
 
-    await addContactAndRender(newContact);
-    closePopUpWithConfirmation();
-    resetSaveButton(saveButton);
-
-    let newIndex = findContactIndex(newContact);
-    let contactItemId = `contactItem_${newIndex}`;
-    await showContactDetails(contactItemId);
-    renderEditFields(newContact);
+    contact = await addContactAndRender(newContact);
+    if (contact) {
+      closePopUpWithConfirmation();
+      resetSaveButton(saveButton);
+      showContactDetails(contact.id);
+      renderEditFields(contact);
+    } else {
+      addContact();
+      resetSaveButton(saveButton);
+      showErrorMessage();
+    }
   }, 1000);
 }
 
@@ -290,9 +292,11 @@ async function createContact() {
  */
 async function addContactAndRender(newContact) {
   let createdContact = await createData('register', newContact);
-  if (createdContact) {
-    await renderContactBook();
+  if (!createdContact) {
+    return undefined;
   }
+  await renderContactBook();
+  return createdContact;
 }
 
 
@@ -332,6 +336,17 @@ function showConfirmationMessage() {
   }, 1500);
 }
 
+/**
+ * Displays a confirmation message and hides it.
+ */
+function showErrorMessage() {
+  let errorMessage = document.getElementById("err-m");
+  errorMessage.style.display = "flex";
+
+  setTimeout(function () {
+    errorMessage.style.display = "none";
+  }, 2000);
+}
 
 /**
  * Closes the pop-up and shows the confirmation message.
@@ -417,7 +432,6 @@ async function deleteContact() {
     let contactItemId = selectedContactItem.id;
     let index = parseInt(contactItemId.split('_')[1]);
     let profileToDelete = contacts.find(c => c.id === contacts[index].id);
-    console.log(profileToDelete.user.token);
 
     res = await deleteUserProfile('contacts', profileToDelete.user.token);
     if (res.ok) {

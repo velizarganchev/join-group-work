@@ -80,6 +80,9 @@
                         <button id="saveButton" type="submit">Create Contact <img src="/assets/img/check.png"
                                 alt="confirm icon"></button>
                     </div>
+                    <div id="err-m" class="validation-error-message-container">
+                        <p class="validation-error-message">Username or email already exists.</p>
+                    </div>
                 </form>
             </div>
         </div>
@@ -99,7 +102,7 @@
             <img class="contactDetailsNameIcons" src="/assets/img/delete-contact.png" alt="delete contact">
             <p>Delete</p>
         </div>
-    </div>      
+    </div>
     <div id="editContactOverlay">
         <div id="editContactPopUp">
             <button class="closeContactButton" type="button" onclick="closePopUp()">

@@ -8,8 +8,6 @@ async function initEntry() {
     animateStartLogo();
     renderLogIn();
     setCurrentUser('');
-    console.log(users);
-    
 }
 
 
@@ -19,9 +17,21 @@ async function initEntry() {
 async function loadUsers() {
     try {
         users = await getData('users')
+        console.log(users);
+
     } catch {
         console.info('Unable to load users');
     }
+}
+
+
+/**
+ * Generates a random hex color.
+ * @returns {string} - Random hex color.
+ */
+function generateRandomColor() {
+    let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    return randomColor;
 }
 
 
@@ -30,29 +40,27 @@ async function loadUsers() {
  * @param {string} password - Value of the password's input field.
  */
 async function signUp(password) {
-    let username = document.getElementById('name').value;
+    let name = document.getElementById('name').value;
     let email = document.getElementById('email').value;
+    let username = name.split(' ', 2)
+
     let data = {
-        'username': username,
-        'email': email,
-        'password': password
+        "username": username.join('').toLowerCase(),
+        "first_name": username[0],
+        "last_name": username[1],
+        "email": email,
+        "password": password,
+        "color": generateRandomColor(),
     }
-    console.log(data);
 
     let user = await loginRegisterUser('register', data);
-    console.log(user);
-
     if (user) {
-        users.push({
-            'name': username,
-            'email': email,
-            'password': password
-        });
+        await loadUsers();
         toggleClass('sign-up-confirmation', 'fly-in');
         toggleClass('confirmation-wrapper', 'dark-background');
         setTimeout(function () {
             renderLogIn();
-        }, 800);
+        }, 1000);
     }
 }
 
@@ -145,7 +153,7 @@ function mobileStartAnimation() {
 /**
  * Renders the form for logging in.
  */
-function renderLogIn() {
+async function renderLogIn() {
     let dynamicContent = document.getElementById('dynamic-content');
     dynamicContent.innerHTML = logInFormTemplate();
     checkIfEmpty('password', 'password-image');

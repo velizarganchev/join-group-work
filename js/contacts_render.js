@@ -106,6 +106,7 @@ function renderContactDetails(contact, toEdit) {
  * @param {Object} contact - The contact information.
  */
 function renderEditFields(contact) {
+
     let editNameField = document.getElementById("editName");
     let editEmailField = document.getElementById("editEmail");
     let editPhoneField = document.getElementById("editPhone");

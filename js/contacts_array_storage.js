@@ -79,39 +79,12 @@ contacts = [
   // },
 ];
 
-
-/**
- * Stores data on the server using the specified key.
- *
- * @param {string} key - The key under which the data will be stored.
- * @param {string} value - The data to be stored.
- * @returns {Promise} - A promise that resolves to the server response in JSON format.
- */
-async function setItemContacts(key, value) {
-  const payload = { key, value, token: STORAGE_TOKEN };
-  return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) }).then((res) => res.json());
-}
-
-
-// /**
-// * Retrieves data from the server using the specified key.
-// *
-// * @param {string} key - The key for which data is to be retrieved.
-// * @returns {Promise} - A promise that resolves to the retrieved data value from the server.
-// */
-// async function getItemContacts(key) {
-//   const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-//   return fetch(url).then((res) => res.json()).then((res) => res.data.value);
-// }
-
-
 /**
 * Loads contacts from the server and updates the local 'contacts' array.
 */
 async function loadContactsFromServer() {
   contacts = await getData('contacts');
 }
-
 
 /**
 * Saves a new contact to the server and updates the local 'contacts' array.

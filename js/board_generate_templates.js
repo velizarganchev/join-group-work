@@ -5,7 +5,7 @@
  */
 function generateTaskHtml(task) {
 
-    let contactsHtml = task.members.map(generateContactHtml).join('');
+    let contactsHtml = task.members.map(generateContactHtml);
     let subtasksHtml = task.subtasks.map(subtask => generateSubtaskHtml(subtask, task.id)).join('');
     let priorityText = generatePriorityText(task.priority);
     let priorityIcon = generatePriorityIcon(task.priority);
@@ -159,12 +159,10 @@ function generateEditContactHtml(contact) {
  * @returns {string} - The HTML string representing the contact.
  */
 function generateContactHtml(contact) {
-    console.log(contact);
-
     return  /*html*/ `
         <div class="pop-up-task-contact">
             <div class="contact-label" style="background:${contact.color};">${contact.user.username[0] + contact.user.username[0]}</div>
-            <div class="contact-name">${contact.user.username} ${contact.username}</div>
+            <div class="contact-name">${contact.user.first_name} ${contact.user.last_name}</div>
         </div>`;
 }
 
@@ -176,8 +174,6 @@ function generateContactHtml(contact) {
  * @returns {string} - The HTML string representing the subtask.
  */
 function generateSubtaskHtml(subtask, taskId) {
-    console.log(subtask);
-
     return  /*html*/ `
         <div class="pop-up-task-subtask">
             <input type="checkbox" onchange="changeSubtaskStatus(this, ${subtask.id}, ${taskId})" ${subtask.status === true ? 'checked' : ''} >
@@ -199,7 +195,7 @@ function generateCardHtml(cardId, task) {
         return /*html*/ `
         <div class="card-container" onclick="openTask(${task.id})" draggable="true" ondragstart="startDragging(${getTaskIndex(task.id)})" id="${cardId}">
         <div class="card">
-            <button class="card-label">${task.category}</button>
+            <button class="card-label" style="background-color: ${task.color};" >${task.category}</button>
                 <h3 class="card-title">${task.title}</h3>
                 <p class="card-content">${task.description}</p>
                 <div id="progress" class="progress-bar-container ${task.subtasks?.length <= 0 ? 'hide' : ''}">
@@ -215,8 +211,7 @@ function generateCardHtml(cardId, task) {
                     </div>
                 </div>
             </div>
-        </div>
-            
+        </div>          
     `;
     }
 }
@@ -252,11 +247,11 @@ function generatePriorityText(priority) {
 function generatePriorityIcon(priority) {
     switch (priority) {
         case 'low':
-            return /*html*/`<img src="../assets/img/board/prio-low.svg" alt="Priority Icon">`;
+            return /*html*/`<img src="../assets/img/board/prio-low.png" alt="Priority Icon">`;
         case 'medium':
-            return /*html*/`<img src="../assets/img/board/prio-medium.svg" alt="Priority Icon">`;
+            return /*html*/`<img src="../assets/img/board/prio-medium.png" alt="Priority Icon">`;
         case 'high':
-            return /*html*/`<img src="../assets/img/board/prio-heigh-white.png" alt="Priority Icon">`;
+            return /*html*/`<img src="../assets/img/board/prio-high.png" alt="Priority Icon">`;
     }
 }
 
@@ -304,7 +299,7 @@ function generateNoTaskHtml() {
  * @param {Array} contacts - An array of contact objects.
  * @param {number} id - The task ID.
  */
-function generateContactsHtml(contacts, id) {    
+function generateContactsHtml(contacts, id) {
     let profiles = document.getElementById(`tasksProfiles${id}`);
     let onlyFirstLetter = takeFirstLetters(contacts);
     for (let i = 0; i < onlyFirstLetter.length; i++) {

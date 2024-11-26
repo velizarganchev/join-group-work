@@ -38,7 +38,6 @@
 
 
 .action-container form {
-    width: 312px;
     height: 48px;
     padding: 8px 16px;
     background-color: #ffff;
@@ -257,7 +256,6 @@
     line-height: 19.2px;
     padding: 4px 16px;
     color: #FFFFFF;
-    background-color: #0038FF;
     border: none;
     border-radius: 8px;
 }

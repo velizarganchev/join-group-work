@@ -142,10 +142,6 @@ body {
     align-items: center;
 }
 
-#upcoming-prio-image {
-    width: 30px;
-}
-
 .upcoming-deadline {
     display: flex;
     flex-direction: column;

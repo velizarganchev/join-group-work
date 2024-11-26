@@ -21,13 +21,13 @@ async function initSummary() {
  */
 function renderWelcomeMessage() {
     let user = getCurrentUser();
-    console.log(user);
+    let name = `${user.first_name} ${user.last_name}`;
 
     let time = new Date().getHours();
     if (window.innerWidth <= 1250) {
-        renderMessageMobile(user.username, time);
+        renderMessageMobile(name, time);
     } else {
-        renderMessageDesktop(user.username, time);
+        renderMessageDesktop(name, time);
     }
 }
 
@@ -114,11 +114,15 @@ function renderUpcomingPrio() {
     let upcomingPrio = document.getElementById('upcoming-prio');
     let upcomingTasks = document.getElementById('upcoming-tasks-amount');
 
-    let prio = allTasks.filter(t => t.priority === 'medium')[0].priority;
-    let upcomingTasksAmount = allTasks.filter(t => t.priority === 'medium').length;
+    let prio = allTasks
+        .filter(t => t.priority === 'high')
+        .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
+        .map(t => t.priority)[0];
+
+    let upcomingTasksAmount = allTasks.filter(t => t.priority === 'high').length;
 
     upcomingPrio.innerHTML = prio.toUpperCase();
-    changeImageSource('upcoming-prio-image', `/assets/img/board/prio-${prio}-white.svg`);
+    changeImageSource('upcoming-prio-image', `/assets/img/board/summary-${prio}-icon.png`);
     toggleClass('upcoming-prio-image-wrapper', `prio-${prio}`);
     upcomingTasks.innerHTML = upcomingTasksAmount;
 }
@@ -128,7 +132,12 @@ function renderUpcomingPrio() {
  * Renders the due date of the upcoming task.
  */
 function renderUpcomingDate() {
-    let date = new Date(allTasks[0]['due_date']);
+    let date = new Date(
+        allTasks
+            .filter(t => t.priority === 'high')
+            .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
+            .map(t => t.due_date)[0]
+    );
     let formattedMonth = date.toLocaleString('default', { month: 'long' });
     let year = date.getFullYear();
     let day = date.getDate();
