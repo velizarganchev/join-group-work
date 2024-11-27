@@ -4,7 +4,6 @@ let users = [];
  * Starts the animation of the opening logo.
  */
 async function initEntry() {
-    await loadUsers();
     animateStartLogo();
     renderLogIn();
     setCurrentUser('');
@@ -17,8 +16,6 @@ async function initEntry() {
 async function loadUsers() {
     try {
         users = await getData('users')
-        console.log(users);
-
     } catch {
         console.info('Unable to load users');
     }
@@ -55,7 +52,6 @@ async function signUp(password) {
 
     let user = await loginRegisterUser('register', data);
     if (user) {
-        await loadUsers();
         toggleClass('sign-up-confirmation', 'fly-in');
         toggleClass('confirmation-wrapper', 'dark-background');
         setTimeout(function () {
@@ -63,7 +59,6 @@ async function signUp(password) {
         }, 1000);
     }
 }
-
 
 
 /**
@@ -82,16 +77,11 @@ async function logIn() {
  * @param {} passwordInput - Input field for password when loggin in.
  */
 async function findUser(emailInput, passwordInput) {
-    let userExist = users.find(u => u.email === emailInput.value);
-    if (userExist) {
-        data = { username: userExist.username, password: passwordInput.value }
-        let user = await loginRegisterUser('login', data)
-        if (user) {
-            setCurrentUser(user);
-            window.location.href = 'summary.html';
-        } else {
-            toggleClass('error-message', 'hide');
-        }
+    data = { email: emailInput.value, password: passwordInput.value }
+    let user = await loginRegisterUser('login', data)
+    if (user) {
+        setCurrentUser(user);
+        window.location.href = 'summary.html';
     } else {
         toggleClass('error-message', 'hide');
     }
@@ -190,7 +180,7 @@ function logInFormTemplate() {
                     </div>
                     <div class="entry-buttons">
                         <button class="dark-button log-in-button-mobile" type="submit">Log in</button>
-                        <button class="light-button" onclick="logInAsGuest()">Guest Log in</button>
+                        <button class="light-button" type="button" onclick="logInAsGuest()">Guest Log in</button>
                     </div>
                 </form>
             </div>
@@ -237,13 +227,27 @@ function togglePasswordVisibility(inputId, imageId) {
 /**
  * Sets up log in for guest user by disabling the form validation.
  */
-function logInAsGuest() {
+async function logInAsGuest() {
     let emailInput = document.getElementById('email');
     let passwordInput = document.getElementById('password');
     emailInput.removeAttribute('required');
     passwordInput.removeAttribute('required');
-    setCurrentUser('Guest');
-    window.location.href = 'summary.html';
+
+    data = {
+        "username": 'guest',
+        "first_name": 'Guest',
+        "last_name": '',
+        "email": 'guest@hotmail.com',
+        "password": '11111111',
+        "color": generateRandomColor(),
+    }
+    let user = await loginRegisterUser('register', data)
+    if (user) {
+        setCurrentUser(user);
+        window.location.href = 'summary.html';
+    } else {
+        toggleClass('error-message', 'hide');
+    }
 }
 
 

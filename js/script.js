@@ -1,7 +1,3 @@
-const STORAGE_TOKEN = 'DR6FZK1MTGPR11C93C73PUGXTKY05AJ4CNFZMV8P';
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
-
-const ADMIN_TOKEN = 'c97c691099e2ec1ee9b67362c9ff4ba86c36c4c7';
 const BASE_URL = 'http://127.0.0.1:8000/api/';
 
 let allTasks = [];
@@ -39,25 +35,12 @@ async function includeHTML() {
     }
 }
 
-/**
- * Fetches data from backend.
- * @param {string} key - The name which the data is saved with.
- * @returns The fethed data from backend.
- */
-async function getItem(key) {
-    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(response => response.json()).then(response => response.data.value);
-}
 
 async function getData(key) {
     let currUser = getCurrentUser();
 
     const myHeaders = new Headers();
-    if (currUser) {
-        myHeaders.append("Authorization", `Token ${currUser.token}`);
-    } else {
-        myHeaders.append("Authorization", `Token ${ADMIN_TOKEN}`);
-    }
+    myHeaders.append("Authorization", `Token ${currUser.token}`);
 
     const requestOptions = {
         method: "GET",
@@ -109,10 +92,12 @@ async function createData(endpoint, data) {
 }
 
 async function updateData(endpoint, id, data) {
+    let currUser = getCurrentUser();
+
     const myHeaders = new Headers();
 
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Token ${ADMIN_TOKEN}`);
+    myHeaders.append("Authorization", `Token ${currUser.token}`);
 
     const requestOptions = {
         method: "PUT",
@@ -282,7 +267,12 @@ function changeImageSource(id, url) {
 /**
  * Loggs out the current user.
  */
-function logOut() {
+async function logOut() {
+    let guest = getCurrentUser();
+    if (guest.username === 'guest') {
+        await deleteUserProfile('contacts', guest.token)
+    }
+
     toggleClass('profile-nav-wrapper', 'hide');
     setCurrentUser('');
     window.location.replace = 'index.html'
@@ -328,7 +318,6 @@ function getCurrentUser() {
  */
 async function loadTasks() {
     allTasks = await getData('tasks');
-    console.log("ALL TASKS: ",allTasks);
 }
 
 /**
@@ -339,8 +328,6 @@ function lockScreenOrientation() {
         screen.orientation.lock('portrait');
     }
 }
-
-
 
 function logInCnodition() {
     return getCurrentUser() === '' && window.location.pathname === '/html/legal_notice.html' ||

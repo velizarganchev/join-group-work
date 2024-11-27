@@ -134,7 +134,7 @@ function showSubtasks() {
     let subtasksList = document.getElementById('subTaskList');
     subtasksList.innerHTML = '';
     for (let i = 0; i < subtasks.length; i++) {
-        subtasksList.innerHTML += `<li>${subtasks[i]['name']} <div class="subtaskContainerEdit"><img class="hover" src="/assets/img/edit-contact.png" onclick="editSubtask(${i})"></img> <img class="hover" onclick="deleteSubtaskInEdit(${i})" src="/assets/img/delete-contact.png"></div> </li>`;
+        subtasksList.innerHTML += `<li>${subtasks[i]['title']} <div class="subtaskContainerEdit"><img class="hover" src="/assets/img/edit-contact.png" onclick="editSubtask(${i})"></img> <img class="hover" onclick="deleteSubtaskInEdit(${i})" src="/assets/img/delete-contact.png"></div> </li>`;
     }
 }
 

@@ -308,8 +308,17 @@
     filter: brightness(0) saturate(100%) invert(52%) sepia(98%) saturate(407%) hue-rotate(155deg) brightness(93%) contrast(90%);
 }
 
-.contactEditButton:hover p,
-.contactDeleteButton:hover p {
+.contactEditButton a,
+.contactDeleteButton a {
+    text-decoration: none;
+    color: #2A3647;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 19.2px;
+}
+
+.contactEditButton:hover a,
+.contactDeleteButton:hover a {
     font-weight: 700;
     font-size: 19px;
     line-height: 19.2px;

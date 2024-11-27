@@ -98,7 +98,6 @@ function handleLastLetter(currentAlphabetLetter, contactOverview) {
  * @param {boolean} toEdit - True, wenn der Bearbeitungsmodus aktiviert ist.
  */
 async function showContactDetails(contactItemId, toEdit) {
-
   await renderContactBook();
   toggleSelectedClass(contactItemId);
 
@@ -271,11 +270,12 @@ async function createContact() {
     };
 
     contact = await addContactAndRender(newContact);
+
     if (contact) {
       closePopUpWithConfirmation();
       resetSaveButton(saveButton);
-      showContactDetails(contact.id);
-      renderEditFields(contact);
+      showContactDetails('contactItem_0');
+      // renderEditFields(contact);
     } else {
       addContact();
       resetSaveButton(saveButton);
@@ -434,13 +434,20 @@ async function deleteContact() {
     let profileToDelete = contacts.find(c => c.id === contacts[index].id);
 
     res = await deleteUserProfile('contacts', profileToDelete.user.token);
-    if (res.ok) {
-      loadContactsFromServer();
-      closePopUp();
-      returnToContactBook();
 
-      detailView.style.display = "none";
-      editDeleteButton.style.display = "none";
+    let currentUser = getCurrentUser();
+    if (currentUser.token == profileToDelete.user.token) {
+      setCurrentUser('');
+      window.location.replace('index.html');
+    } else {
+      if (res.ok) {
+        loadContactsFromServer();
+        closePopUp();
+        returnToContactBook();
+
+        detailView.style.display = "none";
+        editDeleteButton.style.display = "none";
+      }
     }
   }
 }
