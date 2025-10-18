@@ -1,4 +1,4 @@
-const BASE_URL = 'https://join.velizar-ganchev-backend.com/api/';
+const BASE_URL = 'https://join-api.velizar-ganchev-backend.com/api/';
 
 let allTasks = [];
 let column = '';
